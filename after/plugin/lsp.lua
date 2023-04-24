@@ -86,10 +86,25 @@ require'lspconfig'.lua_ls.setup {
 
 local luasnip = require('luasnip')
 
+
 luasnip.config.set_config({
+  history = true,
   region_check_events = 'InsertEnter',
-  delete_check_events = 'InsertLeave'
+  delete_check_events = 'InsertLeave',
+  updateevents = "TextChanged, TextChangedI"
 })
+
+vim.keymap.set({"i", "s"}, "<c-j>", function ()
+  if luasnip.expand_or_jumpable() then
+    luasnip.expand_or_jump()
+  end
+end)
+
+vim.keymap.set({"i", "s"}, "<c-k>", function ()
+  if luasnip.jumpable(-1) then
+    luasnip.jump(-1)
+  end
+end)
 
 require('luasnip.loaders.from_vscode').lazy_load()
 
