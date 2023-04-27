@@ -30,6 +30,8 @@ lua require("l.plugins")
 
 nnoremap <silent> Q <nop>
 
+vnoremap <silent> . :normal .<CR>
+
 nnoremap <silent> <C-s> <cmd>w<CR>
 vnoremap <silent> <C-s> <cmd>w<CR>
 inoremap <silent> <C-s> <cmd>w<CR>
