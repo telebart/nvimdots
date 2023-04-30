@@ -1,6 +1,6 @@
 local dap = require 'dap'
-local dapgo = require 'dap-go'
 local dapui = require 'dapui'
+local daptest = require("l.dap-test")
 
 require('mason-nvim-dap').setup {
   automatic_setup = true,
@@ -9,8 +9,6 @@ require('mason-nvim-dap').setup {
   },
 }
 
-vim.keymap.set('n', '<leader>dd', dapgo.debug_test)
-vim.keymap.set('n', '<leader>df', dapgo.debug_last_test)
 vim.keymap.set('n', '<leader>dh', dap.continue)
 vim.keymap.set('n', '<leader>dj', dap.step_into)
 vim.keymap.set('n', '<leader>dk', dap.step_over)
@@ -64,5 +62,77 @@ dap.listeners.after.event_initialized['dapui_config'] = dapui.open
 --dap.listeners.before.event_terminated['dapui_config'] = dapui.close
 --dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
-require('dap-go').setup()
+
+-- https://stackoverflow.com/questions/43092364/debugging-go-tests-in-visual-studio-code
+
+local buildtags = 'buildthis'
+local testtags = 'test_remote test buildthis'
+
+vim.keymap.set('n', '<leader>dd', function() daptest.debug_test(testtags) end)
+vim.keymap.set('n', '<leader>df', function() daptest.debug_last_test(testtags) end)
+
+dap.adapters.go = {
+  type = 'executable';
+  command = 'node';
+  args = {os.getenv('HOME') .. '/repoja/vscode-go/dist/debugAdapter.js'};
+}
+dap.configurations.go = {
+  {
+    type = 'go';
+    name = 'Debug';
+    buildTags = buildtags;
+    request = 'launch';
+    showLog = false;
+    program = "${file}";
+    dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
+  },
+  {
+    type = 'go';
+    name = 'Debug Test';
+    testTags = testtags;
+    request = 'launch';
+    mode = 'test';
+    showLog = false;
+    program = "${file}";
+    dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
+  },
+}
+
+-- require('dap-go').setup()
 require('nvim-dap-virtual-text').setup()
+
+-- dap.adapters.delve = {
+--   type = 'server',
+--   port = '${port}',
+--   executable = {
+--     command = 'dlv',
+--     args = {'dap', '--build-flags="-tags buildthis"', '-l', '127.0.0.1:${port}'},
+--   }
+-- }
+--
+-- -- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
+-- dap.configurations.go = {
+--   {
+--     type = "delve",
+--     name = "Debug",
+--     request = "launch",
+--     program = "${file}",
+--   },
+--   {
+--     type = "delve",
+--     name = "Debug test", -- configuration for debugging test files
+--     request = "launch",
+--     mode = "test",
+--     program = "${file}"
+--   },
+--   -- works with go.mod packages and sub packages 
+--   {
+--     type = "delve",
+--     name = "Debug test (go.mod)",
+--     request = "launch",
+--     mode = "test",
+--     program = "./${relativeFileDirname}"
+--   }
+-- }
+
+
