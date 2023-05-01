@@ -46,7 +46,6 @@ function M.set_buildtags(buildtags)
   M.buildtags = buildtags
   local client = vim.lsp.get_active_clients({name = "gopls", bufnr = vim.api.nvim_get_current_buf()})
   if client[1] == nil then print("no gopls client attached to buffer") return end
-  P(client[1])
   client[1].config.settings.gopls.buildFlags = {"-tags", M.buildtags}
   client[1].notify("workspace/didChangeConfiguration")
 end
@@ -241,16 +240,6 @@ function M.test(scope)
     vim.notify("no test found")
     return false
   end
-  local testtags = ""
-  if M.testtags ~= "" then
-    testtags = " -tags " .. M.testtags
-  end
-  if testpath == "./." then
-    testpath = ""
-  else
-    testpath = " " .. testpath .. "/..."
-  end
-  testname = " -run " .. testname
 
   if vim.fn.bufexists(term) > 0 then
     vim.api.nvim_buf_delete(term, { force = true })
@@ -258,19 +247,16 @@ function M.test(scope)
 
   vim.cmd("botright 24split new")
 
-  local cmd = "go test -v" .. testtags .. testpath .. testname
-  print(cmd)
-  local cmdtbl = {}
-  for w in cmd:gmatch("%S+") do table.insert(cmdtbl,w) end
+  local cmd = {"go", "test", "-v", "-tags", M.testtags, testpath, "-run", testname}
 
-  vim.fn.termopen(cmdtbl)
+  vim.fn.termopen(cmd)
   term = vim.api.nvim_get_current_buf()
 
   return true
 end
 
-vim.keymap.set("n", "<leader>bi", function() M.set_buildtags(vim.fn.input({default = M.buildtags})) end)
-vim.keymap.set("n", "<leader>bo", function() M.set_testtags(vim.fn.input({default = M.testtags})) end)
+vim.keymap.set("n", "<leader>ni", function() M.set_buildtags(vim.fn.input({default = M.buildtags})) end)
+vim.keymap.set("n", "<leader>no", function() M.set_testtags(vim.fn.input({default = M.testtags})) end)
 vim.keymap.set('n', '<leader>dd', M.debug_test)
 vim.keymap.set('n', '<leader>df', M.debug_last_test)
 vim.keymap.set('n', '<leader>tj', function() M.test("nearest") end)
