@@ -60,8 +60,7 @@ require'lspconfig'.gopls.setup{
   capabilities = capabilities,
   settings = {
     gopls = {
-      buildFlags =  {"-tags=account_test test"},
-      --buildFlags =  {"-tags=test_remote account_test test"},
+      buildFlags =  {"-tags", require("l.dap-test").buildtags},
     }
   },
 }

@@ -3,7 +3,53 @@ local dap = require("dap")
 local M = {
   last_testname = "",
   last_testpath = "",
+  testtags = "test,account_test",
+  buildtags = "test,account_test",
 }
+
+function M.setup()
+  dap.adapters.go = {
+    type = 'executable',
+    command = 'node',
+    args = {os.getenv('HOME') .. '/repoja/vscode-go/dist/debugAdapter.js'},
+  }
+  -- https://stackoverflow.com/questions/43092364/debugging-go-tests-in-visual-studio-code
+  dap.configurations.go = {
+    {
+      type = 'go',
+      name = 'Debug',
+      buildTags = M.buildtags,
+      request = 'launch',
+      showLog = false,
+      program = "${file}",
+      dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
+    },
+    {
+      type = 'go',
+      name = 'Debug Test',
+      testTags = M.testtags,
+      request = 'launch',
+      mode = 'test',
+      showLog = false,
+      program = "${file}",
+      dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
+    },
+  }
+end
+
+
+function M.set_testtags(testtags)
+  M.testtags = testtags
+end
+
+function M.set_buildtags(buildtags)
+  M.buildtags = buildtags
+  local client = vim.lsp.get_active_clients({name = "gopls", bufnr = vim.api.nvim_get_current_buf()})
+  if client[1] == nil then print("no gopls client attached to buffer") return end
+  P(client[1])
+  client[1].config.settings.gopls.buildFlags = {"-tags", M.buildtags}
+  client[1].notify("workspace/didChangeConfiguration")
+end
 
 local tests_query = [[
 (function_declaration
@@ -26,15 +72,15 @@ local subtests_query = [[
   (#eq? @run "Run")) @parent
 ]]
 
-local function debug_test(testname, testpath, testtags)
+local function debug_test(testname, testpath)
   dap.run({
-    type = "go";
-    name = testname;
-    testTags = testtags;
-    request = "launch";
-    mode = "test";
-    program = testpath;
-    args = { "-test.run", testname };
+    type = "go",
+    name = testname,
+    testTags = M.testtags,
+    request = "launch",
+    mode = "test",
+    program = testpath,
+    args = { "-test.run", testname },
     dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
   })
 end
@@ -139,7 +185,7 @@ local function get_closest_test()
   return get_closest_above_cursor(test_tree)
 end
 
-function M.debug_test(testtags)
+function M.debug_test()
   local testname = get_closest_test()
   local relativeFileDirname = vim.fn.fnamemodify(vim.fn.expand("%:.:h"), ":r")
   local testpath = string.format("./%s", relativeFileDirname)
@@ -154,12 +200,12 @@ function M.debug_test(testtags)
 
   local msg = string.format("starting debug session '%s : %s'...", testpath, testname)
   vim.notify(msg)
-  debug_test(testname, testpath, testtags)
+  debug_test(testname, testpath)
 
   return true
 end
 
-function M.debug_last_test(testtags)
+function M.debug_last_test()
   local testname = M.last_testname
   local testpath = M.last_testpath
 
@@ -170,8 +216,64 @@ function M.debug_last_test(testtags)
 
   local msg = string.format("starting debug session '%s : %s'...", testpath, testname)
   vim.notify(msg)
-  debug_test(testname, testpath, testtags)
+  debug_test(testname, testpath)
   return true
 end
+
+local term = nil
+
+function M.test(scope)
+  local testname = ""
+  local testpath = ""
+  if scope == "nearest" then
+    testname = get_closest_test()
+    local relativeFileDirname = vim.fn.fnamemodify(vim.fn.expand("%:.:h"), ":r")
+    testpath = string.format("./%s", relativeFileDirname)
+    M.last_testpath = testpath
+    M.last_testname = testname
+  end
+  if scope == "last" then
+    testname = M.last_testname
+    testpath = M.last_testpath
+  end
+
+  if testname == "" then
+    vim.notify("no test found")
+    return false
+  end
+  local testtags = ""
+  if M.testtags ~= "" then
+    testtags = " -tags " .. M.testtags
+  end
+  if testpath == "./." then
+    testpath = ""
+  else
+    testpath = " " .. testpath .. "/..."
+  end
+  testname = " -run " .. testname
+
+  if vim.fn.bufexists(term) > 0 then
+    vim.api.nvim_buf_delete(term, { force = true })
+  end
+
+  vim.cmd("botright 24split new")
+
+  local cmd = "go test -v" .. testtags .. testpath .. testname
+  print(cmd)
+  local cmdtbl = {}
+  for w in cmd:gmatch("%S+") do table.insert(cmdtbl,w) end
+
+  vim.fn.termopen(cmdtbl)
+  term = vim.api.nvim_get_current_buf()
+
+  return true
+end
+
+vim.keymap.set("n", "<leader>bi", function() M.set_buildtags(vim.fn.input({default = M.buildtags})) end)
+vim.keymap.set("n", "<leader>bo", function() M.set_testtags(vim.fn.input({default = M.testtags})) end)
+vim.keymap.set('n', '<leader>dd', M.debug_test)
+vim.keymap.set('n', '<leader>df', M.debug_last_test)
+vim.keymap.set('n', '<leader>tj', function() M.test("nearest") end)
+vim.keymap.set('n', '<leader>tk', function() M.test("last") end)
 
 return M

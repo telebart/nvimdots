@@ -37,7 +37,6 @@ vnoremap <silent> <C-s> <cmd>w<CR>
 inoremap <silent> <C-s> <cmd>w<CR>
 
 nnoremap <leader>u :UndotreeToggle<CR>
-nnoremap <leader><CR> <cmd>so ~/.config/nvim/init.vim<CR>
 nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
 
 nnoremap <leader>tt <cmd>set expandtab!<CR>
@@ -90,12 +89,6 @@ nnoremap <leader>qq <cmd>call ToggleLocList()<CR>
 
 " Git
 nnoremap <leader>b <cmd>Gitsigns toggle_current_line_blame<CR>
-
-" Test
-nnoremap <leader>tj <cmd>TestNearest<CR>
-nnoremap <leader>tk <cmd>TestLast<CR>
-nnoremap <leader>tl <cmd>TestFile<CR>
-nnoremap <leader>tö <cmd>TestSuite<CR>
 
 " Go
 nnoremap <leader>ie <cmd>GoIfErr<CR>
