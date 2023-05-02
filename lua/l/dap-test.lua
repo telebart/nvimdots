@@ -13,12 +13,11 @@ function M.setup()
     command = 'node',
     args = {os.getenv('HOME') .. '/repoja/vscode-go/dist/debugAdapter.js'},
   }
-  -- https://stackoverflow.com/questions/43092364/debugging-go-tests-in-visual-studio-code
   dap.configurations.go = {
     {
       type = 'go',
       name = 'Debug',
-      buildTags = M.buildtags,
+      buildFlags = "-tags " .. M.buildtags,
       request = 'launch',
       showLog = false,
       program = "${file}",
@@ -27,7 +26,7 @@ function M.setup()
     {
       type = 'go',
       name = 'Debug Test',
-      testTags = M.testtags,
+      buildFlags = "-tags " .. M.testtags,
       request = 'launch',
       mode = 'test',
       showLog = false,
@@ -75,7 +74,7 @@ local function debug_test(testname, testpath)
   dap.run({
     type = "go",
     name = testname,
-    testTags = M.testtags,
+    buildFlags = "-tags " .. M.testtags,
     request = "launch",
     mode = "test",
     program = testpath,
