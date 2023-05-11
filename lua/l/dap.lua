@@ -5,13 +5,13 @@ vim.keymap.set('n', '<leader>dh', dap.continue)
 vim.keymap.set('n', '<leader>dj', dap.step_into)
 vim.keymap.set('n', '<leader>dk', dap.step_over)
 vim.keymap.set('n', '<leader>dl', dap.step_out)
-vim.keymap.set('n', '<leader>di', dap.toggle_breakpoint)
+vim.keymap.set('n', '<leader>d<space>', dap.run_to_cursor)
 vim.keymap.set('n', '<Up>', dap.continue)
 vim.keymap.set('n', '<Left>', dap.step_into)
 vim.keymap.set('n', '<Down>', dap.step_over)
 vim.keymap.set('n', '<Right>', dap.step_out)
-vim.keymap.set('n', '<leader>di', dap.toggle_breakpoint)
 vim.keymap.set('n', '<leader>dp', dapui.toggle)
+vim.keymap.set('n', '<leader>di', dap.toggle_breakpoint)
 vim.keymap.set('n', '<leader>do', function() dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ') end)
 
 dapui.setup {
@@ -51,7 +51,8 @@ dapui.setup {
 }
 
 dap.listeners.after.event_initialized['dapui_config'] = dapui.open
---dap.listeners.before.event_terminated['dapui_config'] = dapui.close
---dap.listeners.before.event_exited['dapui_config'] = dapui.close
+dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+dap.listeners.before.event_exited['dapui_config'] = dapui.close
+
 require('nvim-dap-virtual-text').setup({})
 require("l.dap-test").setup()

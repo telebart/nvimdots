@@ -21,7 +21,9 @@ function M.setup()
       request = 'launch',
       showLog = false,
       program = "${file}",
+      dlvFlags = {"--check-go-version=false"},
       dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
+
     },
     {
       type = 'go',
@@ -30,7 +32,7 @@ function M.setup()
       request = 'launch',
       mode = 'test',
       showLog = false,
-      program = "${file}",
+      program = "./${relativeFileDirname}",
       dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
     },
   }
@@ -39,6 +41,9 @@ end
 
 function M.set_testtags(testtags)
   M.testtags = testtags
+  for _, v in pairs(dap.configurations.go) do
+    if v.name == "Debug Test" then v.buildFlags = "-tags " .. M.testtags end
+  end
 end
 
 function M.set_buildtags(buildtags)
@@ -47,6 +52,10 @@ function M.set_buildtags(buildtags)
   if client[1] == nil then print("no gopls client attached to buffer") return end
   client[1].config.settings.gopls.buildFlags = {"-tags", M.buildtags}
   client[1].notify("workspace/didChangeConfiguration")
+  client[1].notify("workspace/applyEdit")
+  for _, v in pairs(dap.configurations.go) do
+    if v.name == "Debug" then v.buildFlags = "-tags " .. M.buildtags end
+  end
 end
 
 local tests_query = [[
@@ -79,6 +88,7 @@ local function debug_test(testname, testpath)
     mode = "test",
     program = testpath,
     args = { "-test.run", testname },
+    dlvFlags = {"--check-go-version=false"},
     dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
   })
 end

@@ -8,5 +8,8 @@ null_ls.setup({
     --null_ls.builtins.diagnostics.revive,
     --null_ls.builtins.code_actions.gitsigns,null
     null_ls.builtins.formatting.prettier,
+
+    --null_ls.builtins.diagnostics.tfsec,
+    null_ls.builtins.formatting.terraform_fmt,
   }
 })
