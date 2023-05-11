@@ -28,6 +28,8 @@ set laststatus=2
 
 lua require("l.plugins")
 
+nnoremap <space><space> <cmd>make<CR>
+
 nnoremap <silent> Q <nop>
 
 vnoremap <silent> . :normal .<CR>
