@@ -90,7 +90,7 @@ nnoremap <C-q> <cmd>call ToggleQFList()<CR>
 nnoremap <leader>qq <cmd>call ToggleLocList()<CR>
 
 " Git
-nnoremap <leader>b <cmd>Gitsigns toggle_current_line_blame<CR>
+nnoremap B <cmd>Gitsigns blame_line<CR>
 
 " Go
 nnoremap <leader>ie <cmd>GoIfErr<CR>
