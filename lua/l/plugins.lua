@@ -87,6 +87,8 @@ require("lazy").setup({
   },
 
   "folke/neodev.nvim",
+
+  'stevearc/oil.nvim',
 })
 
 require("neodev").setup()

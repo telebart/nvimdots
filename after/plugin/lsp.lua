@@ -76,6 +76,8 @@ require'lspconfig'.zls.setup{
   capabilities = capabilities,
 }
 
+require'lspconfig'.ols.setup({})
+
 require'lspconfig'.lua_ls.setup {
   on_attach = on_attach,
   capabilities = capabilities,

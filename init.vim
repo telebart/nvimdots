@@ -64,7 +64,7 @@ nnoremap yip m'yip``
 nnoremap yaw m'yaw``
 nnoremap yiw m'yiw``
 
-nnoremap <leader>pv <cmd>Ex<CR>
+" nnoremap <leader>pv <cmd>Ex<CR>
 
 " LSP
 nnoremap <leader>lr <cmd>LspRestart<CR>
