@@ -64,6 +64,8 @@ nnoremap yip m'yip``
 nnoremap yaw m'yaw``
 nnoremap yiw m'yiw``
 
+nnoremap yfp <cmd>let @+=expand("%:p")<CR>
+
 " nnoremap <leader>pv <cmd>Ex<CR>
 
 " LSP

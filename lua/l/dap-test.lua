@@ -261,6 +261,8 @@ function M.test(scope)
   vim.fn.termopen(cmd)
   term = vim.api.nvim_get_current_buf()
 
+  vim.cmd("wincmd p")
+
   return true
 end
 

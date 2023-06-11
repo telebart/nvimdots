@@ -90,7 +90,7 @@ require("lazy").setup({
   "folke/neodev.nvim",
 
   'stevearc/oil.nvim',
-
+  "sindrets/diffview.nvim"
 })
 
 require("neodev").setup()
