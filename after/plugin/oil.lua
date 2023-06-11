@@ -118,4 +118,4 @@ require("oil").setup({
   },
 })
 
-vim.keymap.set("n", "pv", require("oil").open, { desc = "Open parent directory" })
+vim.keymap.set("n", "<leader>pv", require("oil").open, { desc = "Open parent directory" })

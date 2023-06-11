@@ -64,6 +64,7 @@ require("lazy").setup({
     "folke/tokyonight.nvim",
     priority = 1000
   },
+  { 'rose-pine/neovim', name = 'rose-pine', priority = 1000 },
 
   {
     "iamcco/markdown-preview.nvim",
@@ -89,6 +90,7 @@ require("lazy").setup({
   "folke/neodev.nvim",
 
   'stevearc/oil.nvim',
+
 })
 
 require("neodev").setup()
