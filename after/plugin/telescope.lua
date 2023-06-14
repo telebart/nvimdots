@@ -1,6 +1,9 @@
 require'telescope'.load_extension'repo'
 
 local actions = require("telescope.actions")
+local action_state = require('telescope.actions.state')
+
+
 require'telescope'.setup({
   defaults = {
     layout_strategy='vertical',
@@ -12,6 +15,25 @@ require'telescope'.setup({
         ,["<C-h>"] = "which_key"
         ,["<C-space>"] = actions.toggle_selection + actions.move_selection_previous
         ,["<C-w>"] = actions.delete_buffer
+      }
+    }
+  },
+  pickers = {
+    git_commits = {
+      mappings = {
+        i = {
+          ["<C-e>"] = function()
+            -- Open in diffview
+            local selected_entry = action_state.get_selected_entry()
+            local value = selected_entry.value
+            -- close Telescope window properly prior to switching windows
+            vim.api.nvim_win_close(0, true)
+            vim.cmd("stopinsert")
+            vim.schedule(function()
+              vim.cmd(("DiffviewOpen %s^!"):format(value))
+            end)
+          end,
+        }
       }
     }
   }

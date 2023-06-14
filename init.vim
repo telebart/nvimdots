@@ -79,7 +79,8 @@ nnoremap <Leader>pf <cmd>lua require'telescope.builtin'.find_files()<CR>
 nnoremap <leader>pw <cmd>lua require'telescope.builtin'.grep_string()<CR>
 nnoremap <leader>pb <cmd>lua require'telescope.builtin'.buffers()<CR>
 nnoremap <leader>fh <cmd>lua require'telescope.builtin'.help_tags()<CR>
-nnoremap <leader>fp <cmd>lua require'telescope.builtin'.git_bcommits()<CR>
+nnoremap <leader>gb <cmd>lua require'telescope.builtin'.git_bcommits()<CR>
+nnoremap <leader>gc <cmd>lua require'telescope.builtin'.git_commits()<CR>
 nnoremap <leader>gs <cmd>lua require'telescope.builtin'.git_status()<CR>
 nnoremap <leader>gh <cmd>lua require'telescope.builtin'.git_branches()<CR>
 

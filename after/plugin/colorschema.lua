@@ -85,7 +85,7 @@ require('rose-pine').setup({
 		GitSignsAdd = { fg = 'teal', bg = 'none'},
 		GitSignsChange = { fg = 'gold', bg = 'none'},
 		GitSignsDelete = { fg = 'love', bg = 'none'},
-		StatusLine = { fg = 'love', bg = 'none'},
+		StatusLine = { fg = 'teal', bg = 'none'},
 	}
 })
 

@@ -73,7 +73,10 @@ require("lazy").setup({
   },
 
   "rebelot/heirline.nvim",
-  "j-hui/fidget.nvim",
+  {
+    "j-hui/fidget.nvim",
+    tag = "legacy"
+  },
 
   -- "klen/nvim-test",
 
