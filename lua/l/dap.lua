@@ -18,13 +18,14 @@ dapui.setup {
   icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
   controls = {
     icons = {
-      pause = '⏸',
-      play = '▶',
-      step_into = '⏎',
-      step_over = '⏭',
-      step_out = '⏮',
-      step_back = 'b',
-      run_last = '▶▶',
+      disconnect = "",
+      pause = "",
+      play = "",
+      run_last = "",
+      step_back = "",
+      step_into = "",
+      step_out = "",
+      step_over = "",
       terminate = '⏹',
     },
   },
@@ -36,21 +37,21 @@ dapui.setup {
         { id = "stacks", size = 0.25 },
         { id = "watches", size = 0.25 },
       },
-      size = 0.33,
+      size = 0.2,
       position = "right",
     },
     {
       elements = {
-        { id = "repl", size = 0.45 },
-        { id = "scopes", size = 0.55 },
+        { id = "repl", size = 0.5 },
+        { id = "scopes", size = 0.5 },
       },
-      size = 0.27,
+      size = 0.30,
       position = "bottom",
     },
   },
 }
 
-dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open({reset = true}) end
 dap.listeners.before.event_terminated['dapui_config'] = dapui.close
 dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
