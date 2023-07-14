@@ -23,6 +23,7 @@ set autowrite
 set autoread
 set nofixendofline
 set cpoptions+=>
+set termguicolors
 
 set spell
 
@@ -121,3 +122,5 @@ fun! ToggleLocList()
 endfun
 
 lua require("l.globals")
+
+colorscheme rose-pine
