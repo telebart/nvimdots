@@ -58,7 +58,6 @@ require("lazy").setup({
   "cljoly/telescope-repo.nvim",
 
   "norcalli/nvim-colorizer.lua",
-  "folke/lsp-colors.nvim",
 
   {
     "folke/tokyonight.nvim",
@@ -90,10 +89,10 @@ require("lazy").setup({
     config = function() require('Comment').setup() end
   },
 
-  "folke/neodev.nvim",
+  -- "folke/neodev.nvim",
 
   'stevearc/oil.nvim',
   "sindrets/diffview.nvim"
 })
 
-require("neodev").setup()
+-- require("neodev").setup()
