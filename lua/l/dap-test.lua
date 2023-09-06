@@ -9,15 +9,21 @@ local M = {
 
 function M.setup()
   dap.adapters.go = {
-    type = 'executable',
-    command = 'node',
-    args = {os.getenv('HOME') .. '/repoja/vscode-go/dist/debugAdapter.js'},
+    -- type = 'executable',
+    -- command = 'node',
+    -- args = {os.getenv('HOME') .. '/repoja/vscode-go/dist/debugAdapter.js'},
+    type = 'server',
+    port = '${port}',
+    executable = {
+      command = 'dlv',
+      args = {'dap', '-l', '127.0.0.1:${port}'},
+    }
   }
   dap.configurations.go = {
     {
       type = 'go',
       name = 'Debug',
-      buildFlags = "-tags " .. M.buildtags,
+      buildFlags = "-tags=" .. M.buildtags,
       request = 'launch',
       showLog = false,
       program = "${file}",
@@ -28,7 +34,7 @@ function M.setup()
     {
       type = 'go',
       name = 'Debug Test',
-      buildFlags = "-tags " .. M.testtags,
+      buildFlags = "-tags=" .. M.testtags,
       request = 'launch',
       mode = 'test',
       showLog = false,
@@ -42,7 +48,7 @@ end
 function M.set_testtags(testtags)
   M.testtags = testtags
   for _, v in pairs(dap.configurations.go) do
-    if v.name == "Debug Test" then v.buildFlags = "-tags " .. M.testtags end
+    if v.name == "Debug Test" then v.buildFlags = "-tags=" .. M.testtags end
   end
 end
 
@@ -54,7 +60,7 @@ function M.set_buildtags(buildtags)
   client[1].notify("workspace/didChangeConfiguration")
   client[1].notify("workspace/applyEdit")
   for _, v in pairs(dap.configurations.go) do
-    if v.name == "Debug" then v.buildFlags = "-tags " .. M.buildtags end
+    if v.name == "Debug" then v.buildFlags = "-tags=" .. M.buildtags end
   end
 end
 
@@ -83,7 +89,7 @@ local function debug_test(testname, testpath)
   dap.run({
     type = "go",
     name = testname,
-    buildFlags = "-tags " .. M.testtags,
+    buildFlags = "-tags=" .. M.testtags,
     request = "launch",
     mode = "test",
     program = testpath,

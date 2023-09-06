@@ -4,8 +4,8 @@ require("oil").setup({
   columns = {
     --"icon",
     --"permissions",
-    --"size",
-    --"mtime",
+    "size",
+    "mtime",
   },
   -- Buffer-local options to use for oil buffers
   buf_options = {
@@ -45,7 +45,7 @@ require("oil").setup({
     ["<C-s>"] = "actions.select_vsplit",
     ["<C-h>"] = "actions.select_split",
     ["<C-t>"] = "actions.select_tab",
-    ["<C-e>"] = "actions.preview",
+    -- ["<C-e>"] = "actions.preview",
     ["<C-c>"] = "actions.close",
     ["<C-l>"] = "actions.refresh",
     ["-"] = "actions.parent",
@@ -119,3 +119,6 @@ require("oil").setup({
 })
 
 vim.keymap.set("n", "<leader>pv", require("oil").open, { desc = "Open parent directory" })
+-- oil disables netwr functions and that breaks gx
+--vim.keymap.set("n", "gx", function() vim.api.nvim_command("execute 'silent! !xdg-open ' . shellescape(expand('<cWORD>'), 1)") end)
+vim.keymap.set("n", "gx", function() vim.api.nvim_command("execute 'silent! !open ' . shellescape(expand('<cWORD>'), 1)") end)

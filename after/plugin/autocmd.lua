@@ -22,10 +22,9 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     end ,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("l_spell", { clear = true }),
-  pattern = { "gitcommit", "markdown" },
+vim.api.nvim_create_autocmd("TermOpen", {
+  group = vim.api.nvim_create_augroup("l_term_spell", { clear = true }),
   callback = function()
-    vim.opt_local.spell = true
+    vim.opt_local.spell = false
   end,
 })

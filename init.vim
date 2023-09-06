@@ -1,4 +1,4 @@
-set nohls
+set hls
 set incsearch
 set nowrap
 set rnu nu
@@ -23,6 +23,8 @@ set autowrite
 set autoread
 set nofixendofline
 set cpoptions+=>
+
+set spell
 
 set laststatus=2
 

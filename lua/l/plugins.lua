@@ -59,16 +59,12 @@ require("lazy").setup({
 
   "norcalli/nvim-colorizer.lua",
 
-  {
-    "folke/tokyonight.nvim",
-    priority = 1000
-  },
   { 'rose-pine/neovim', name = 'rose-pine', priority = 1000 },
 
   {
     "iamcco/markdown-preview.nvim",
     config = function() vim.fn["mkdp#util#install"]() end,
-    event = "BufAdd *.md"
+    ft = {"markdown"}
   },
 
   "rebelot/heirline.nvim",
@@ -81,7 +77,6 @@ require("lazy").setup({
 
   "theprimeagen/harpoon",
 
-  "asiryk/auto-hlsearch.nvim",
   "olexsmir/gopher.nvim",
 
   {
@@ -89,10 +84,10 @@ require("lazy").setup({
     config = function() require('Comment').setup() end
   },
 
-  -- "folke/neodev.nvim",
+  "folke/neodev.nvim",
 
   'stevearc/oil.nvim',
-  "sindrets/diffview.nvim"
+  "sindrets/diffview.nvim",
 })
 
--- require("neodev").setup()
+require("neodev").setup()
