@@ -29,7 +29,7 @@ set spell
 
 set laststatus=2
 
-lua require("l.plugins")
+lua require("l.lazy")
 
 nnoremap <space><space> <cmd>make<CR>
 
