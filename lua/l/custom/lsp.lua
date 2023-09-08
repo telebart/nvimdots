@@ -80,6 +80,10 @@ return {
         settings = {
           gopls = {
             buildFlags =  {"-tags", require("l.dap-test").buildtags},
+            analyses = {
+              unusedparams = true,
+              nilness = true,
+            },
           }
         },
       }
