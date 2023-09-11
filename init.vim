@@ -74,19 +74,6 @@ nnoremap yfp <cmd>let @+=expand("%:p")<CR>
 " LSP
 nnoremap <leader>lr <cmd>LspRestart<CR>
 
-" Telescope
-nnoremap <leader>ps <cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep For > ")})<CR>
-nnoremap <leader>pa <cmd>lua require('telescope.builtin').live_grep()<CR>
-nnoremap <C-p> <cmd>lua require('telescope.builtin').git_files({show_untracked=true})<CR>
-nnoremap <Leader>pf <cmd>lua require'telescope.builtin'.find_files()<CR>
-nnoremap <leader>pw <cmd>lua require'telescope.builtin'.grep_string()<CR>
-nnoremap <leader>pb <cmd>lua require'telescope.builtin'.buffers()<CR>
-nnoremap <leader>fh <cmd>lua require'telescope.builtin'.help_tags()<CR>
-nnoremap <leader>gb <cmd>lua require'telescope.builtin'.git_bcommits()<CR>
-nnoremap <leader>gc <cmd>lua require'telescope.builtin'.git_commits()<CR>
-nnoremap <leader>gs <cmd>lua require'telescope.builtin'.git_status()<CR>
-nnoremap <leader>gh <cmd>lua require'telescope.builtin'.git_branches()<CR>
-
 " QF
 nnoremap <C-k> <cmd>cprev<CR>zz
 nnoremap <C-j> <cmd>cnext<CR>zz
