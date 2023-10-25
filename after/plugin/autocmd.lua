@@ -23,8 +23,18 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 })
 
 vim.api.nvim_create_autocmd("TermOpen", {
-  group = vim.api.nvim_create_augroup("l_term_spell", { clear = true }),
+  group = vim.api.nvim_create_augroup("l_term_open", { clear = true }),
   callback = function()
     vim.opt_local.spell = false
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.signcolumn = "no"
   end,
 })
+
+-- vim.api.nvim_create_autocmd("TermClose", {
+--   group = vim.api.nvim_create_augroup("l_term_close", { clear = true }),
+--   callback = function()
+--     vim.cmd("bd")
+--   end,
+-- })

@@ -3,9 +3,6 @@ return {
   -- snippets
   {
     "L3MON4D3/LuaSnip",
-    build = (not jit.os:find("Windows"))
-        and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
-      or nil,
     dependencies = {
       "rafamadriz/friendly-snippets",
       config = function()
@@ -49,8 +46,6 @@ return {
     event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
       "saadparwaiz1/cmp_luasnip",
     },
     opts = function()
@@ -79,27 +74,16 @@ return {
           end),
         }),
         sources = cmp.config.sources({
-          {name = 'path'},
           {name = 'nvim_lsp'},
-          {name = 'buffer', keyword_length = 3},
           {name = 'luasnip', keyword_length = 2},
         }),
         sorting = defaults.sorting,
       }
     end,
   },
-
-  { "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
   {
     "echasnovski/mini.comment",
-    event = "VeryLazy",
-    opts = {
-      options = {
-        custom_commentstring = function()
-          return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
-        end,
-      },
-    },
+    opts = {},
   },
 }
 

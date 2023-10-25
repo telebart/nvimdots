@@ -21,7 +21,7 @@ return {
         panel = 'surface',
         panel_nc = 'base',
         border = 'highlight_med',
-        comment = 'muted',
+        comment = '#aaaaaa',
         link = 'iris',
         punctuation = 'subtle',
 
@@ -51,6 +51,7 @@ return {
         GitSignsChange = { fg = 'gold', bg = 'none'},
         GitSignsDelete = { fg = 'love', bg = 'none'},
         StatusLine = { fg = 'teal', bg = 'none'},
+        NvimDapVirtualText = { fg = '#d484ff', bg = 'none'},
       }
     },
   },

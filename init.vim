@@ -14,7 +14,7 @@ set undofile
 set scrolloff=8 sidescrolloff=12
 set cmdheight=1
 set updatetime=50
-set shortmess+=c
+set shortmess+=WcC
 set signcolumn=yes
 set mouse=a
 set completeopt=menu,menuone,noselect
@@ -24,8 +24,10 @@ set autoread
 set nofixendofline
 set cpoptions+=>
 set termguicolors
+set splitkeep="screen"
 
 set spell
+set spelloptions=camel,noplainbuffer
 
 set laststatus=2
 
@@ -88,9 +90,9 @@ nnoremap B <cmd>Gitsigns toggle_current_line_blame<CR>
 " Go
 nnoremap <leader>ie <cmd>GoIfErr<CR>
 
-" Rooter
-let g:rooter_manual_only = 1
-nnoremap <leader>jf <cmd>Rooter<CR>
+nnoremap <leader>jf <cmd>lua Root()<CR>
+
+nnoremap <leader>ii <cmd>set ignorecase! smartcase!<CR>
 
 fun! ToggleQFList()
     if empty(filter(getwininfo(), 'v:val.quickfix'))
@@ -109,5 +111,6 @@ fun! ToggleLocList()
 endfun
 
 lua require("l.globals")
+lua require("l.treesitter")
 
 colorscheme rose-pine

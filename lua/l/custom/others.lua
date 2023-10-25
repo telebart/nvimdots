@@ -1,5 +1,5 @@
 return {{
-    {
+  {
     "jose-elias-alvarez/null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
     opts = function()
@@ -7,7 +7,9 @@ return {{
       return {
         root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
         sources = {
+          nls.builtins.formatting.sql_formatter,
           nls.builtins.formatting.gofumpt,
+          nls.builtins.formatting.shfmt,
           nls.builtins.formatting.terraform_fmt,
           nls.builtins.formatting.prettier,
           nls.builtins.formatting.stylua,
@@ -16,12 +18,11 @@ return {{
     end,
   },
 
-  "nvim-lua/popup.nvim",
+  -- "nvim-lua/popup.nvim",
+  -- { "folke/neodev.nvim", opts = {} },
   "nvim-lua/plenary.nvim",
 
   "mbbill/undotree",
-
-  "airblade/vim-rooter",
 
   { 'rose-pine/neovim', name = 'rose-pine', priority = 1000 },
 
@@ -44,7 +45,7 @@ return {{
     }
   },
 
-  { "norcalli/nvim-colorizer.lua", opts = {} },
+  { "brenoprata10/nvim-highlight-colors", opts = {} },
 
   {
     "j-hui/fidget.nvim",
@@ -65,4 +66,12 @@ return {{
     dependencies = { "nvim-lua/plenary.nvim" },
     config = true, -- default settings
   },
+  {
+  "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      "nvim-treesitter/nvim-treesitter-context"
+    }
+  }
 }}

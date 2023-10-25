@@ -50,6 +50,8 @@ return {
             -- use `force` because we need to override the child's hl foreground
             return { fg = "cyan", bold = true, force=true }
           end
+          -- unchanged filepath name
+          return { fg = "#229922", bold = true, force=true }
         end,
       }
 
