@@ -4,8 +4,6 @@ local root_names = { '.git', 'Makefile' }
 
 local function find_root()
   local path = vim.api.nvim_buf_get_name(0)
-  local oil = "oil://"
-  if string.sub(path, 1, #oil) == oil then path = string.sub(path, #oil+1,#path) end
   if path == '' then return end
   path = vim.fs.dirname(path)
 

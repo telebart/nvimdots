@@ -25,11 +25,19 @@ set nofixendofline
 set cpoptions+=>
 set termguicolors
 set splitkeep="screen"
-
 set spell
 set spelloptions=camel,noplainbuffer
-
 set laststatus=2
+set path+=**
+set wildignore+=**/node_modules/**
+set wildignore+=**/vendor/**
+
+" Netrw
+let g:netrw_banner=0
+let g:netrw_altv=1
+let g:netrw_liststyle = 3
+let g:netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
+let g:netrw_use_errorwindow=0
 
 lua require("l.lazy")
 
@@ -71,7 +79,7 @@ nnoremap yiw m'yiw``
 
 nnoremap yfp <cmd>let @+=expand("%:p")<CR>
 
-" nnoremap <leader>pv <cmd>Ex<CR>
+nnoremap <leader>pv <cmd>Ex<CR>
 
 " LSP
 nnoremap <leader>lr <cmd>LspRestart<CR>
