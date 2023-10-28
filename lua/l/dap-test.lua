@@ -3,15 +3,11 @@ local dap = require("dap")
 local M = {
   last_testname = "",
   last_testpath = "",
-  testtags = "test,account_test",
   buildtags = "test,account_test",
 }
 
 function M.setup()
   dap.adapters.go = {
-    -- type = 'executable',
-    -- command = 'node',
-    -- args = {os.getenv('HOME') .. '/repoja/vscode-go/dist/debugAdapter.js'},
     type = 'server',
     port = '${port}',
     executable = {
@@ -34,7 +30,7 @@ function M.setup()
     {
       type = 'go',
       name = 'Debug Test',
-      buildFlags = "-tags=" .. M.testtags,
+      buildFlags = "-tags=" .. M.buildtags,
       request = 'launch',
       mode = 'test',
       showLog = false,
@@ -45,15 +41,11 @@ function M.setup()
 end
 
 
-function M.set_testtags(testtags)
-  M.testtags = testtags
-  for _, v in pairs(dap.configurations.go) do
-    if v.name == "Debug Test" then v.buildFlags = "-tags=" .. M.testtags end
-  end
-end
-
 function M.set_buildtags(buildtags)
   M.buildtags = buildtags
+  for _, v in pairs(dap.configurations.go) do
+    if v.name == "Debug Test" then v.buildFlags = "-tags=" .. buildtags end
+  end
   local client = vim.lsp.get_active_clients({name = "gopls", bufnr = vim.api.nvim_get_current_buf()})
   if client[1] == nil then print("no gopls client attached to buffer") return end
   client[1].config.settings.gopls.buildFlags = {"-tags", M.buildtags}
@@ -89,7 +81,7 @@ local function debug_test(testname, testpath)
   dap.run({
     type = "go",
     name = testname,
-    buildFlags = "-tags=" .. M.testtags,
+    buildFlags = "-tags=" .. M.buildtags,
     request = "launch",
     mode = "test",
     program = testpath,
@@ -262,7 +254,7 @@ function M.test(scope)
 
   vim.cmd("botright 24split new")
 
-  local cmd = {"go", "test", "-v", "-tags", M.testtags, testpath, "-run", testname}
+  local cmd = {"go", "test", "-v", "-tags", M.buildtags, testpath, "-run", testname}
 
   vim.fn.termopen(cmd)
   term = vim.api.nvim_get_current_buf()
@@ -273,7 +265,6 @@ function M.test(scope)
 end
 
 vim.keymap.set("n", "<leader>ni", function() M.set_buildtags(vim.fn.input({default = M.buildtags})) end)
-vim.keymap.set("n", "<leader>no", function() M.set_testtags(vim.fn.input({default = M.testtags})) end)
 vim.keymap.set('n', '<leader>dd', M.debug_test)
 vim.keymap.set('n', '<leader>df', M.debug_last_test)
 vim.keymap.set('n', '<leader>tj', function() M.test("nearest") end)

@@ -32,19 +32,6 @@ return {{
     ft = {"markdown"}
   },
 
-  {
-    "olexsmir/gopher.nvim",
-    opts = {
-      commands = {
-        go = "go",
-        gomodifytags = "gomodifytags",
-        gotests = "gotests",
-        impl = "impl",
-        iferr = "iferr",
-      },
-    }
-  },
-
   { "brenoprata10/nvim-highlight-colors", opts = {} },
 
   {

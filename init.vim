@@ -1,3 +1,8 @@
+let g:loaded_ruby_provider = 0
+let g:loaded_node_provider = 0
+let g:loaded_perl_provider = 0
+let g:loaded_python3_provider = 0
+
 set hls
 set incsearch
 set nowrap
@@ -19,8 +24,6 @@ set signcolumn=yes
 set mouse=a
 set completeopt=menu,menuone,noselect
 set list listchars=tab:▸\ ,trail:·
-set autowrite
-set autoread
 set nofixendofline
 set cpoptions+=>
 set termguicolors
@@ -35,7 +38,6 @@ set wildignore+=**/vendor/**
 " Netrw
 let g:netrw_banner=0
 let g:netrw_altv=1
-let g:netrw_liststyle = 3
 let g:netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 let g:netrw_use_errorwindow=0
 
@@ -120,5 +122,6 @@ endfun
 
 lua require("l.globals")
 lua require("l.treesitter")
+lua require("l.filetypes")
 
 colorscheme rose-pine

@@ -68,5 +68,6 @@ return {{
         return "▸" .. string.sub(variable.value, 1, 50)
       end,
     })
+    require("l.dap-test").setup()
   end
 }}
