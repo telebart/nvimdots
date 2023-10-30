@@ -28,6 +28,7 @@ local function run_term(prog)
     local path = vim.api.nvim_buf_get_name(0)
     prog = prog .. " " .. path
   end
+  vim.cmd("tabnew")
   vim.cmd("term " .. prog)
   local buf_num = vim.api.nvim_get_current_buf()
   vim.opt_local.spell = false

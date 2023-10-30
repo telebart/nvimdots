@@ -1,10 +1,57 @@
 return {{
   "mfussenegger/nvim-dap",
   dependencies = {
-    "rcarriga/nvim-dap-ui",
+    {
+      "rcarriga/nvim-dap-ui",
+      opts = {
+        icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+        controls = {
+          icons = {
+            disconnect = "",
+            pause = "",
+            play = "",
+            run_last = "",
+            step_back = "",
+            step_into = "",
+            step_out = "",
+            step_over = "",
+            terminate = '⏹',
+          },
+        },
+        layouts = {
+          {
+            elements = {
+              { id = "console", size = 0.33 },
+              { id = "breakpoints", size = 0.17 },
+              { id = "stacks", size = 0.25 },
+              { id = "watches", size = 0.25 },
+            },
+            size = 0.2,
+            position = "right",
+          },
+          {
+            elements = {
+              { id = "repl", size = 0.5 },
+              { id = "scopes", size = 0.5 },
+            },
+            size = 0.30,
+            position = "bottom",
+          },
+        },
+      }
+    },
+    {
     "theHamsta/nvim-dap-virtual-text",
+      opts = {
+      virt_text_pos = "eol",
+      display_callback = function(variable, buf, stackframe, node, options)
+        return "▸" .. string.sub(variable.value, 1, 50)
+      end,
+      }
+    }
   },
   config = function ()
+    vim.defer_fn(function ()
     local dap = require('dap')
     local dapui = require('dapui')
 
@@ -21,53 +68,11 @@ return {{
     vim.keymap.set('n', '<leader>di', dap.toggle_breakpoint)
     vim.keymap.set('n', '<leader>do', function() dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ') end)
 
-    dapui.setup {
-      icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-      controls = {
-        icons = {
-          disconnect = "",
-          pause = "",
-          play = "",
-          run_last = "",
-          step_back = "",
-          step_into = "",
-          step_out = "",
-          step_over = "",
-          terminate = '⏹',
-        },
-      },
-      layouts = {
-        {
-          elements = {
-            { id = "console", size = 0.33 },
-            { id = "breakpoints", size = 0.17 },
-            { id = "stacks", size = 0.25 },
-            { id = "watches", size = 0.25 },
-          },
-          size = 0.2,
-          position = "right",
-        },
-        {
-          elements = {
-            { id = "repl", size = 0.5 },
-            { id = "scopes", size = 0.5 },
-          },
-          size = 0.30,
-          position = "bottom",
-        },
-      },
-    }
-
     dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open({reset = true}) end
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
-    require('nvim-dap-virtual-text').setup({
-      virt_text_pos = "eol",
-      display_callback = function(variable, buf, stackframe, node, options)
-        return "▸" .. string.sub(variable.value, 1, 50)
-      end,
-    })
-    require("l.dap-test").setup()
+      require("l.dap-test").setup()
+    end, 0)
   end
 }}

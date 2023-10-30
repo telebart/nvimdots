@@ -2,7 +2,8 @@ return {
   {
     "sindrets/diffview.nvim",
     cmd = {
-      "DiffviewOpen"
+      "DiffviewOpen",
+      "DiffviewFileHistory",
     },
     opts = {
       use_icons = false

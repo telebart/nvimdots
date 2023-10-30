@@ -6,9 +6,6 @@ return {
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      require("mason").setup()
-      require("mason-lspconfig").setup()
-
       local capabilities =
         require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -44,93 +41,97 @@ return {
       vim.lsp.handlers["textDocument/signatureHelp"] =
         vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
+      vim.defer_fn(function ()
+        require("mason").setup()
+        require("mason-lspconfig").setup()
 
-      function Init_mason_bins()
-        local bins = {
-          "bash-language-server",
-          "css-lsp",
-          "delve",
-          "dockerfile-language-server",
-          "gofumpt",
-          "golangci-lint",
-          "gomodifytags",
-          "gopls",
-          "gotests",
-          "gotestsum",
-          "graphql-language-service-cli",
-          "html-lsp",
-          "json-lsp",
-          "lua-language-server",
-          "ols",
-          "prettier",
-          "pyright",
-          "shellcheck",
-          "shfmt",
-          "sql-formatter",
-          "sqlls",
-          "stylua",
-          "terraform-ls",
-          "tflint",
-          "vim-language-server",
-          "vtsls",
-        }
-        vim.api.nvim_cmd({
-          cmd = "MasonInstall",
-          args = bins
-        }, {})
-      end
+        function Init_mason_bins()
+          local bins = {
+            "bash-language-server",
+            "css-lsp",
+            "delve",
+            "dockerfile-language-server",
+            "gofumpt",
+            "golangci-lint",
+            "gomodifytags",
+            "gopls",
+            "gotests",
+            "gotestsum",
+            "graphql-language-service-cli",
+            "html-lsp",
+            "json-lsp",
+            "lua-language-server",
+            "ols",
+            "prettier",
+            "pyright",
+            "shellcheck",
+            "shfmt",
+            "sql-formatter",
+            "sqlls",
+            "stylua",
+            "terraform-ls",
+            "tflint",
+            "vim-language-server",
+            "vtsls",
+          }
+          vim.api.nvim_cmd({
+            cmd = "MasonInstall",
+            args = bins
+          }, {})
+        end
 
-      local lspconfig = require("lspconfig")
-      require("mason-lspconfig").setup_handlers({
-        function (server_name)
-          lspconfig[server_name].setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-          })
-        end,
-        ["gopls"] = function ()
-          lspconfig.gopls.setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-            settings = {
-              gopls = {
-                buildFlags = { "-tags", "test,account_test" },
-                analyses = {
-                  unusedparams = true,
-                  nilness = true,
+        local lspconfig = require("lspconfig")
+        require("mason-lspconfig").setup_handlers({
+          function (server_name)
+            lspconfig[server_name].setup({
+              on_attach = on_attach,
+              capabilities = capabilities,
+            })
+          end,
+          ["gopls"] = function ()
+            lspconfig.gopls.setup({
+              on_attach = on_attach,
+              capabilities = capabilities,
+              settings = {
+                gopls = {
+                  buildFlags = { "-tags", "test,account_test" },
+                  analyses = {
+                    unusedparams = true,
+                    nilness = true,
+                  },
                 },
               },
-            },
-          })
-        end,
-        ["lua_ls"] = function ()
-          lspconfig.lua_ls.setup({
+            })
+          end,
+          ["lua_ls"] = function ()
+            lspconfig.lua_ls.setup({
+              on_attach = on_attach,
+              capabilities = capabilities,
+              settings = {
+                Lua = {
+                  workspace = { checkThirdParty = false, },
+                  telemetry = { enable = false },
+                  library = {vim.env.VIMRUNTIME},
+                  diagnostics = { globals = { "vim" } }
+                }
+              }
+            })
+          end,
+        })
+
+        -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+        local servers = {
+          zls = {}
+        }
+
+        for s, o in pairs(servers) do
+          lspconfig[s].setup({
             on_attach = on_attach,
             capabilities = capabilities,
-            settings = {
-              Lua = {
-                workspace = { checkThirdParty = false, },
-                telemetry = { enable = false },
-                library = {vim.env.VIMRUNTIME},
-                diagnostics = { globals = { "vim" } }
-              }
-            }
+            settings = o
           })
-        end,
-      })
-
-      -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-      local servers = {
-        zls = {}
-      }
-
-      for s, o in pairs(servers) do
-        lspconfig[s].setup({
-          on_attach = on_attach,
-          capabilities = capabilities,
-          settings = o
-        })
-      end
+        end
+      end,0)
     end,
   },
 }
