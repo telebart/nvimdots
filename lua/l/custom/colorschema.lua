@@ -52,6 +52,9 @@ return {
         GitSignsDelete = { fg = 'love', bg = 'none'},
         StatusLine = { fg = 'teal', bg = 'none'},
         NvimDapVirtualText = { fg = '#d484ff', bg = 'none'},
+        DiffAdd = {bg='pine', blend=10},
+        DiffChange = {bg='gold', blend=20},
+        DiffText = {bg='gold', blend=50},
       }
     },
   },
