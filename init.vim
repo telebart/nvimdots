@@ -104,6 +104,8 @@ nnoremap <leader>jf <cmd>lua Root()<CR>
 
 nnoremap <leader>ii <cmd>set ignorecase! smartcase!<CR>
 
+tnoremap <leader><Esc> <C-\><C-N>
+
 fun! ToggleQFList()
     if empty(filter(getwininfo(), 'v:val.quickfix'))
         copen
@@ -125,3 +127,5 @@ lua require("l.treesitter")
 lua require("l.filetypes")
 
 colorscheme rose-pine
+
+vnoremap <RightMouse> <S-LeftMouse>

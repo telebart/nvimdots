@@ -35,17 +35,14 @@ local function run_term(prog)
   vim.opt_local.number = false
   vim.opt_local.relativenumber = false
   vim.opt_local.signcolumn = "no"
+  vim.opt_local.showtabline = 0
   vim.api.nvim_input("i")
   vim.api.nvim_create_autocmd("TermClose", {
     group = vim.api.nvim_create_augroup("l_term_close", { clear = true }),
+    once = true,
+    buffer = buf_num,
     callback = function()
-      vim.api.nvim_buf_delete(buf_num, {})
-      if vim.env.LFCD then
-        vim.defer_fn(function ()
-          vim.cmd("e " .. vim.env.LFCD)
-          vim.env.LFCD = nil
-        end, 0)
-      end
+      vim.cmd("tabclose")
     end,
   })
 end
