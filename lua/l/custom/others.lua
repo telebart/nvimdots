@@ -7,6 +7,7 @@ return {{
       return {
         root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
         sources = {
+          nls.builtins.diagnostics.fish,
           nls.builtins.formatting.sql_formatter,
           nls.builtins.formatting.gofumpt,
           nls.builtins.formatting.shfmt,

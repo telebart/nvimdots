@@ -40,6 +40,7 @@ let g:netrw_banner=0
 let g:netrw_altv=1
 let g:netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 let g:netrw_use_errorwindow=0
+let g:netrw_list_hide='^\.\+/$'
 
 lua require("l.lazy")
 
@@ -104,7 +105,7 @@ nnoremap <leader>jf <cmd>lua Root()<CR>
 
 nnoremap <leader>ii <cmd>set ignorecase! smartcase!<CR>
 
-tnoremap <leader><Esc> <C-\><C-N>
+tnoremap <C-W>ö <C-\><C-N>
 
 fun! ToggleQFList()
     if empty(filter(getwininfo(), 'v:val.quickfix'))
@@ -129,3 +130,4 @@ lua require("l.filetypes")
 colorscheme rose-pine
 
 vnoremap <RightMouse> <S-LeftMouse>
+nnoremap <leader>pp :put=execute('')<Left><Left>
