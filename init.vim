@@ -82,8 +82,6 @@ nnoremap yiw m'yiw``
 
 nnoremap yfp <cmd>let @+=expand("%:p")<CR>
 
-nnoremap <leader>pv <cmd>Ex<CR>
-
 " LSP
 nnoremap <leader>lr <cmd>LspRestart<CR>
 

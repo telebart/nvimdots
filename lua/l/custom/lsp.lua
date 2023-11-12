@@ -112,7 +112,6 @@ return {
                   workspace = { checkThirdParty = false, },
                   telemetry = { enable = false },
                   library = {vim.env.VIMRUNTIME},
-                  diagnostics = { globals = { "vim" } }
                 }
               }
             })
