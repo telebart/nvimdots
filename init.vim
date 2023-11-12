@@ -88,10 +88,10 @@ nnoremap <leader>lr <cmd>LspRestart<CR>
 " QF
 nnoremap <C-k> <cmd>cprev<CR>zz
 nnoremap <C-j> <cmd>cnext<CR>zz
-nnoremap <leader>k <cmd>lprev<CR>zz
-nnoremap <leader>j <cmd>lnext<CR>zz
 nnoremap <C-q> <cmd>call ToggleQFList()<CR>
-nnoremap <leader>qq <cmd>call ToggleLocList()<CR>
+nnoremap <M-k> <cmd>lprev<CR>zz
+nnoremap <M-j> <cmd>lnext<CR>zz
+nnoremap <M-q> <cmd>call ToggleLocList()<CR>
 
 " Git
 nnoremap B <cmd>Gitsigns toggle_current_line_blame<CR>
@@ -104,6 +104,11 @@ nnoremap <leader>jf <cmd>lua Root()<CR>
 nnoremap <leader>ii <cmd>set ignorecase! smartcase!<CR>
 
 tnoremap <C-W>ö <C-\><C-N>
+
+nnoremap <M-H> <C-W>h
+nnoremap <M-J> <C-W>j
+nnoremap <M-K> <C-W>k
+nnoremap <M-L> <C-W>l
 
 fun! ToggleQFList()
     if empty(filter(getwininfo(), 'v:val.quickfix'))
