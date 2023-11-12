@@ -123,7 +123,6 @@ endfun
 
 lua require("l.globals")
 lua require("l.treesitter")
-lua require("l.filetypes")
 
 colorscheme rose-pine
 
