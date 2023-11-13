@@ -12,14 +12,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.api.nvim_create_autocmd('BufWritePre', {
   group = vim.api.nvim_create_augroup("l_auto_format", { clear = true }),
   pattern = {"*.go", "*.js", "*.ts", "*.jsx", "*.tsx", "*.json", "*.graphql", "*.tf"},
-  callback = function()
-    vim.lsp.buf.format({
-        filter = function(client)
-            return client.name == "null-ls"
-        end,
-    })
-    vim.api.nvim_command('write')
-    end ,
+  callback = function(args)
+    require("conform").format({ bufnr = args.buf })
+  end,
 })
 
 local function run_term(prog)

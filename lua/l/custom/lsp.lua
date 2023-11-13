@@ -16,14 +16,6 @@ return {
       vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
       local on_attach = function(_, bufnr)
         local bufopts = { noremap = true, silent = true, buffer = bufnr }
-        vim.keymap.set("n", "<leader>ff", function()
-          vim.lsp.buf.format({
-            filter = function(client)
-              -- apply whatever logic you want (in this example, we'll only use null-ls)
-              return client.name == "null-ls"
-            end,
-          })
-        end, bufopts)
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)

@@ -86,6 +86,7 @@ return {
     config = function ()
       require('lint').linters_by_ft = {
           go = {"golangcilint"},
+          fish = {"fish"},
       }
       vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
         callback = function()
@@ -93,6 +94,29 @@ return {
         end,
       })
     end
+  },
+  {
+    'stevearc/conform.nvim',
+    config = function ()
+      vim.keymap.set('n', '<leader>ff', function()
+        require("conform").format({ lsp_fallback = true })
+      end)
+      require("conform").setup({
+        formatters_by_ft = {
+          sql = {"sql_formatter"},
+          go = {"gofumpt"},
+          sh = {"shfmt"},
+          terraform = {"terraform_fmt"},
+          lua = { "stylua" },
+          javascript = { "prettier" },
+          typescript = { "prettier" },
+          javascriptreact = { "prettier" },
+          typescriptreact = { "prettier" },
+          graphql = { "prettier" },
+          json = { "prettier" },
+        },
+      })
+    end,
   },
 }
 
