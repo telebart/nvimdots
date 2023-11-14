@@ -10,7 +10,8 @@ return {
           go_in = '',
           go_out_plus = 'h',
           go_out = '',
-        }
+        },
+        options = {use_as_default_explorer = false}
       })
       require('mini.comment').setup()
       require('mini.extra').setup()

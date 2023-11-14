@@ -100,6 +100,7 @@ return {
     config = function ()
       vim.keymap.set('n', '<leader>ff', function()
         require("conform").format({ lsp_fallback = true })
+        vim.cmd('write')
       end)
       require("conform").setup({
         formatters_by_ft = {
@@ -113,7 +114,8 @@ return {
           javascriptreact = { "prettier" },
           typescriptreact = { "prettier" },
           graphql = { "prettier" },
-          json = { "prettier" },
+          json = { "biome" },
+          yaml = { "prettier" },
         },
       })
     end,

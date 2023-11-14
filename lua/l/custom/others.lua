@@ -1,4 +1,5 @@
 return {{
+
   -- "nvim-lua/popup.nvim",
   -- { "folke/neodev.nvim", opts = {} },
   "nvim-lua/plenary.nvim",
@@ -17,22 +18,12 @@ return {{
 
   {
     "j-hui/fidget.nvim",
-    tag = "legacy",
-    opts = {
-      window = {
-        relative = "win",         -- where to anchor, either "win" or "editor"
-        blend = 0,              -- &winblend for the window
-        zindex = nil,             -- the zindex value for the window
-        border = "single",          -- style of border for the fidget window
-      }
-    }
+    opts = { window = {blend = 0} }
   },
 
   {
     "chrishrb/gx.nvim",
-    event = { "BufEnter" },
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = true, -- default settings
+    opts = {}
   },
   {
   "nvim-treesitter/nvim-treesitter",
