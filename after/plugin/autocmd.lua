@@ -37,7 +37,7 @@ local function run_term(prog)
     once = true,
     buffer = buf_num,
     callback = function()
-      vim.cmd("tabclose")
+      vim.cmd("bd")
     end,
   })
 end

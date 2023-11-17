@@ -18,7 +18,7 @@ return {{
 
   {
     "j-hui/fidget.nvim",
-    opts = { window = {blend = 0} }
+    opts = { notification = { window = {winblend = 0} }}
   },
 
   {

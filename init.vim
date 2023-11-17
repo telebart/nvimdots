@@ -133,3 +133,4 @@ colorscheme rose-pine
 
 vnoremap <RightMouse> <S-LeftMouse>
 nnoremap <leader>pp :put=execute('')<Left><Left>
+command! BufOnly execute '%bdelete|edit #|normal `"'
