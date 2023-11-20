@@ -33,7 +33,6 @@ set spelloptions=camel,noplainbuffer
 set laststatus=2
 set path+=**
 set wildignore+=**/node_modules/**
-set wildignore+=**/vendor/**
 
 " Netrw
 let g:netrw_banner=0
