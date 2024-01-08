@@ -126,7 +126,6 @@ fun! ToggleLocList()
 endfun
 
 lua require("l.globals")
-lua require("l.treesitter")
 
 colorscheme rose-pine
 

@@ -25,12 +25,4 @@ return {{
     "chrishrb/gx.nvim",
     opts = {}
   },
-  {
-  "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      "nvim-treesitter/nvim-treesitter-context"
-    }
-  }
 }}

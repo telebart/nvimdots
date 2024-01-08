@@ -80,41 +80,34 @@ return {
               capabilities = capabilities,
             })
           end,
-          ["gopls"] = function ()
-            lspconfig.gopls.setup({
-              on_attach = on_attach,
-              capabilities = capabilities,
-              settings = {
-                gopls = {
-                  buildFlags = { "-tags", "test,account_test" },
-                  analyses = {
-                    unusedparams = true,
-                    nilness = true,
-                  },
-                },
-              },
-            })
-          end,
-          ["lua_ls"] = function ()
-            lspconfig.lua_ls.setup({
-              on_attach = on_attach,
-              capabilities = capabilities,
-              settings = {
-                Lua = {
-                  workspace = { checkThirdParty = false, },
-                  telemetry = { enable = false },
-                  library = {vim.env.VIMRUNTIME},
-                }
-              }
-            })
-          end,
         })
 
         -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
         local servers = {
-          zls = {}
+          zls = {},
+          lua_ls = {
+            settings = {
+              Lua = {
+                workspace = { checkThirdParty = false, },
+                telemetry = { enable = false },
+                library = {vim.env.VIMRUNTIME},
+              }
+            }
+          },
+          gopls = {
+            settings = {
+              gopls = {
+                buildFlags = { "-tags", "test,account_test" },
+                analyses = {
+                  unusedparams = true,
+                  nilness = true,
+                },
+              },
+            },
+          },
         }
 
+        local lspconfig = require("lspconfig")
         for s, o in pairs(servers) do
           lspconfig[s].setup({
             on_attach = on_attach,

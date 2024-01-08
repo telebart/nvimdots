@@ -53,7 +53,7 @@ return {
       local file = config_path .. "/telerepos"
       local extra_repos = lines_from(file)
 
-      local find_repo_cmd = { "fd", ".git$", "-Hp", "-d3", "-td", "--prune", "-x", "echo", "{//}", ";" }
+      local find_repo_cmd = { "fd", ".git$", "-HIp", "-d3", "-td", "--prune", "-x", "echo", "{//}", ";" }
       local home = os.getenv("HOME")
       local repos = { "/.config/nvim", "/repos" }
       for _, v in ipairs(repos) do
