@@ -51,6 +51,7 @@ return {
         DiffAdd = {bg='pine', blend=10},
         DiffChange = {bg='gold', blend=20},
         DiffText = {bg='gold', blend=50},
+        Search = {bg='#aaaaaa'},
       }
     },
   },
