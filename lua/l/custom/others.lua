@@ -1,6 +1,5 @@
 return {{
 
-  -- "nvim-lua/popup.nvim",
   -- { "folke/neodev.nvim", opts = {} },
   "nvim-lua/plenary.nvim",
 
@@ -19,10 +18,5 @@ return {{
   {
     "j-hui/fidget.nvim",
     opts = { notification = { window = {winblend = 0} }}
-  },
-
-  {
-    "chrishrb/gx.nvim",
-    opts = {}
   },
 }}

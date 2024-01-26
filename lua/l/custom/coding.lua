@@ -52,6 +52,10 @@ return {
       local cmp = require("cmp")
       local defaults = require("cmp.config.default")()
       return {
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
         completion = { completeopt = "menu,menuone,noinsert", },
         snippet = {
           expand = function(args)

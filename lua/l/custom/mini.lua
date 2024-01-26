@@ -95,7 +95,7 @@ return {
         end, 0)
       end)
 
-      vim.keymap.set("n", "<leader>op", function()
+      local function git_branches()
         MiniExtra.pickers.git_branches({}, {
           source = {
             cwd = ".",
@@ -109,6 +109,14 @@ return {
             end,
           },
         })
+      end
+
+      vim.keymap.set("n", "<leader>OP", function()
+        vim.cmd("silent !git fetch -p")
+        git_branches()
+      end)
+      vim.keymap.set("n", "<leader>op", function()
+        git_branches()
       end)
     end,
   },

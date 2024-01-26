@@ -46,11 +46,10 @@ function M.set_buildtags(buildtags)
   for _, v in pairs(dap.configurations.go) do
     if v.name == "Debug Test" then v.buildFlags = "-tags=" .. buildtags end
   end
-  local client = vim.lsp.get_active_clients({name = "gopls", bufnr = vim.api.nvim_get_current_buf()})
-  if client[1] == nil then print("no gopls client attached to buffer") return end
-  client[1].config.settings.gopls.buildFlags = {"-tags", M.buildtags}
-  client[1].notify("workspace/didChangeConfiguration")
-  client[1].notify("workspace/applyEdit")
+  local client = vim.lsp.get_active_clients({name = "gopls", bufnr = vim.api.nvim_get_current_buf()})[1]
+  if client == nil then print("no gopls client attached to buffer") return end
+  client.config.settings.gopls.buildFlags = {"-tags", M.buildtags}
+  client.notify("workspace/didChangeConfiguration", {settings = client.config.settings})
   for _, v in pairs(dap.configurations.go) do
     if v.name == "Debug" then v.buildFlags = "-tags=" .. M.buildtags end
   end
@@ -264,7 +263,12 @@ function M.test(scope)
   return true
 end
 
-vim.keymap.set("n", "<leader>ni", function() M.set_buildtags(vim.fn.input({default = M.buildtags})) end)
+vim.keymap.set("n", "<leader>ni", function()
+  vim.ui.input({default = M.buildtags}, function(input)
+    if input == nil then return end
+    M.set_buildtags(string.gsub(input, " ", ","))
+  end)
+end)
 vim.keymap.set('n', '<leader>dd', M.debug_test)
 vim.keymap.set('n', '<leader>df', M.debug_last_test)
 vim.keymap.set('n', '<leader>tj', function() M.test("nearest") end)

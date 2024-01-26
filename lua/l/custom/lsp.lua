@@ -107,12 +107,11 @@ return {
           },
         }
 
-        local lspconfig = require("lspconfig")
         for s, o in pairs(servers) do
           lspconfig[s].setup({
             on_attach = on_attach,
             capabilities = capabilities,
-            settings = o
+            settings = o.settings,
           })
         end
       end,0)
