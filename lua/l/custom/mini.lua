@@ -48,7 +48,6 @@ return {
         return lines
       end
 
-      -- tests the functions above
       local config_path = vim.fn.stdpath("config")
       local file = config_path .. "/telerepos"
       local extra_repos = lines_from(file)
