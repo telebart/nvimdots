@@ -2,7 +2,8 @@ return {
   {
     'rose-pine/neovim',
     name = 'rose-pine',
-    lazy = true,
+    lazy = false,
+    priority = 1000,
     opts = {
       variant = 'moon',
       dark_variant = 'main',
@@ -45,13 +46,7 @@ return {
       -- Change specific vim highlight groups
       -- https://github.com/rose-pine/neovim/wiki/Recipes
       highlight_groups = {
-        Directory = { fg = 'pine', bg = 'none'},
-        StatusLine = { fg = 'pine', bg = 'none'},
-        NvimDapVirtualText = { fg = '#d484ff', bg = 'none'},
-        DiffAdd = {bg='pine', blend=10},
-        DiffChange = {bg='gold', blend=20},
-        DiffText = {bg='gold', blend=50},
-        Search = {bg='#aaaaaa'},
+        DiffText = {blend=40},
       }
     },
   },

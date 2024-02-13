@@ -45,6 +45,7 @@ lua require("l.lazy")
 
 nnoremap <space><space> <cmd>make<CR>
 
+nnoremap == mqHmwgg=G`wzt`q
 nnoremap <silent> Q <nop>
 
 vnoremap <silent> . :normal .<CR>
@@ -110,24 +111,25 @@ nnoremap <M-K> <C-W>k
 nnoremap <M-L> <C-W>l
 
 fun! ToggleQFList()
-    if empty(filter(getwininfo(), 'v:val.quickfix'))
-        copen
-    else
-        cclose
-    endif
+  if empty(filter(getwininfo(), 'v:val.quickfix'))
+    copen
+  else
+    cclose
+  endif
 endfun
 
 fun! ToggleLocList()
-    if empty(filter(getwininfo(), 'v:val.loclist'))
-        lopen
-    else
-        lclose
-    endif
+  if empty(filter(getwininfo(), 'v:val.loclist'))
+    lopen
+  else
+    lclose
+  endif
 endfun
 
 lua require("l.globals")
 
 colorscheme rose-pine
+highlight WinBarNC guibg=NONE
 
 vnoremap <RightMouse> <S-LeftMouse>
 nnoremap <leader>pp :put=execute('')<Left><Left>
