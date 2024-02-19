@@ -90,8 +90,13 @@ return {
     config = function ()
       require('lint').linters_by_ft = {
           -- go = {"golangcilint"},
-          fish = {"fish"},
+          -- javascript = {"eslint_d"},
+          -- javascriptreact = {"eslint_d"},
+          -- typescript = {"eslint_d"},
+          -- typescriptreact = {"eslint_d"},
+          terraform = {"snyk_iac"},
       }
+      -- require('lint').linters.eslint_d.args = vim.list_extend({"--rule", "prettier/prettier: 0"}, require('lint').linters.eslint_d.args)
       vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
         callback = function()
           require("lint").try_lint()
@@ -118,7 +123,7 @@ return {
           javascriptreact = { "prettier" },
           typescriptreact = { "prettier" },
           graphql = { "prettier" },
-          json = { "biome" },
+          json = { "prettier" },
           yaml = { "prettier" },
         },
       })

@@ -11,9 +11,14 @@ return {
           go_out = "",
         },
         options = { use_as_default_explorer = false },
+        windows = {
+          preview = true,
+          width_preview = 60,
+        },
       })
       require("mini.comment").setup()
       require("mini.extra").setup()
+      require("mini.splitjoin").setup()
       require("mini.pick").setup({
         mappings = {
           choose_marked = "<C-q>",

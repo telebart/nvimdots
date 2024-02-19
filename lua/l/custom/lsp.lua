@@ -28,7 +28,7 @@ return {
         vim.keymap.set({ "i", "n" }, "<C-h>", vim.lsp.buf.signature_help, bufopts)
       end
 
-      vim.diagnostic.config({ float = { border = "rounded", header = "", prefix = "" } })
+      vim.diagnostic.config({ float = { border = "rounded", header = "", prefix = "", source = true} })
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
       vim.lsp.handlers["textDocument/signatureHelp"] =
         vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })

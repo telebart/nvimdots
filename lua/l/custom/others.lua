@@ -1,12 +1,10 @@
-return {{
-
+return {
   -- { "folke/neodev.nvim", opts = {} },
-  "nvim-lua/plenary.nvim",
-
   "mbbill/undotree",
-
-  { 'rose-pine/neovim', name = 'rose-pine', priority = 1000 },
-
+  {
+    "eandrju/cellular-automaton.nvim",
+    cmd = {"CellularAutomaton"},
+  },
   {
     "iamcco/markdown-preview.nvim",
     build = vim.fn["mkdp#util#install"],
@@ -18,7 +16,7 @@ return {{
       if vim.fn.has("mac") == 1 then
         vim.cmd[[
         function OpenMarkdownPreview (url)
-          execute "silent ! open -a Firefox -n --args --new-window " . a:url
+        execute "silent ! open -a Firefox -n --args --new-window " . a:url
         endfunction
         let g:mkdp_browserfunc = 'OpenMarkdownPreview'
         ]]
@@ -39,4 +37,4 @@ return {{
     "j-hui/fidget.nvim",
     opts = { notification = { window = {winblend = 0} }}
   },
-}}
+}

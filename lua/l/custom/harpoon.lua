@@ -24,6 +24,7 @@
 return {
   {
     'MeanderingProgrammer/harpoon-core.nvim',
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       local mark = require("harpoon-core.mark")
       local ui = require("harpoon-core.ui")

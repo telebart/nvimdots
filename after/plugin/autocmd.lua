@@ -47,4 +47,5 @@ local function run_term(prog)
 end
 
 vim.keymap.set('n', '<leader>lg', function() run_term("lazygit") end)
+vim.keymap.set('n', '<leader>ld', function() run_term("lazydocker") end)
 vim.keymap.set('n', '<leader>lf', function() run_term("lf") end)
