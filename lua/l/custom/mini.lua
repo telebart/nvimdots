@@ -17,8 +17,14 @@ return {
         },
       })
       require("mini.comment").setup()
+      require("mini.surround").setup()
+      require("mini.ai").setup()
       require("mini.extra").setup()
-      require("mini.splitjoin").setup()
+      require("mini.splitjoin").setup({
+        mappings = {
+          toggle = "gs"
+        }
+      })
       require("mini.pick").setup({
         mappings = {
           choose_marked = "<C-q>",

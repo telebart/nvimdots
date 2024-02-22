@@ -3,19 +3,15 @@ let g:loaded_node_provider = 0
 let g:loaded_perl_provider = 0
 let g:loaded_python3_provider = 0
 
+set shell=dash
 set hls
 set incsearch
 set nowrap
 set rnu nu
 set hidden
-set tabstop=2 softtabstop=2
-set shiftwidth=2
-set expandtab
-set smartindent
-set noswapfile
-set nobackup
+set tabstop=2 softtabstop=2 shiftwidth=2 smartindent expandtab
 exec 'set undodir=' . stdpath('data') . '/undodir'
-set undofile
+set undofile noswapfile nobackup
 set scrolloff=8 sidescrolloff=12
 set cmdheight=1
 set updatetime=50
@@ -33,6 +29,7 @@ set spelloptions=camel,noplainbuffer
 set laststatus=2
 set path+=**
 set wildignore+=**/node_modules/**
+set spr sb
 
 " Netrw
 let g:netrw_banner=0
@@ -40,6 +37,8 @@ let g:netrw_altv=1
 let g:netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 let g:netrw_use_errorwindow=0
 let g:netrw_list_hide='^\.\+/$'
+
+inoremap <silent> <C-e> <nop>
 
 lua require("l.lazy")
 
@@ -49,10 +48,6 @@ nnoremap == mqHmwgg=G`wzt`q
 nnoremap <silent> Q <nop>
 
 vnoremap <silent> . :normal .<CR>
-
-nnoremap <silent> <C-s> <cmd>w<CR>
-vnoremap <silent> <C-s> <cmd>w<CR>
-inoremap <silent> <C-s> <cmd>w<CR>
 
 nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
@@ -91,7 +86,7 @@ nnoremap <C-j> <cmd>cnext<CR>zz
 nnoremap <C-q> <cmd>call ToggleQFList()<CR>
 nnoremap <M-k> <cmd>lprev<CR>zz
 nnoremap <M-j> <cmd>lnext<CR>zz
-nnoremap <M-q> <cmd>call ToggleLocList()<CR>
+nnoremap <leader>qq <cmd>call ToggleLocList()<CR>
 
 " Git
 nnoremap B <cmd>Gitsigns toggle_current_line_blame<CR>
@@ -100,7 +95,7 @@ nnoremap <leader>jf <cmd>lua Root()<CR>
 
 nnoremap <leader>ii <cmd>set ignorecase! smartcase!<CR>
 
-tnoremap <C-W>ö <C-\><C-N>
+tnoremap <C-h> <C-\><C-N>
 
 nnoremap <M-H> <C-W>h
 nnoremap <M-J> <C-W>j
@@ -127,6 +122,8 @@ lua require("l.globals")
 
 colorscheme rose-pine
 highlight WinBarNC guibg=NONE
+highlight StatusLineTerm guibg=NONE
+highlight StatusLineTermNC guibg=NONE
 
 vnoremap <RightMouse> <S-LeftMouse>
 nnoremap <leader>pp :put=execute('')<Left><Left>

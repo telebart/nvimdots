@@ -9,16 +9,12 @@ return {
     config = function()
       require("nvim-treesitter.configs").setup({
         auto_install = true,
-        context_commentstring = {
-          enable = true,
-          enable_autocmd = false,
-        },
         additional_vim_regex_highlighting = false,
-        ensure_installed = { "c", "cpp", "go", "lua", "python", "rust", "tsx", "typescript", "vim", "comment" },
+        ensure_installed = { "vim", "vimdoc", "comment" },
         disable = function(_, buf)
           local max_filesize = 100 * 1024
           local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-          if ok and stats and stats.size > max_filesize then
+         if ok and stats and stats.size > max_filesize then
             return true
           end
         end,
@@ -29,7 +25,7 @@ return {
           keymaps = {
             init_selection = "<c-space>",
             node_incremental = "<c-space>",
-            -- scope_incremental = '<c-s>',
+            scope_incremental = '<c-s>',
             node_decremental = "<c-m>",
           },
         },

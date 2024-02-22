@@ -1,5 +1,4 @@
 return {
-  -- { "folke/neodev.nvim", opts = {} },
   "mbbill/undotree",
   {
     "eandrju/cellular-automaton.nvim",
@@ -35,6 +34,7 @@ return {
 
   {
     "j-hui/fidget.nvim",
+    event = "VeryLazy",
     opts = { notification = { window = {winblend = 0} }}
   },
 }
