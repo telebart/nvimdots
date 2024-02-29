@@ -121,9 +121,10 @@ endfun
 lua require("l.globals")
 
 colorscheme rose-pine
-highlight WinBarNC guibg=NONE
-highlight StatusLineTerm guibg=NONE
-highlight StatusLineTermNC guibg=NONE
+hi WinBarNC guibg=NONE
+hi StatusLineTerm guibg=NONE
+hi StatusLineTermNC guibg=NONE
+hi link MiniNotifyNormal Boolean
 
 vnoremap <RightMouse> <S-LeftMouse>
 nnoremap <leader>pp :put=execute('')<Left><Left>

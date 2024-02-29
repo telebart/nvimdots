@@ -21,6 +21,7 @@ require("lazy").setup({
     enabled = false,
     notify = false, -- get a notification when changes are found
   },
+  ui = { border = "rounded" },
   performance = {
     rtp = {
       -- disable some rtp plugins

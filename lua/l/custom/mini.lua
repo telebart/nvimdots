@@ -16,6 +16,12 @@ return {
           width_preview = 60,
         },
       })
+      require("mini.notify").setup({
+        window = {
+          config = { border = "none", },
+          winblend = 0,
+        }
+      })
       require("mini.comment").setup()
       require("mini.surround").setup()
       require("mini.ai").setup()

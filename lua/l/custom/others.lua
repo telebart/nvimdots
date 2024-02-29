@@ -31,10 +31,4 @@ return {
   },
 
   { "brenoprata10/nvim-highlight-colors", opts = {} },
-
-  {
-    "j-hui/fidget.nvim",
-    event = "VeryLazy",
-    opts = { notification = { window = {winblend = 0} }}
-  },
 }
