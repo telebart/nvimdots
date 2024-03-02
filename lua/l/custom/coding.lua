@@ -109,6 +109,7 @@ return {
           graphql = { "prettier" },
           json = { "prettier" },
           yaml = { "prettier" },
+          xml = { "xmlformat" },
         },
       })
     end,

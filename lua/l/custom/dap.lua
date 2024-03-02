@@ -22,18 +22,18 @@ return {{
         layouts = {
           {
             elements = {
-              { id = "console", size = 0.33 },
-              { id = "breakpoints", size = 0.17 },
-              { id = "stacks", size = 0.25 },
               { id = "watches", size = 0.25 },
+              { id = "stacks", size = 0.25 },
+              { id = "breakpoints", size = 0.17 },
+              { id = "console", size = 0.33 },
             },
             size = 0.2,
             position = "right",
           },
           {
             elements = {
-              { id = "repl", size = 0.5 },
               { id = "scopes", size = 0.5 },
+              { id = "repl", size = 0.5 },
             },
             size = 0.30,
             position = "bottom",

@@ -30,6 +30,8 @@ set laststatus=2
 set path+=**
 set wildignore+=**/node_modules/**
 set spr sb
+set grepprg=rg\ --vimgrep
+set grepformat=%f:%l:%c:%m
 
 " Netrw
 let g:netrw_banner=0
@@ -75,7 +77,7 @@ nnoremap yip m'yip``
 nnoremap yaw m'yaw``
 nnoremap yiw m'yiw``
 
-nnoremap yfp <cmd>let @+=expand("%:p")<CR>
+nnoremap <leader>yfp <cmd>let @+=expand("%:p")<CR>
 
 " LSP
 nnoremap <leader>lr <cmd>LspRestart<CR>
@@ -84,8 +86,8 @@ nnoremap <leader>lr <cmd>LspRestart<CR>
 nnoremap <C-k> <cmd>cprev<CR>zz
 nnoremap <C-j> <cmd>cnext<CR>zz
 nnoremap <C-q> <cmd>call ToggleQFList()<CR>
-nnoremap <M-k> <cmd>lprev<CR>zz
-nnoremap <M-j> <cmd>lnext<CR>zz
+nnoremap <leader>K <cmd>lprev<CR>zz
+nnoremap <leader>J <cmd>lnext<CR>zz
 nnoremap <leader>qq <cmd>call ToggleLocList()<CR>
 
 " Git
@@ -121,6 +123,7 @@ endfun
 lua require("l.globals")
 
 colorscheme rose-pine
+hi WinBar guibg=NONE
 hi WinBarNC guibg=NONE
 hi StatusLineTerm guibg=NONE
 hi StatusLineTermNC guibg=NONE

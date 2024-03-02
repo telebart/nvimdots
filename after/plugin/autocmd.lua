@@ -38,6 +38,7 @@ vim.api.nvim_create_autocmd('TermLeave', {
 local function run_term(prog)
   vim.api.nvim_create_autocmd('TermOpen', {
     group = vim.api.nvim_create_augroup("l_term_open", { clear = true }),
+    once = true,
     callback = function(args)
       vim.opt_local.spell = false
       vim.opt_local.number = false
@@ -48,6 +49,7 @@ local function run_term(prog)
       end)
       vim.api.nvim_create_autocmd("TermClose", {
         group = vim.api.nvim_create_augroup("l_term_close", { clear = true }),
+        once = true,
         buffer = args.buf,
         callback = function()
           vim.api.nvim_buf_delete(0, {})
