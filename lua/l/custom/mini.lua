@@ -11,10 +11,6 @@ return {
           go_out = "",
         },
         options = { use_as_default_explorer = false },
-        windows = {
-          preview = true,
-          width_preview = 60,
-        },
       })
       require("mini.notify").setup({
         window = {
@@ -40,8 +36,11 @@ return {
       -- FILES
 
       vim.keymap.set("n", "<leader>pv", function()
-        MiniFiles.open(vim.api.nvim_buf_get_name(0))
-        MiniFiles.reveal_cwd()
+        local path = vim.api.nvim_buf_get_name(0)
+
+        if vim.fn.filereadable(path) == 0 then path = "" end
+        MiniFiles.open(path)
+        MiniFiles.reveal_cwd(path)
       end)
 
       -- PICKER

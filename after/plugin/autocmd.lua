@@ -11,6 +11,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 vim.cmd([[
   au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+  au BufWritePre,FileWritePre * if @% !~# '\(://\)' | call mkdir(expand('<afile>:p:h'), 'p') | endif
 ]])
 
 vim.api.nvim_create_autocmd('BufWritePre', {
@@ -35,7 +36,7 @@ vim.api.nvim_create_autocmd('TermLeave', {
   end,
 })
 
-local function run_term(prog)
+local function run_term(prog, split)
   vim.api.nvim_create_autocmd('TermOpen', {
     group = vim.api.nvim_create_augroup("l_term_open", { clear = true }),
     once = true,
@@ -57,15 +58,20 @@ local function run_term(prog)
       })
     end,
   })
+  local style = "tabnew"
+  if split then
+    style = string.format("%dsplit",vim.fn.winheight(0)/3+1)
+  end
+
   if not prog then
-    vim.cmd("tabnew term://fish")
+    vim.cmd(style .." term://fish")
     return
   end
   if prog == "lf" then
     local path = vim.api.nvim_buf_get_name(0)
     prog = prog .. " " .. path
   end
-  vim.cmd(string.format("tabnew term://%s -c %s",vim.opt.shell._value,prog))
+  vim.cmd(string.format(style .. " term://%s -c %s",vim.opt.shell._value,prog))
 end
 
 vim.api.nvim_create_user_command("Term", function ()
@@ -75,3 +81,4 @@ end, {})
 vim.keymap.set('n', '<leader>lg', function() run_term("lazygit") end)
 vim.keymap.set('n', '<leader>ld', function() run_term("lazydocker") end)
 vim.keymap.set('n', '<leader>lf', function() run_term("lf") end)
+vim.keymap.set('n', '<leader>to', function() run_term(nil, true) end)

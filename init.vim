@@ -123,6 +123,7 @@ endfun
 lua require("l.globals")
 
 colorscheme rose-pine
+hi Search guibg=#c69157
 hi WinBar guibg=NONE
 hi WinBarNC guibg=NONE
 hi StatusLineTerm guibg=NONE
