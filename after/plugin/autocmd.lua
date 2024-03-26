@@ -18,6 +18,12 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   group = vim.api.nvim_create_augroup("l_auto_format", { clear = true }),
   pattern = {"*.go", "*.js", "*.ts", "*.jsx", "*.tsx", "*.json", "*.graphql", "*.tf"},
   callback = function(args)
+    -- vim.lsp.buf.code_action({
+    --   filter = function(action)
+    --     return action.title == "Organize Imports (Biome)"
+    --   end,
+    --   apply = true,
+    -- })
     require("conform").format({ bufnr = args.buf })
   end,
 })

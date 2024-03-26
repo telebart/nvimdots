@@ -45,7 +45,7 @@ return {
         use_cursor = true,
         -- Settings for popup window
         menu = {
-          width = 90,
+          width = math.floor(0.70 * vim.o.columns),
         },
       })
     end,
