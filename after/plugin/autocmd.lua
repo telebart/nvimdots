@@ -18,50 +18,21 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   group = vim.api.nvim_create_augroup("l_auto_format", { clear = true }),
   pattern = {"*.go", "*.js", "*.ts", "*.jsx", "*.tsx", "*.json", "*.graphql", "*.tf"},
   callback = function(args)
-    -- vim.lsp.buf.code_action({
-    --   filter = function(action)
-    --     return action.title == "Organize Imports (Biome)"
-    --   end,
-    --   apply = true,
-    -- })
     require("conform").format({ bufnr = args.buf })
   end,
 })
 
-local laststatus = vim.opt.laststatus
-
-vim.api.nvim_create_autocmd('TermEnter', {
-  callback = function()
-    vim.opt.laststatus = 0
-  end,
-})
-
-vim.api.nvim_create_autocmd('TermLeave', {
-  callback = function()
-    vim.opt.laststatus = laststatus
-  end,
+vim.api.nvim_create_autocmd('TermOpen', {
+  pattern = "term://*",
+  command = "setlocal nonu nornu nospell signcolumn=no | startinsert"
 })
 
 local function run_term(prog, split)
-  vim.api.nvim_create_autocmd('TermOpen', {
-    group = vim.api.nvim_create_augroup("l_term_open", { clear = true }),
+  vim.api.nvim_create_autocmd("TermClose", {
+    group = vim.api.nvim_create_augroup("l_term_close", { clear = true }),
     once = true,
-    callback = function(args)
-      vim.opt_local.spell = false
-      vim.opt_local.number = false
-      vim.opt_local.relativenumber = false
-      vim.opt_local.signcolumn = "no"
-      vim.api.nvim_buf_call(args.buf, function()
-        vim.api.nvim_input("i")
-      end)
-      vim.api.nvim_create_autocmd("TermClose", {
-        group = vim.api.nvim_create_augroup("l_term_close", { clear = true }),
-        once = true,
-        buffer = args.buf,
-        callback = function()
-          vim.api.nvim_buf_delete(0, {})
-        end,
-      })
+    callback = function()
+      vim.api.nvim_buf_delete(0, {})
     end,
   })
   local style = "tabnew"
@@ -77,12 +48,17 @@ local function run_term(prog, split)
     local path = vim.api.nvim_buf_get_name(0)
     prog = prog .. " " .. path
   end
-  vim.cmd(string.format(style .. " term://%s -c %s",vim.opt.shell._value,prog))
+  vim.cmd(string.format(style .. " term://%s",prog))
 end
 
-vim.api.nvim_create_user_command("Term", function ()
-  run_term()
-end, {})
+vim.api.nvim_create_user_command("Term", function (args)
+  print(args.args)
+  run_term(args.args)
+end, {nargs = '?'})
+
+vim.api.nvim_create_user_command("Terms", function (args)
+  run_term(args.args, true)
+end, {nargs = '?'})
 
 vim.keymap.set('n', '<leader>lg', function() run_term("lazygit") end)
 vim.keymap.set('n', '<leader>ld', function() run_term("lazydocker") end)
