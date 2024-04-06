@@ -18,7 +18,6 @@ return {
           winblend = 0,
         }
       })
-      require("mini.comment").setup()
       require("mini.surround").setup()
       require("mini.ai").setup()
       require("mini.extra").setup()
@@ -54,7 +53,7 @@ return {
 
         if vim.fn.filereadable(path) == 0 then path = "" end
         MiniFiles.open(path)
-        MiniFiles.reveal_cwd(path)
+        MiniFiles.reveal_cwd()
       end)
 
       -- PICKER
