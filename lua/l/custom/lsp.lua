@@ -9,6 +9,8 @@ return {
       vim.keymap.set("n", "<leader>qp", vim.diagnostic.setqflist)
       vim.keymap.set("n", "<leader>pq", vim.diagnostic.setloclist)
       vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+      vim.keymap.set('n', '<leader>k', vim.diagnostic.goto_prev)
+      vim.keymap.set('n', '<leader>j', vim.diagnostic.goto_next)
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("l-lsp-attach", {clear = true}),
         callback = function (event)

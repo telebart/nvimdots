@@ -10,7 +10,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.cmd([[
+  " start from last position
   au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+  " create directory before writing file
   au BufWritePre,FileWritePre * if @% !~# '\(://\)' | call mkdir(expand('<afile>:p:h'), 'p') | endif
 ]])
 
@@ -52,7 +54,6 @@ local function run_term(prog, split)
 end
 
 vim.api.nvim_create_user_command("Term", function (args)
-  print(args.args)
   run_term(args.args)
 end, {nargs = '?'})
 
@@ -61,6 +62,7 @@ vim.api.nvim_create_user_command("Terms", function (args)
 end, {nargs = '?'})
 
 vim.keymap.set('n', '<leader>lg', function() run_term("lazygit") end)
+
 vim.keymap.set('n', '<leader>ld', function() run_term("lazydocker") end)
 vim.keymap.set('n', '<leader>lf', function() run_term("lf") end)
 vim.keymap.set('n', '<leader>to', function() run_term(nil, true) end)

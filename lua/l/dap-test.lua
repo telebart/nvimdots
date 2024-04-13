@@ -247,8 +247,9 @@ function M.test(scope)
     return false
   end
 
-  if vim.fn.bufexists(term) > 0 then
+  if term then
     vim.api.nvim_buf_delete(term, { force = true })
+    term = nil
   end
 
   vim.cmd("botright 24split new")
@@ -259,6 +260,7 @@ function M.test(scope)
   term = vim.api.nvim_get_current_buf()
 
   vim.cmd("wincmd p")
+  vim.cmd.stopinsert()
 
   return true
 end
