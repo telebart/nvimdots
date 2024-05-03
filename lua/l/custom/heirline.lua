@@ -100,7 +100,7 @@ return {
           for _, server in pairs(vim.lsp.get_active_clients(nil)) do
             table.insert(names, server.name)
           end
-          return "[" .. table.concat(names, " ") .. "]"
+          return "[" .. table.concat(names, "·") .. "]"
         end,
         hl = { fg = utils.get_highlight("Type").fg, bold = true },
       }

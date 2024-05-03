@@ -101,23 +101,13 @@ return {
         wrap("files")
         vim.o.smartcase, vim.o.ignorecase = false, false
       end)
-      vim.keymap.set("n", "<leader>pa", function()
-        wrap("grep_live")
-      end)
-      vim.keymap.set("n", "<leader>pw", function()
-        wrap("grep", { pattern = vim.fn.expand("<cword>") })
-      end)
-      vim.keymap.set("n", "<leader>pb", function()
-        wrap("buffers")
-      end)
-      vim.keymap.set("n", "<leader>ph", function()
-        wrap("help")
-      end)
+      vim.keymap.set("n", "<leader>pa", function() wrap("grep_live") end)
+      vim.keymap.set("n", "<leader>pw", function() wrap("grep", { pattern = vim.fn.expand("<cword>") }) end)
+      vim.keymap.set("n", "<leader>pb", function() wrap("buffers") end)
+      vim.keymap.set("n", "<leader>ph", function() wrap("help") end)
       vim.keymap.set("n", "<leader>fj", function()
         local selection = wrap("cli", { command = find_repo_cmd })
-        if selection == nil then
-          return
-        end
+        if selection == nil then return end
         vim.defer_fn(function()
           wrap("files", nil, { source = { cwd = selection } })
         end, 0)

@@ -2,7 +2,8 @@ vim.o.autochdir = false
 local root_cache = {}
 local root_names = { '.git', 'Makefile' }
 
-local function find_root()
+function Find_root(names)
+  if names == nil then names = root_names end
   local path = vim.api.nvim_buf_get_name(0)
   if path == '' then return end
   path = vim.fs.dirname(path)
@@ -12,7 +13,7 @@ local function find_root()
   if res ~= nil then return res end
 
   -- Find root
-  local root_file = vim.fs.find(root_names, { path = path, upward = true })[1]
+  local root_file = vim.fs.find(names, { path = path, upward = true })[1]
   if root_file == nil then return end
 
   -- Use absolute path and cache result
@@ -23,7 +24,7 @@ local function find_root()
 end
 
 function Root()
-  local root = find_root()
+  local root = Find_root()
   if root == nil then return end
   vim.fn.chdir(root)
 end

@@ -31,4 +31,29 @@ return {
   },
 
   { "brenoprata10/nvim-highlight-colors", opts = {} },
+  {
+    "vim-test/vim-test",
+    config = function()
+      vim.g["test#strategy"] = "neovim_sticky"
+      vim.g["test#neovim#term_position"] = "vert"
+      vim.g["test#preserve_screen"] = 0
+    end,
+    keys = {
+      { "<leader>tj", function ()
+        local root = Find_root({'package.json'})
+        if root == nil then return end
+        vim.g["test#project_root"] = root
+        vim.cmd("TestNearest | stopinsert")
+      end },
+      { "<leader>tf", function ()
+        local root = Find_root({'package.json'})
+        if root == nil then return end
+        vim.g["test#project_root"] = root
+        vim.cmd("TestFile | stopinsert")
+      end },
+      { "<leader>tk", function()
+        vim.cmd("TestLast | stopinsert")
+      end },
+    },
+  }
 }
