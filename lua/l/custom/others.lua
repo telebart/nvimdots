@@ -1,3 +1,24 @@
+local function contains(t, value)
+  for _, v in pairs(t) do
+    if v == value then
+      return true
+    end
+  end
+  return false
+end
+
+local function jsroot()
+  if not contains({
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+  }, vim.bo.filetype) then return end
+  local root = vim.fs.root(0, {'package.json', '.git'})
+  if root == nil then return end
+  vim.g["test#project_root"] = root
+end
+
 return {
   "mbbill/undotree",
   {
@@ -40,15 +61,11 @@ return {
     end,
     keys = {
       { "<leader>tj", function ()
-        local root = Find_root({'package.json'})
-        if root == nil then return end
-        vim.g["test#project_root"] = root
+        jsroot()
         vim.cmd("TestNearest | stopinsert")
       end },
       { "<leader>tf", function ()
-        local root = Find_root({'package.json'})
-        if root == nil then return end
-        vim.g["test#project_root"] = root
+        jsroot()
         vim.cmd("TestFile | stopinsert")
       end },
       { "<leader>tk", function()
