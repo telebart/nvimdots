@@ -275,13 +275,4 @@ end)
 vim.keymap.set('n', '<leader>dd', M.debug_test)
 vim.keymap.set('n', '<leader>df', M.debug_last_test)
 
-vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup("l_go_test", { clear = true }),
-  pattern = {"go"},
-  callback = function()
-    vim.keymap.set('n', '<leader>tj', function() M.test("nearest") end)
-    vim.keymap.set('n', '<leader>tk', function() M.test("last") end)
-  end,
-})
-
 return M
