@@ -66,17 +66,21 @@ return {
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
+      local lspconfig = require('lspconfig')
+      lspconfig.util.default_config = vim.tbl_extend( "force", lspconfig.util.default_config,
+        { on_attach = function(client) client.server_capabilities.semanticTokensProvider = nil end })
+
       require("mason").setup({ ui = { border = "rounded" } })
       require("mason-lspconfig").setup({
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
+            lspconfig[server_name].setup(server)
           end,
         }
       })
-      require('lspconfig').zls.setup({})
+      lspconfig.zls.setup({})
     end,
   },
 }
