@@ -105,6 +105,8 @@ nnoremap <M-J> <C-W>j
 nnoremap <M-K> <C-W>k
 nnoremap <M-L> <C-W>l
 
+inoremap { {}<Up>	
+
 nnoremap ö :
 
 fun! ToggleQFList()
