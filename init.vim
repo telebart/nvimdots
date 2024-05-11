@@ -40,8 +40,8 @@ let g:netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 let g:netrw_use_errorwindow=0
 let g:netrw_list_hide='^\.\+/$'
 
-let leader=" "
-let localleader=" "
+let g:mapleader=" "
+let g:maplocalleader=" "
 
 inoremap <silent> <C-e> <nop>
 
@@ -130,4 +130,4 @@ vnoremap <RightMouse> <S-LeftMouse>
 nnoremap <leader>pp :put=execute('')<Left><Left>
 command! BufOnly execute '%bdelete|edit #|normal `"'
 
-lua require("l.lazy")
+lua require("l.deps")
