@@ -40,9 +40,10 @@ let g:netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 let g:netrw_use_errorwindow=0
 let g:netrw_list_hide='^\.\+/$'
 
-inoremap <silent> <C-e> <nop>
+let leader=" "
+let localleader=" "
 
-lua require("l.lazy")
+inoremap <silent> <C-e> <nop>
 
 nnoremap <space><space> <cmd>make<CR>
 
@@ -125,16 +126,8 @@ fun! ToggleLocList()
   endif
 endfun
 
-lua require("l.globals")
-
-colorscheme rose-pine
-hi Search guibg=#c69157
-hi WinBar guibg=NONE
-hi WinBarNC guibg=NONE
-hi StatusLineTerm guibg=NONE
-hi StatusLineTermNC guibg=NONE
-hi link MiniNotifyNormal Boolean
-
 vnoremap <RightMouse> <S-LeftMouse>
 nnoremap <leader>pp :put=execute('')<Left><Left>
 command! BufOnly execute '%bdelete|edit #|normal `"'
+
+lua require("l.lazy")
