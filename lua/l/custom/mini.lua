@@ -50,7 +50,7 @@ return function (add)
       if not from or not to then return end
       local clients = vim.lsp.get_clients()
       for _, client in ipairs(clients) do
-        if client.supports_method("workspace/willRenameFiles") then
+        if client.supports_method("workspace/didRenameFiles") then
           ---@diagnostic disable-next-line: invisible
           client.notify("workspace/didRenameFiles", {
             files = {
