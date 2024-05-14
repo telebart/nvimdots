@@ -9,19 +9,6 @@ return function (add)
     },
     options = { use_as_default_explorer = false },
   })
-  require("mini.notify").setup({
-    window = {
-      config = { border = "none", },
-      winblend = 0,
-    }
-  })
-  require("mini.surround").setup()
-  require("mini.extra").setup()
-  require("mini.splitjoin").setup({
-    mappings = {
-      toggle = "gs"
-    }
-  })
 
   local win_config = function()
     local height = math.floor(0.618 * vim.o.lines)
@@ -43,26 +30,8 @@ return function (add)
   })
 
   vim.api.nvim_create_autocmd("User", {
-    pattern = "MiniFilesActionRename",
-    callback = function(args)
-      local from = args.data.from
-      local to = args.data.to
-      if not from or not to then return end
-      local clients = vim.lsp.get_clients()
-      for _, client in ipairs(clients) do
-        if client.supports_method("workspace/didRenameFiles") then
-          ---@diagnostic disable-next-line: invisible
-          client.notify("workspace/didRenameFiles", {
-            files = {
-              {
-                oldUri = vim.uri_from_fname(args.data.from),
-                newUri = vim.uri_from_fname(args.data.to),
-              },
-            },
-          })
-        end
-      end
-    end,
+    pattern = "MiniPickStart",
+    callback = function() MiniFiles.close() end,
   })
 
   -- FILES
@@ -110,26 +79,20 @@ return function (add)
     table.insert(find_repo_cmd, home .. v)
   end
 
-  local function wrap(builtin, local_opts, opts)
-    MiniFiles.close()
-    return MiniPick.builtin[builtin](local_opts, opts)
-  end
-
   vim.keymap.set("n", "<C-p>", function()
     vim.o.smartcase, vim.o.ignorecase = true, true
-    wrap("files")
+    MiniPick.builtin.files()
     vim.o.smartcase, vim.o.ignorecase = false, false
   end)
-  vim.keymap.set("n", "<leader>pa", function() wrap("grep_live") end)
-  vim.keymap.set("n", "<leader>pw", function() wrap("grep", { pattern = vim.fn.expand("<cword>") }) end)
-  vim.keymap.set("n", "<leader>pb", function() wrap("buffers") end)
-  vim.keymap.set("n", "<leader>ph", function() wrap("help") end)
+  vim.keymap.set("n", "<leader>pa", function() MiniPick.builtin.grep_live() end)
+  vim.keymap.set("n", "<leader>pw", function() MiniPick.builtin.grep({ pattern = vim.fn.expand("<cword>") }) end)
+  vim.keymap.set("n", "<leader>pb", function() MiniPick.builtin.buffers() end)
+  vim.keymap.set("n", "<leader>ph", function() MiniPick.builtin.help() end)
   vim.keymap.set("n", "<leader>fj", function()
-    local selection = wrap("cli", { command = find_repo_cmd })
+    local selection = MiniPick.builtin.cli({ command = find_repo_cmd },
+      { source = { choose = function() return nil end }})
     if selection == nil then return end
-    vim.defer_fn(function()
-      wrap("files", nil, { source = { cwd = selection } })
-    end, 0)
+    MiniPick.builtin.files(nil, { source = { cwd = selection } })
   end)
 
   local function git_branches()
