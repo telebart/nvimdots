@@ -31,7 +31,7 @@ return function (add)
 
   vim.api.nvim_create_autocmd("User", {
     pattern = "MiniPickStart",
-    callback = function() MiniFiles.close() end,
+    callback = MiniFiles.close,
   })
 
   -- FILES
@@ -84,10 +84,10 @@ return function (add)
     MiniPick.builtin.files()
     vim.o.smartcase, vim.o.ignorecase = false, false
   end)
-  vim.keymap.set("n", "<leader>pa", function() MiniPick.builtin.grep_live() end)
+  vim.keymap.set("n", "<leader>pa", MiniPick.builtin.grep_live)
   vim.keymap.set("n", "<leader>pw", function() MiniPick.builtin.grep({ pattern = vim.fn.expand("<cword>") }) end)
-  vim.keymap.set("n", "<leader>pb", function() MiniPick.builtin.buffers() end)
-  vim.keymap.set("n", "<leader>ph", function() MiniPick.builtin.help() end)
+  vim.keymap.set("n", "<leader>pb", MiniPick.builtin.buffers)
+  vim.keymap.set("n", "<leader>ph", MiniPick.builtin.help)
   vim.keymap.set("n", "<leader>fj", function()
     local selection = MiniPick.builtin.cli({ command = find_repo_cmd },
       { source = { choose = function() return nil end }})

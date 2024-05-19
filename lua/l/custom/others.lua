@@ -55,7 +55,7 @@ return function (add, later)
   end
 
   add("brenoprata10/nvim-highlight-colors")
-  require("nvim-highlight-colors")
+  require("nvim-highlight-colors").setup({ render = "virtual" })
 
   add("vim-test/vim-test")
   vim.g["test#strategy"] = "neovim_sticky"
