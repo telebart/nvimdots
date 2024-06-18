@@ -1,4 +1,4 @@
----@diagnostic disable: undefined-field
+---@diagnostic disable: missing-fields
 return function(add)
   add("mfussenegger/nvim-dap")
   add("rcarriga/nvim-dap-ui")

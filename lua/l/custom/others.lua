@@ -38,6 +38,7 @@ return function (add, later)
   vim.g.mkdp_auto_close = 0
   vim.g.mkdp_browser = "firefox"
   vim.g.mkdp_combine_preview = 1
+  vim.g.mkdp_filetypes = { "markdown", "plantuml" }
   if vim.fn.has("mac") == 1 then
     vim.cmd[[
         function OpenMarkdownPreview (url)
@@ -53,9 +54,18 @@ return function (add, later)
           let g:mkdp_browserfunc = 'OpenMarkdownPreview'
           ]]
   end
+  vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreview<cr>")
 
-  add("brenoprata10/nvim-highlight-colors")
-  require("nvim-highlight-colors").setup({ render = "virtual" })
+  add("uga-rosa/ccc.nvim")
+  require("ccc").setup({
+    highlight_mode = "virtual",
+    virtual_pos = "inline-right",
+    highlighter = {
+      auto_enable = true,
+      lsp = true,
+    },
+  })
+  vim.keymap.set("n", "<leader>cc", "<cmd>CccPick<cr>")
 
   add("vim-test/vim-test")
   vim.g["test#strategy"] = "neovim_sticky"

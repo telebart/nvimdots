@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 
 vim.api.nvim_create_autocmd('TermOpen', {
   pattern = "term://*",
-  command = "setlocal nonu nornu nospell signcolumn=no | startinsert"
+  command = "setlocal nonu nornu nospell signcolumn=no so=0 siso=0 | startinsert"
 })
 
 local function run_term(prog, split)
@@ -34,7 +34,8 @@ local function run_term(prog, split)
     group = vim.api.nvim_create_augroup("l_term_close", { clear = true }),
     once = true,
     callback = function()
-      vim.api.nvim_buf_delete(0, {})
+      vim.cmd('silent! :checktime')
+      vim.cmd('silent! :bw')
     end,
   })
   local style = "tabnew"
