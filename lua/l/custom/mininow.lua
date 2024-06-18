@@ -1,5 +1,5 @@
 return function (add)
-  add({ name = 'mini.nvim', checkout = 'HEAD' })
+  add("echasnovski/mini.nvim")
   require("mini.files").setup({
     mappings = {
       go_in_plus = "l",

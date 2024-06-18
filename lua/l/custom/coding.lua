@@ -103,6 +103,7 @@ return function (add)
         args = {
           "check",
           "--trailing-comma=all",
+          "--organize-imports-enabled=false",
           "--semicolons=as-needed",
           "--indent-style=space",
           "--indent-width=2",

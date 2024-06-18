@@ -73,14 +73,14 @@ return function (add)
 
   local FileSize = {
     provider = function()
-      local suffix = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' }
-      local fsize = vim.fn.getfsize(vim.api.nvim_buf_get_name(0))
-      fsize = (fsize < 0 and 0) or fsize
-      if fsize < 1024 then
-        return fsize..suffix[1]
+      local size = vim.fn.getfsize(vim.fn.getreg('%'))
+      if size < 1024 then
+        return string.format('%dB', size)
+      elseif size < 1048576 then
+        return string.format('%.2fKiB', size / 1024)
+      else
+        return string.format('%.2fMiB', size / 1048576)
       end
-      local i = math.floor((math.log(fsize) / math.log(1024)))
-      return string.format("%.2g%s", fsize / (1024^i), suffix[i + 1])
     end,
     hl = { fg = utils.get_highlight("Function").fg },
   }
@@ -95,7 +95,7 @@ return function (add)
     update = {'LspAttach', 'LspDetach'},
     provider  = function()
       local names = {}
-      for _, server in pairs(vim.lsp.get_active_clients(nil)) do
+      for _, server in pairs(vim.lsp.get_clients(nil)) do
         table.insert(names, server.name)
       end
       return "[" .. table.concat(names, "·") .. "]"

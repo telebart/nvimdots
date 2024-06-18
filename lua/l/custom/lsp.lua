@@ -3,12 +3,13 @@ return function (add)
   add("williamboman/mason.nvim")
   add("williamboman/mason-lspconfig.nvim")
   add("hrsh7th/cmp-nvim-lsp")
+  add("b0o/SchemaStore.nvim")
 
   vim.keymap.set("n", "<leader>qp", vim.diagnostic.setqflist)
   vim.keymap.set("n", "<leader>pq", vim.diagnostic.setloclist)
   vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
-  vim.keymap.set('n', '<leader>k', vim.diagnostic.goto_prev)
-  vim.keymap.set('n', '<leader>j', vim.diagnostic.goto_next)
+  vim.keymap.set('n', '<leader>k', function() vim.diagnostic.jump({count = -1}) end)
+  vim.keymap.set('n', '<leader>j', function() vim.diagnostic.jump({count = 1}) end)
   vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("l-lsp-attach", {clear = true}),
     callback = function (event)
@@ -31,9 +32,15 @@ return function (add)
 
   -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
   local servers = {
-    -- vtsls = {
-    --   root_dir = require("lspconfig.util").root_pattern(".git")
-    -- },
+    vtsls = {
+      settings = {
+        typescript = {
+          preferences = {
+            importModuleSpecifier = "non-relative",
+          },
+        },
+      }
+    },
     lua_ls = {
       settings = {
         Lua = {
@@ -59,6 +66,41 @@ return function (add)
         },
       },
     },
+    jsonls = {
+      on_new_config = function(new_config)
+        new_config.settings.json.schemas = new_config.settings.json.schemas or {}
+        vim.list_extend(new_config.settings.json.schemas, require('schemastore').json.schemas())
+      end,
+      settings = {
+        json = {
+          schemas = require("schemastore").json.schemas(),
+          validate = { enable = true },
+        },
+      },
+    },
+    yamlls = {
+      on_new_config = function(new_config)
+        new_config.settings.yaml.schemas = vim.tbl_deep_extend('force', new_config.settings.yaml.schemas or {}, require('schemastore').yaml.schemas())
+      end,
+      settings = {
+        yaml = {
+          schemaStore = {
+            enable = false,
+            url = "",
+          },
+          schemas = require("schemastore").yaml.schemas({
+            replace = {
+              ['gitlab-ci'] = {
+                description = 'Gitlab CI',
+                fileMatch = { '.gitlab*yml', 'gitlab*yml', '.snyk.yml' },
+                name = "gitlab-ci",
+                url = "https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"
+              }
+            },
+          }),
+        },
+      },
+    },
   }
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -66,7 +108,7 @@ return function (add)
 
   local lspconfig = require('lspconfig')
   lspconfig.util.default_config = vim.tbl_extend( "force", lspconfig.util.default_config,
-    { on_attach = function(client) client.server_capabilities.semanticTokensProvider = nil end })
+  { on_attach = function(client) client.server_capabilities.semanticTokensProvider = nil end })
 
   require("mason").setup({ ui = { border = "rounded" } })
   require("mason-lspconfig").setup({
