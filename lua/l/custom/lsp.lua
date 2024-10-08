@@ -2,7 +2,6 @@ return function (add)
   add("neovim/nvim-lspconfig")
   add("williamboman/mason.nvim")
   add("williamboman/mason-lspconfig.nvim")
-  add("hrsh7th/cmp-nvim-lsp")
 
   vim.keymap.set("n", "<leader>qp", vim.diagnostic.setqflist)
   vim.keymap.set("n", "<leader>pq", vim.diagnostic.setloclist)
@@ -103,7 +102,6 @@ return function (add)
   }
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
   local lspconfig = require('lspconfig')
   lspconfig.util.default_config = vim.tbl_extend( "force", lspconfig.util.default_config,

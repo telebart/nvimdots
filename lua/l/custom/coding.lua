@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 return function (add)
   add("hrsh7th/nvim-cmp")
   add("saadparwaiz1/cmp_luasnip")
@@ -8,57 +9,46 @@ return function (add)
   add("rafamadriz/friendly-snippets")
   add("mfussenegger/nvim-lint")
   add('stevearc/conform.nvim')
-
-  local cmp = require("cmp")
-  local luasnip = require("luasnip")
-  luasnip.setup({
-    history = true,
-    region_check_events = 'InsertEnter',
-    delete_check_events = 'InsertLeave',
-    update_events = { "TextChanged", "TextChangedI" }
-  })
-  require("luasnip.loaders.from_vscode").lazy_load()
-  cmp.setup({
-    snippet = {
-      expand = function(args)
-        require("luasnip").lsp_expand(args.body)
-      end,
+  -- add({
+  --   source = "Saghen/blink.cmp",
+  --   checkout = "v0.2.0",
+  --   monitor = "main"
+  -- })
+  add("telebart/blink.cmp")
+  require("blink.cmp").setup({
+    highlight = {
+      use_nvim_cmp_as_default = true,
     },
-    window = {
-      completion = cmp.config.window.bordered(),
-      documentation = cmp.config.window.bordered(),
+    fuzzy = {
+      use_frecency = false
+    },
+    keymap = {
+      show = "<C-e>",
+      select_next = "<C-n>",
+      select_prev = "<C-p>",
+      snippet_forward = "<C-j>",
+      snippet_backward = "<C-k>",
+      scroll_documentation_down = "<C-d>",
+      scroll_documentation_up = "<C-u>",
+    },
+    windows = {
+      autocomplete = {
+        border = "rounded",
+        draw = "reversed",
+      },
+      documentation = {
+        border = "rounded",
+      },
     },
     sources = {
-      { name = 'nvim_lsp' },
-      { name = 'luasnip' },
-    },
-    completion = { completeopt = "menu,menuone,noinsert" },
-    mapping = cmp.mapping.preset.insert({
-      ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-d>'] = cmp.mapping.scroll_docs(4),
-      ['<TAB>'] = cmp.mapping.confirm({select = true, behavior = cmp.ConfirmBehavior.Insert}),
-      ['<C-p>'] = cmp.mapping.select_prev_item({behavior = cmp.SelectBehavior.Select}),
-      ['<C-n>'] = cmp.mapping.select_next_item({behavior = cmp.SelectBehavior.Select}),
-      ['<C-e>'] = cmp.mapping(function()
-        if cmp.visible() then
-          cmp.close()
-        else
-          cmp.complete()
-        end
-      end),
-      ['<C-j>'] = cmp.mapping(function()
-        if luasnip.expand_or_locally_jumpable() then
-          luasnip.expand_or_jump()
-        end
-      end, { 'i', 's' }),
-      ['<C-k>'] = cmp.mapping(function(fallback)
-        if luasnip.locally_jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { 'i', 's' }),
-    }),
+      providers = {
+        {
+          { 'blink.cmp.sources.lsp' },
+          { 'blink.cmp.sources.path' },
+          { 'blink.cmp.sources.snippets', score_offset = -3 },
+        },
+      }
+    }
   })
 
   require('lint').linters_by_ft = {
