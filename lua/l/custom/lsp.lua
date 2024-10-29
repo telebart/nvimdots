@@ -2,13 +2,16 @@ return function (add)
   add("neovim/nvim-lspconfig")
   add("williamboman/mason.nvim")
   add("williamboman/mason-lspconfig.nvim")
+  add("b0o/SchemaStore.nvim")
   add("hrsh7th/cmp-nvim-lsp")
 
   vim.keymap.set("n", "<leader>qp", vim.diagnostic.setqflist)
   vim.keymap.set("n", "<leader>pq", vim.diagnostic.setloclist)
   vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
-  vim.keymap.set('n', '<leader>k', function() vim.diagnostic.jump({count = -1}) end)
-  vim.keymap.set('n', '<leader>j', function() vim.diagnostic.jump({count = 1}) end)
+  -- vim.keymap.set('n', '<leader>k', function() vim.diagnostic.jump({count = -1}) end)
+  -- vim.keymap.set('n', '<leader>j', function() vim.diagnostic.jump({count = 1}) end)
+  vim.keymap.set('n', '<leader>k', function() vim.diagnostic.goto_prev() end)
+  vim.keymap.set('n', '<leader>j', function() vim.diagnostic.goto_next() end)
   vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("l-lsp-attach", {clear = true}),
     callback = function (event)
@@ -36,6 +39,7 @@ return function (add)
         typescript = {
           preferences = {
             importModuleSpecifier = "non-relative",
+            preferTypeOnlyImports = true,
           },
         },
       }
@@ -43,13 +47,8 @@ return function (add)
     lua_ls = {
       settings = {
         Lua = {
-          runtime = { version = "LuaJIT", },
-          workspace = {
-            checkThirdParty = false,
-            library = {
-              "${3rd}/luv/library",
-              unpack(vim.api.nvim_get_runtime_file('', true))
-            },
+          completion = {
+            callSnippet = 'Replace',
           },
         }
       }
@@ -107,7 +106,7 @@ return function (add)
 
   local lspconfig = require('lspconfig')
   lspconfig.util.default_config = vim.tbl_extend( "force", lspconfig.util.default_config,
-  { on_attach = function(client) client.server_capabilities.semanticTokensProvider = nil end })
+  { on_attach = function(client) client.server_capabilities.semanticTokensProvider = false end })
 
   require("mason").setup({ ui = { border = "rounded" } })
   require("mason-lspconfig").setup({
@@ -119,5 +118,4 @@ return function (add)
       end,
     }
   })
-  lspconfig.zls.setup({})
 end

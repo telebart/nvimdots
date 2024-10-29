@@ -54,6 +54,7 @@ set wildignore+=**/node_modules/**
 set spr sb
 set grepprg=rg\ --vimgrep
 set grepformat=%f:%l:%c:%m
+set nocursorline
 
 " Netrw
 let g:netrw_banner=0

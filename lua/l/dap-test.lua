@@ -252,7 +252,7 @@ function: (selector_expression
 
     vim.cmd("botright 24split new")
 
-    local cmd = {"go", "test", "-v", "-tags", M.buildtags, testpath, "-run", testname}
+    local cmd = {"go", "test", "-v", "-race", "-tags", M.buildtags, testpath, "-run", testname}
 
     vim.fn.termopen(cmd)
     term = vim.api.nvim_get_current_buf()

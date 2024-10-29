@@ -36,9 +36,10 @@ return function (add, later)
     },
   })
   vim.g.mkdp_auto_close = 0
+  vim.g.mkdp_theme = 'dark'
   vim.g.mkdp_browser = "firefox"
   vim.g.mkdp_combine_preview = 1
-  vim.g.mkdp_filetypes = { "markdown", "plantuml" }
+  vim.g.mkdp_filetypes = { "markdown", "plantuml", "asciidoc" }
   if vim.fn.has("mac") == 1 then
     vim.cmd[[
         function OpenMarkdownPreview (url)
@@ -58,8 +59,7 @@ return function (add, later)
 
   add("uga-rosa/ccc.nvim")
   require("ccc").setup({
-    highlight_mode = "virtual",
-    virtual_pos = "inline-right",
+    highlight_mode = "background",
     highlighter = {
       auto_enable = true,
       lsp = true,

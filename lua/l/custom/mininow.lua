@@ -1,5 +1,6 @@
 return function (add)
   add("echasnovski/mini.nvim")
+  require("mini.icons").setup({})
   require("mini.files").setup({
     mappings = {
       go_in_plus = "l",
