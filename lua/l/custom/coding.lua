@@ -1,5 +1,5 @@
 return function (add)
-  add("hrsh7th/nvim-cmp")
+  add("iguanacucumber/magazine.nvim")
   add("saadparwaiz1/cmp_luasnip")
   add({
     source ="L3MON4D3/LuaSnip",
