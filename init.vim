@@ -106,6 +106,7 @@ nnoremap <leader>yfp <cmd>let @+=expand("%:p")<CR>
 
 " LSP
 nnoremap <leader>lr <cmd>LspRestart<CR>
+nnoremap <leader>li <cmd>LspInfo<CR>
 
 " QF
 nnoremap <C-k> <cmd>cprev<CR>zz
@@ -153,3 +154,21 @@ nnoremap <leader>pp :put=execute('')<Left><Left>
 command! BufOnly execute '%bdelete|edit #|normal `"'
 
 lua require("l.deps")
+
+function! GetFilesize()
+        let size = getfsize(expand(@%))
+        if size < 1024
+          return size . 'B'
+        elseif size < 1048576
+          return (round(size / 1024.0 * 100)/100) . 'KB'
+        else
+          return (round(size / 1048576.0 *100)/100) . 'MB'
+endfunction
+
+set statusline=
+set statusline+=%#ModeMsg#%f
+set statusline+=%#Title#%m
+set statusline+=%#NonText#\ %{GetFilesize()}
+set statusline+=%=
+set statusline+=%#Title#%y
+set statusline+=%#Boolean#\ %(%l/%L%):%c/%-2{virtcol('$')-1}

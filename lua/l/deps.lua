@@ -16,7 +16,6 @@ require('mini.deps').setup({ path = { package = path_package } })
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 now(function () require("l.custom.colorschema")(add) end)
-now(function () require("l.custom.heirline")(add) end)
 now(function () require("l.custom.coding")(add) end)
 now(function () require("l.custom.lsp")(add) end)
 now(function () require("l.custom.mininow")(add) end)
