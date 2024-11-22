@@ -32,7 +32,17 @@ return function (add)
 
   vim.api.nvim_create_autocmd("User", {
     pattern = "MiniPickStart",
-    callback = MiniFiles.close,
+    callback = function ()
+      vim.o.smartcase, vim.o.ignorecase = true, true
+      MiniFiles.close()
+    end
+  })
+
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "MiniPickStop",
+    callback = function ()
+      vim.o.smartcase, vim.o.ignorecase = false, false
+    end
   })
 
   -- FILES
@@ -80,11 +90,7 @@ return function (add)
     table.insert(find_repo_cmd, home .. v)
   end
 
-  vim.keymap.set("n", "<C-p>", function()
-    vim.o.smartcase, vim.o.ignorecase = true, true
-    MiniPick.builtin.files()
-    vim.o.smartcase, vim.o.ignorecase = false, false
-  end)
+  vim.keymap.set("n", "<C-p>", MiniPick.builtin.files)
   vim.keymap.set("n", "<leader>pa", MiniPick.builtin.grep_live)
   vim.keymap.set("n", "<leader>pw", function() MiniPick.builtin.grep({ pattern = vim.fn.expand("<cword>") }) end)
   vim.keymap.set("n", "<leader>pb", MiniPick.builtin.buffers)

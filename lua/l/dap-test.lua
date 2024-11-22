@@ -29,13 +29,14 @@ function M.setup()
     },
     {
       type = 'go',
-      name = 'Debug Test',
+      name = 'Debug package',
       buildFlags = "-tags=" .. M.buildtags,
       request = 'launch',
-      mode = 'test',
       showLog = false,
-      program = "./${relativeFileDirname}",
+      program = "${fileDirname}",
+      dlvFlags = {"--check-go-version=false"},
       dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
+
     },
   }
 end

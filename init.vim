@@ -119,6 +119,7 @@ nnoremap <leader>qq <cmd>call ToggleLocList()<CR>
 nnoremap B <cmd>Gitsigns toggle_current_line_blame<CR>
 
 nnoremap <leader>rr <cmd>lua Root()<CR>
+nnoremap <leader>rl <cmd>lua Root(true)<CR>
 
 nnoremap <leader>ii <cmd>set ignorecase! smartcase!<CR>
 
