@@ -23,6 +23,8 @@ return function (add)
       vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = event.buf })
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = event.buf })
       vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = event.buf })
+      vim.keymap.set("n", "<leader>GI", vim.lsp.buf.incoming_calls, { buffer = event.buf })
+      vim.keymap.set("n", "<leader>GO", vim.lsp.buf.outgoing_calls, { buffer = event.buf })
       vim.keymap.set({ "i", "n" }, "<C-h>", vim.lsp.buf.signature_help, { buffer = event.buf })
     end
   })
@@ -39,7 +41,6 @@ return function (add)
         typescript = {
           preferences = {
             importModuleSpecifier = "non-relative",
-            preferTypeOnlyImports = true,
           },
         },
       }
