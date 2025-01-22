@@ -25,7 +25,6 @@ let g:loaded_tutor_mode_plugin = 1
 "let g:loaded_netrwPlugin = 1
 "let g:loaded_netrwSettings = 1
 
-set shell=dash
 set hls
 set incsearch
 set nowrap
@@ -45,11 +44,10 @@ set list listchars=tab:▸\ ,trail:·
 set nofixendofline
 set cpoptions+=>
 set termguicolors
-set splitkeep="screen"
+set splitkeep=screen
 set spell
 set spelloptions=camel,noplainbuffer
 set laststatus=2
-set path+=**
 set wildignore+=**/node_modules/**
 set spr sb
 set grepprg=rg\ --vimgrep
@@ -96,11 +94,6 @@ nnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG
 
 nnoremap J m'J``
-
-nnoremap yap m'yap``
-nnoremap yip m'yip``
-nnoremap yaw m'yaw``
-nnoremap yiw m'yiw``
 
 nnoremap <leader>yfp <cmd>let @+=expand("%:p")<CR>
 
@@ -172,3 +165,12 @@ set statusline+=%#NonText#\ %{GetFilesize()}
 set statusline+=%=
 set statusline+=%#Title#%y
 set statusline+=%#Boolean#\ %(%l/%L%):%c/%-2{virtcol('$')-1}
+augroup yank_restore_cursor
+  autocmd!
+  autocmd VimEnter,CursorMoved *
+        \ let s:cursor = getpos('.')
+  autocmd TextYankPost *
+        \ if v:event.operator ==? 'y' |
+        \ call setpos('.', s:cursor) |
+        \ endif
+augroup END
