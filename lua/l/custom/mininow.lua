@@ -112,9 +112,16 @@ return function (add)
           for w in item:gmatch("%S+") do
             table.insert(out, w)
           end
-          vim.fn.jobstart({ "git", "checkout", out[2] })
+          vim.system({ "git", "checkout", out[2] }, {}, function (obj)
+            if obj.code == 0 then
+              vim.print(string.format("checkout %s", out[2]))
+            else
+              vim.print("checkout failed")
+            end
+          end)
         end,
       },
+
     })
   end
 

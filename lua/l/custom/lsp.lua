@@ -17,7 +17,9 @@ return function (add)
     callback = function (event)
       vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = event.buf })
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = event.buf })
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = event.buf })
+      vim.keymap.set("n", "K", function ()
+        vim.lsp.buf.hover({border = "rounded"})
+      end, { buffer = event.buf })
       vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = event.buf })
       vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, { buffer = event.buf })
       vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = event.buf })
@@ -25,14 +27,19 @@ return function (add)
       vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = event.buf })
       vim.keymap.set("n", "<leader>GI", vim.lsp.buf.incoming_calls, { buffer = event.buf })
       vim.keymap.set("n", "<leader>GO", vim.lsp.buf.outgoing_calls, { buffer = event.buf })
-      vim.keymap.set({ "i", "n" }, "<C-h>", vim.lsp.buf.signature_help, { buffer = event.buf })
+      vim.keymap.set({ "i", "n" }, "<C-h>", function ()
+        vim.lsp.buf.signature_help({ border = "rounded" })
+      end, { buffer = event.buf })
     end
   })
 
-  vim.diagnostic.config({ float = { border = "rounded", header = "", prefix = "", source = true} })
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-  vim.lsp.handlers["textDocument/signatureHelp"] =
-  vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+  vim.diagnostic.config({
+    float = { border = "rounded", header = "", prefix = "", source = true},
+    virtual_text = true,
+  })
+  -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+  -- vim.lsp.handlers["textDocument/signatureHelp"] =
+  -- vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
   -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
   local servers = {

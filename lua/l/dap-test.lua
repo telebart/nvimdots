@@ -158,7 +158,7 @@ function M.test(scope)
 
   vim.cmd("botright 12split new")
 
-  local cmd = {"go", "test", "-v", "-race", "-tags", M.buildtags, testpath, "-run", testname}
+  local cmd = {"gotestsum", "--format", "testname", "--", "-v", "-race", "-tags", M.buildtags, testpath, "-run", testname}
   vim.print(cmd)
 
   vim.fn.termopen(cmd)

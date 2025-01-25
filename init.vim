@@ -82,6 +82,7 @@ let g:mapleader=" "
 let g:maplocalleader=" "
 
 inoremap <silent> <C-e> <nop>
+nnoremap <nowait> gr gr
 
 nnoremap <space><space> <cmd>make<CR>
 

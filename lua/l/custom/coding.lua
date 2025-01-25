@@ -1,3 +1,5 @@
+local lint = true
+
 return function (add)
   add("iguanacucumber/magazine.nvim")
   add("saadparwaiz1/cmp_luasnip")
@@ -69,13 +71,26 @@ return function (add)
     -- typescriptreact = {"eslint_d"},
     terraform = {"snyk_iac"},
   }
-  -- require('lint').linters.eslint_d.args = vim.list_extend({"--rule", "prettier/prettier: 0"}, require('lint').linters.eslint_d.args)
+  require('lint').linters.eslint_d.args = vim.list_extend({"--rule", "prettier/prettier: 0"}, require('lint').linters.eslint_d.args)
   vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
     callback = function()
+      if not lint then return end
       require("lint").try_lint()
     end,
   })
-
+  vim.keymap.set('n', '<leader>lt', function()
+    if lint then
+      local linters = require("lint").linters_by_ft[vim.bo.filetype]
+      for _, l in ipairs(linters) do
+        local ns = require("lint").get_namespace(l)
+        vim.diagnostic.reset(ns)
+      end
+      print("lint disabled")
+    else
+      print("lint enabled")
+    end
+    lint = not lint
+  end)
   vim.keymap.set('n', '<leader>ff', function()
     require("conform").format({ lsp_fallback = true })
     vim.cmd('write')
@@ -96,25 +111,6 @@ return function (add)
       json = { "prettier" },
       yaml = { "prettier" },
       xml = { "xmlformat" },
-    },
-    formatters = {
-      biome = {
-        command = "biome",
-        args = {
-          "check",
-          "--trailing-comma=all",
-          "--organize-imports-enabled=false",
-          "--semicolons=as-needed",
-          "--indent-style=space",
-          "--indent-width=2",
-          "--line-width=100",
-          "--quote-style=single",
-          "--apply",
-          "--stdin-file-path",
-          "$FILENAME",
-        },
-        formatStdin = true,
-      },
     }
   })
 
