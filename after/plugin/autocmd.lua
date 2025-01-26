@@ -16,6 +16,7 @@ vim.cmd([[
   " create directory before writing file
   au BufWritePre,FileWritePre * if @% !~# '\(://\)' | call mkdir(expand('<afile>:p:h'), 'p') | endif
   au TermOpen * setlocal nonu nornu nospell signcolumn=no so=0 siso=0 | startinsert | nnoremap <buffer> q <CMD>bd!<CR>
+  au FileType dap-float,minideps-confirm nnoremap <buffer> q <CMD>close<CR>
 ]])
 
 vim.api.nvim_create_autocmd('BufWritePre', {

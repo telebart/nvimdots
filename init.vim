@@ -113,7 +113,7 @@ nnoremap <leader>Y gg"+yG
 
 nnoremap J m'J``
 
-nnoremap <leader>yfp <cmd>let @+=expand("%:p")<CR>
+nnoremap <leader>yfp <cmd>let @+=expand("%")<CR>
 
 " LSP
 nnoremap <leader>lr <cmd>LspRestart<CR>
@@ -136,11 +136,6 @@ nnoremap <leader>rl <cmd>lua Root(true)<CR>
 nnoremap <leader>ii <cmd>set ignorecase! smartcase!<CR>
 
 tnoremap <C-h> <C-\><C-N>
-
-nnoremap <M-H> <C-W>h
-nnoremap <M-J> <C-W>j
-nnoremap <M-K> <C-W>k
-nnoremap <M-L> <C-W>l
 
 nnoremap ö :
 
@@ -167,13 +162,16 @@ command! BufOnly execute '%bdelete|edit #|normal `"'
 lua require("l.deps")
 
 function! GetFilesize()
-        let size = getfsize(expand(@%))
-        if size < 1024
-          return size . 'B'
-        elseif size < 1048576
-          return (round(size / 1024.0 * 100)/100) . 'KB'
-        else
-          return (round(size / 1048576.0 *100)/100) . 'MB'
+  if &filetype == "dap-repl"
+    return
+  endif
+  let size = getfsize(expand(@%))
+  if size < 1024
+    return size . 'B'
+  elseif size < 1048576
+    return (round(size / 1024.0 * 100)/100) . 'KB'
+  else
+    return (round(size / 1048576.0 *100)/100) . 'MB'
 endfunction
 
 augroup yank_restore_cursor

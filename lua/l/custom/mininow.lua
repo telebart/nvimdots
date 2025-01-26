@@ -93,7 +93,7 @@ return function (add)
   vim.keymap.set("n", "<C-p>", MiniPick.builtin.files)
   vim.keymap.set("n", "<leader>pa", MiniPick.builtin.grep_live)
   vim.keymap.set("n", "<leader>pw", function() MiniPick.builtin.grep({ pattern = vim.fn.expand("<cword>") }) end)
-  vim.keymap.set("n", "<leader>pb", MiniPick.builtin.buffers)
+  vim.keymap.set("n", "<leader>pr", MiniPick.builtin.resume)
   vim.keymap.set("n", "<leader>ph", MiniPick.builtin.help)
   vim.keymap.set("n", "<leader>fj", function()
     local selection = MiniPick.builtin.cli({ command = find_repo_cmd },
