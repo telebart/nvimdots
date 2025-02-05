@@ -13,7 +13,7 @@ local function get_closest_test()
     if current_node:type() == "function_declaration" then
       local name = current_node:field("name")[1]
       if name and vim.treesitter.get_node_text(current_node:field("name")[1], 0):sub(1, 4) == "Test" then
-        return vim.treesitter.get_node_text(name, 0) .. subtest
+        return "^" .. vim.treesitter.get_node_text(name, 0) .. "$" .. subtest
       end
     end
 
@@ -22,7 +22,7 @@ local function get_closest_test()
       if first_child then
         local field = first_child:field("field")[1]
         if field and vim.treesitter.get_node_text(field, 0) == "Run" then
-          subtest = "/" .. vim.treesitter.get_node_text(current_node:child(1):child(1):child(1), 0)
+          subtest = "/^" .. vim.treesitter.get_node_text(current_node:child(1):child(1):child(1), 0) .. "$"
         end
       end
     end

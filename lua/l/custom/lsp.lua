@@ -52,23 +52,10 @@ return function (add)
         },
       }
     },
-    lua_ls = {
-      settings = {
-        Lua = {
-          completion = {
-            callSnippet = 'Replace',
-          },
-        }
-      }
-    },
     gopls = {
       settings = {
         gopls = {
           buildFlags = { "-tags", "test,account_test" },
-          analyses = {
-            unusedparams = true,
-            nilness = true,
-          },
         },
       },
     },
