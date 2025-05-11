@@ -21,7 +21,7 @@ vim.cmd([[
 
 vim.api.nvim_create_autocmd('BufWritePre', {
   group = vim.api.nvim_create_augroup("l_auto_format", { clear = true }),
-  pattern = {"*.go", "*.js", "*.ts", "*.jsx", "*.tsx", "*.json", "*.graphql", "*.tf"},
+  pattern = {"*.go", "*.js", "*.ts", "*.jsx", "*.tsx", "*.json", "*.tf"},
   callback = function(args)
     require("conform").format({ bufnr = args.buf })
   end,
@@ -52,4 +52,5 @@ vim.keymap.set('n', '<leader>lq', function() run_term("lazygit -f %") end)
 
 vim.keymap.set('n', '<leader>ld', function() run_term("lazydocker") end)
 vim.keymap.set('n', '<leader>lf', function() run_term("lf %") end)
+vim.keymap.set('n', '<leader>ly', function() run_term("yazi %") end)
 vim.keymap.set('n', '<leader>to', function() run_term(nil, string.format("%dsplit",vim.fn.winheight(0)/3+1)) end)

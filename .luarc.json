@@ -4,7 +4,8 @@
       "vim",
       "MiniPick",
       "MiniFiles",
-      "MiniExtra"
+      "MiniExtra",
+            "MiniDeps"
     ]
   }
 }

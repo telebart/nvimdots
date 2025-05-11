@@ -156,9 +156,13 @@ function M.test(scope)
   pcall(vim.api.nvim_buf_delete, term, { force = true })
   term = nil
 
-  vim.cmd("botright 12split new")
+  -- get window height
+  local height = vim.api.nvim_get_option("lines")
+  height = math.floor(height * 0.3)
 
-  local cmd = {"gotestsum", "--format", "testname", "--", "-v", "-race", "-tags", M.buildtags, testpath, "-run", testname}
+  vim.cmd(string.format("botright %dsplit new", height))
+
+  local cmd = {"go", "test", "-v", "-race", "-tags", M.buildtags, testpath, "-run", testname}
   vim.print(cmd)
 
   vim.fn.termopen(cmd)

@@ -53,6 +53,8 @@ set spr sb
 set grepprg=rg\ --vimgrep
 set grepformat=%f:%l:%c:%m
 set nocursorline
+set diffopt+="algorithm:histogram"
+set winborder=rounded
 
 hi Normal guibg=NONE
 hi NormalFloat guibg=NONE
@@ -62,14 +64,6 @@ hi Keyword guifg=#3e8fb0
 hi @variable.member guifg=#65c2b4
 hi Operator guifg=NvimLightGray4
 hi Delimiter guifg=NvimLightGray4
-
-set statusline=
-set statusline+=%#Delimiter#%f
-set statusline+=%#Title#%m
-set statusline+=%#NonText#\ %{GetFilesize()}
-set statusline+=%=
-set statusline+=%#Title#%y
-set statusline+=%#Boolean#\ %(%l/%L%):%c/%-2{virtcol('$')-1}
 
 " Netrw
 let g:netrw_banner=0
@@ -113,7 +107,7 @@ nnoremap <leader>Y gg"+yG
 
 nnoremap J m'J``
 
-nnoremap <leader>yfp <cmd>let @+=expand("%")<CR>
+nnoremap <leader>YFP <cmd>let @+=expand("%")<CR>
 
 " LSP
 nnoremap <leader>lr <cmd>LspRestart<CR>
@@ -173,6 +167,14 @@ function! GetFilesize()
   else
     return (round(size / 1048576.0 *100)/100) . 'MB'
 endfunction
+
+set statusline=
+set statusline+=%#Delimiter#%f
+set statusline+=%#Title#%m
+set statusline+=%#NonText#\ %{GetFilesize()}
+set statusline+=%=
+set statusline+=%#Title#%y
+set statusline+=%#Boolean#\ %(%l/%L%):%c/%-2{virtcol('$')-1}
 
 augroup yank_restore_cursor
   autocmd!

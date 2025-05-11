@@ -14,14 +14,14 @@ end
 
 require('mini.deps').setup({ path = { package = path_package } })
 
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
-now(function () require("l.custom.coding")(add) end)
-now(function () require("l.custom.lsp")(add) end)
-now(function () require("l.custom.mininow")(add) end)
-later(function () require("l.custom.treesitter")(add) end)
+local now, later = MiniDeps.now, MiniDeps.later
+now(function () require("l.custom.coding") end)
+now(function () require("l.custom.lsp") end)
+now(function () require("l.custom.mininow") end)
+later(function () require("l.custom.treesitter") end)
 later(function () require("l.custom.minilater") end)
-later(function () require("l.custom.harpoon")(add) end)
-later(function () require("l.custom.dap")(add) end)
-later(function () require("l.custom.gitsigns")(add) end)
-later(function () require("l.custom.others")(add, later) end)
+later(function () require("l.custom.harpoon") end)
+later(function () require("l.custom.mydap") end)
+later(function () require("l.custom.gitsigns") end)
+later(function () require("l.custom.others") end)
 
