@@ -3,7 +3,6 @@ add("neovim/nvim-lspconfig")
 add("williamboman/mason.nvim")
 add("williamboman/mason-lspconfig.nvim")
 add("b0o/SchemaStore.nvim")
-add("hrsh7th/cmp-nvim-lsp")
 
 vim.keymap.set("n", "<leader>qp", vim.diagnostic.setqflist)
 vim.keymap.set("n", "<leader>pq", vim.diagnostic.setloclist)
@@ -23,7 +22,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = event.buf })
     vim.keymap.set("n", "<leader>GI", vim.lsp.buf.incoming_calls, { buffer = event.buf })
     vim.keymap.set("n", "<leader>GO", vim.lsp.buf.outgoing_calls, { buffer = event.buf })
-    vim.keymap.set({ "i", "n" }, "<C-h>", vim.lsp.buf.signature_help , { buffer = event.buf })
+    vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help , { buffer = event.buf })
   end
 })
 
@@ -32,11 +31,7 @@ vim.diagnostic.config({
   virtual_text = true,
 })
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
 vim.lsp.config('*', {
-  capabilities = capabilities,
   on_attach = function(client)
     client.server_capabilities.semanticTokensProvider = nil
   end

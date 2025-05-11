@@ -1,63 +1,46 @@
 local add = MiniDeps.add
-add("iguanacucumber/magazine.nvim")
-add("saadparwaiz1/cmp_luasnip")
-add({
-  source ="L3MON4D3/LuaSnip",
-  hooks = { post_checkout = function() os.execute("make install_jsregexp") end },
-})
 add("rafamadriz/friendly-snippets")
 add("mfussenegger/nvim-lint")
 add('stevearc/conform.nvim')
-
-local cmp = require("cmp")
-local luasnip = require("luasnip")
-luasnip.setup({
-  history = true,
-  region_check_events = 'InsertEnter',
-  delete_check_events = 'InsertLeave',
-  update_events = { "TextChanged", "TextChangedI" }
+add({
+  source = "https://github.com/Saghen/blink.cmp",
+  checkout = "v1.2.0",
 })
-require("luasnip.loaders.from_vscode").lazy_load()
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      require("luasnip").lsp_expand(args.body)
-    end,
-  },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
+
+require("blink.cmp").setup({
+  completion = {
+    documentation = { auto_show = true, auto_show_delay_ms = 50 },
+    ghost_text = { enabled = false },
+    list = { selection = { preselect = true, auto_insert = false } },
+    menu = {
+      draw = {
+        columns = { { "label", "label_description", gap = 1 }, { "kind" } },
+      },
+    },
   },
   sources = {
-    { name = 'nvim_lsp' },
+    default = { 'lsp' },
   },
-  completion = { completeopt = "menu,menuone,noinsert" },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-d>'] = cmp.mapping.scroll_docs(4),
-    ['<TAB>'] = cmp.mapping.confirm({select = true, behavior = cmp.ConfirmBehavior.Insert}),
-    ['<C-p>'] = cmp.mapping.select_prev_item({behavior = cmp.SelectBehavior.Select}),
-    ['<C-n>'] = cmp.mapping.select_next_item({behavior = cmp.SelectBehavior.Select}),
-    ['<C-e>'] = cmp.mapping(function()
-      if cmp.visible() then
-        cmp.close()
-      else
-        cmp.complete()
+  keymap = {
+    ["<C-space>"] = {},
+    ["<C-s>"] = { function(cmp) cmp.show({ providers = { 'snippets' } }) end },
+    ["<TAB>"] = { "accept", "fallback" },
+    ["<C-j>"] = { "snippet_forward", "fallback" },
+    ["<C-k>"] = { "snippet_backward", "fallback" },
+    ["<C-d>"] = { "scroll_documentation_down", "fallback" },
+    ["<C-u>"] = { "scroll_documentation_up", "fallback" },
+    ['<C-p>'] = { 'select_prev', 'fallback' },
+    ['<C-n>'] = { 'select_next', 'fallback' },
+    ["<C-e>"] = {
+      function(cmp)
+        if cmp.is_visible() then
+          cmp.hide()
+        else
+          cmp.show()
+        end
       end
-    end),
-    ['<C-j>'] = cmp.mapping(function()
-      if luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
-      end
-    end, { 'i', 's' }),
-    ['<C-k>'] = cmp.mapping(function(fallback)
-      if luasnip.locally_jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-  }),
+    }
+  }
 })
 
 require('lint').linters_by_ft = {
