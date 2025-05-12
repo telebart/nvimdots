@@ -8,6 +8,7 @@ add({
 })
 
 require("blink.cmp").setup({
+  cmdline = { enabled = false },
   completion = {
     documentation = { auto_show = true, auto_show_delay_ms = 50 },
     ghost_text = { enabled = false },
@@ -67,11 +68,9 @@ vim.keymap.set('n', '<leader>lt', function()
       local ns = require("lint").get_namespace(l)
       vim.diagnostic.reset(ns)
     end
-    print("lint disabled")
-  else
-    print("lint enabled")
   end
   lint = not lint
+  print("lint: " .. (lint and "enabled" or "disabled"))
 end)
 vim.keymap.set('n', '<leader>ff', function()
   require("conform").format({ lsp_fallback = true })

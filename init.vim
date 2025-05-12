@@ -63,7 +63,7 @@ hi StatusLineNC guibg=NONE
 hi PMenu guibg=NONE
 hi Keyword guifg=#3e8fb0
 hi @variable.member guifg=#65c2b4
-hi BlinkCmpKind guifg=NvimLightCyan guibg=NONE
+hi BlinkCmpKind guifg=NvimLightCyan
 hi PmenuSel cterm=underline gui=NONE guibg=NvimDarkGray4
 hi Operator guifg=NvimLightGray4
 hi Delimiter guifg=NvimLightGray4
