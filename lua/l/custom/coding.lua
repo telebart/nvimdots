@@ -55,6 +55,7 @@ require('lint').linters_by_ft = {
 
 local lint = true
 require('lint').linters.eslint_d.args = vim.list_extend({"--rule", "prettier/prettier: 0"}, require('lint').linters.eslint_d.args)
+require('lint').linters.golangcilint.args = vim.list_extend({"--fix=false"}, require('lint').linters.golangcilint.args)
 vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
   callback = function()
     if not lint then return end
