@@ -39,7 +39,7 @@ set updatetime=50
 set shortmess+=WcC
 set signcolumn=yes
 set mouse=a
-set completeopt=menu,menuone,noselect
+set completeopt=menuone,noselect,fuzzy
 set list listchars=tab:▸\ ,trail:·
 set nofixendofline
 set cpoptions+=>
