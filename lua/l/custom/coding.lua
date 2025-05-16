@@ -54,8 +54,8 @@ require('lint').linters_by_ft = {
 }
 
 local lint = true
-require('lint').linters.eslint_d.args = vim.list_extend({"--rule", "prettier/prettier: 0"}, require('lint').linters.eslint_d.args)
-require('lint').linters.golangcilint.args = vim.list_extend({"--fix=false"}, require('lint').linters.golangcilint.args)
+vim.list_extend(require('lint').linters.eslint_d.args, {"--rule", "prettier/prettier: 0"})
+vim.schedule(function() vim.list_extend(require('lint').linters.golangcilint.args, {"--fix=false"}) end, 1000)
 vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
   callback = function()
     if not lint then return end

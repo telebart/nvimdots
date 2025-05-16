@@ -27,8 +27,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 vim.diagnostic.config({
-  float = { header = "", prefix = "", source = true},
-  virtual_text = true,
+  float = { max_width = 100, source = "if_many"},
 })
 
 vim.lsp.config('*', {
