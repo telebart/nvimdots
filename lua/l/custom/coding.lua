@@ -14,6 +14,7 @@ require("blink.cmp").setup({
     ghost_text = { enabled = false },
     list = { selection = { preselect = true, auto_insert = false } },
     menu = {
+      max_height = 20,
       draw = {
         columns = { { "label", "label_description", gap = 1 }, { "kind" } },
       },

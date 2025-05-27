@@ -58,15 +58,15 @@ set winborder=rounded
 
 hi Normal guibg=NONE
 hi NormalFloat guibg=NONE
-hi StatusLine guibg=NONE
+hi StatusLine guibg=NONE gui=bold
 hi StatusLineNC guibg=NONE
 hi PMenu guibg=NONE
 hi Keyword guifg=#3e8fb0
 hi @variable.member guifg=#65c2b4
 hi BlinkCmpKind guifg=NvimLightCyan
 hi PmenuSel cterm=underline gui=NONE guibg=NvimDarkGray4
-hi Operator guifg=NvimLightGray4
-hi Delimiter guifg=NvimLightGray4
+hi Operator guifg=NvimLightGrey4
+hi Delimiter guifg=NvimLightGrey4
 
 " Netrw
 let g:netrw_banner=0
@@ -156,28 +156,8 @@ vnoremap <RightMouse> <S-LeftMouse>
 nnoremap <leader>pp :put=execute('')<Left><Left>
 command! BufOnly execute '%bdelete|edit #|normal `"'
 
+lua require("l.statusline")
 lua require("l.deps")
-
-function! GetFilesize()
-  if &filetype == "dap-repl"
-    return
-  endif
-  let size = getfsize(expand(@%))
-  if size < 1024
-    return size . 'B'
-  elseif size < 1048576
-    return (round(size / 1024.0 * 100)/100) . 'KB'
-  else
-    return (round(size / 1048576.0 *100)/100) . 'MB'
-endfunction
-
-set statusline=
-set statusline+=%#Delimiter#%f
-set statusline+=%#Title#%m
-set statusline+=%#NonText#\ %{GetFilesize()}
-set statusline+=%=
-set statusline+=%#Title#%y
-set statusline+=%#Boolean#\ %(%l/%L%):%c/%-2{virtcol('$')-1}
 
 augroup yank_restore_cursor
   autocmd!
