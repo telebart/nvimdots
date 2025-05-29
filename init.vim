@@ -64,6 +64,7 @@ hi PMenu guibg=NONE
 hi Keyword guifg=#3e8fb0
 hi @variable.member guifg=#65c2b4
 hi BlinkCmpKind guifg=NvimLightCyan
+hi link BlinkCmpLabelDeprecated DiagnosticDeprecated
 hi PmenuSel cterm=underline gui=NONE guibg=NvimDarkGray4
 hi Operator guifg=NvimLightGrey4
 hi Delimiter guifg=NvimLightGrey4
