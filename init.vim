@@ -58,11 +58,11 @@ set winborder=rounded
 
 hi Normal guibg=NONE
 hi NormalFloat guibg=NONE
-hi StatusLine guibg=NONE gui=bold
+hi StatusLine guibg=NONE
 hi StatusLineNC guibg=NONE
 hi PMenu guibg=NONE
 hi Keyword guifg=#3e8fb0
-hi @variable.member guifg=#65c2b4
+hi @variable.member guifg=NvimLightBlue
 hi BlinkCmpKind guifg=NvimLightCyan
 hi link BlinkCmpLabelDeprecated DiagnosticDeprecated
 hi PmenuSel cterm=underline gui=NONE guibg=NvimDarkGray4
