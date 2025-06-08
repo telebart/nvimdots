@@ -11,13 +11,3 @@ function GetFilesize()
   end
 end
 vim.o.statusline = [[%#Delimiter#%f%#Title#%m%r %#NonText#%{luaeval("GetFilesize()")}%=%#Title#%y %#Boolean#%(%l/%L%):%c/%-2{virtcol('$')-1}]]
--- vim.cmd[[
--- set statusline=
--- set statusline+=%#Delimiter#%f
--- set statusline+=%#Title#%m
--- set statusline+=%#NonText#\ %{GetFilesize()}
--- set statusline+=%=
--- set statusline+=%#Title#%y
--- set statusline+=%#Boolean#\ %(%l/%L%):%c/%-2{virtcol('$')-1}
--- ]]
---

@@ -56,18 +56,7 @@ set nocursorline
 set diffopt+="algorithm:histogram"
 set winborder=rounded
 
-hi Normal guibg=NONE
-hi NormalFloat guibg=NONE
-hi StatusLine guibg=NONE
-hi StatusLineNC guibg=NONE
-hi PMenu guibg=NONE
-hi Keyword guifg=#3e8fb0
-hi @variable.member guifg=NvimLightBlue
-hi BlinkCmpKind guifg=NvimLightCyan
-hi link BlinkCmpLabelDeprecated DiagnosticDeprecated
-hi PmenuSel cterm=underline gui=NONE guibg=NvimDarkGray4
-hi Operator guifg=NvimLightGrey4
-hi Delimiter guifg=NvimLightGrey4
+lua require("l.colors")()
 
 " Netrw
 let g:netrw_banner=0
@@ -92,7 +81,7 @@ vnoremap <silent> . :normal .<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
 
-nnoremap <leader>tt <cmd>set expandtab!<CR>
+nnoremap <leader>tt <cmd>lua require("l.colors")()<CR>
 
 nnoremap H ^
 nnoremap L g_
