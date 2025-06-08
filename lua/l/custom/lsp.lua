@@ -7,8 +7,8 @@ add("b0o/SchemaStore.nvim")
 vim.keymap.set("n", "<leader>qp", vim.diagnostic.setqflist)
 vim.keymap.set("n", "<leader>pq", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
-vim.keymap.set('n', '<leader>k', function() vim.diagnostic.goto_prev() end)
-vim.keymap.set('n', '<leader>j', function() vim.diagnostic.goto_next() end)
+vim.keymap.set('n', '<leader>k', function() vim.diagnostic.jump({count=-1, float=true}) end)
+vim.keymap.set('n', '<leader>j', function() vim.diagnostic.jump({count=1, float=true}) end)
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("l-lsp-attach", {clear = true}),
   callback = function (event)

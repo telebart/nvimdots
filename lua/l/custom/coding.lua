@@ -4,7 +4,7 @@ add("mfussenegger/nvim-lint")
 add('stevearc/conform.nvim')
 add({
   source = "https://github.com/Saghen/blink.cmp",
-  checkout = "v1.2.0",
+  checkout = "v1.3.1",
 })
 
 require("blink.cmp").setup({
