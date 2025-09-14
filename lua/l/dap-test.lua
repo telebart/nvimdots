@@ -76,7 +76,7 @@ function M.set_buildtags(buildtags)
   local client = vim.lsp.get_clients({name = "gopls", bufnr = vim.api.nvim_get_current_buf()})[1]
   if client == nil then print("no gopls client attached to buffer") return end
   client.config.settings.gopls.buildFlags = {"-tags", M.buildtags}
-  client.notify("workspace/didChangeConfiguration", {settings = client.config.settings})
+  client:notify("workspace/didChangeConfiguration", {settings = client.config.settings})
 end
 
 local function debug_test(testname, testpath)

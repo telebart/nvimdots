@@ -3,50 +3,20 @@ local add = MiniDeps.add
 
 add({
   source="nvim-treesitter/nvim-treesitter",
+  checkout = "main",
   hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
 })
-require("nvim-treesitter.configs").setup({
-  auto_install = true,
-  ensure_installed = { "vim", "vimdoc", "comment" },
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-  indent = { enable = false },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "<c-space>",
-      node_incremental = "<c-space>",
-      scope_incremental = '<c-s>',
-      node_decremental = "<c-m>",
-    },
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
-      -- You can choose the select mode (default is charwise 'v')
-      selection_modes = {
-        ["@parameter.outer"] = "v", -- charwise
-        ["@function.outer"] = "V", -- linewise
-        ["@class.outer"] = "<c-v>", -- blockwise
-      },
-      -- If you set this to `true` (default is `false`) then any textobject is
-      -- extended to include preceding xor succeeding whitespace. Succeeding
-      -- whitespace has priority in order to act similarly to eg the built-in
-      -- `ap`.
-      include_surrounding_whitespace = false,
-    },
-  },
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = {'*'},
+  callback = function(args)
+    local ft = vim.api.nvim_get_option_value("filetype", { buf = args.buf })
+    local parser_name = vim.treesitter.language.get_lang(ft)
+    if not require("nvim-treesitter.parsers")[parser_name] then return end
+    require('nvim-treesitter').install(parser_name)
+    vim.treesitter.start()
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
 })
 
-add("nvim-treesitter/nvim-treesitter-textobjects")
 add("nvim-treesitter/nvim-treesitter-context")

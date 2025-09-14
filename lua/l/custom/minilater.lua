@@ -12,6 +12,20 @@ require("mini.splitjoin").setup({
   }
 })
 
+local gen_loader = require("mini.snippets").gen_loader
+require("mini.snippets").setup({
+  snippets = {
+    gen_loader.from_file(vim.fn.stdpath("data") .. "/site/pack/deps/opt/friendly-snippets/snippets/global.json"),
+    gen_loader.from_lang(),
+  },
+  mappings = {
+    expand = "<C-s>",
+    jump_next = "<C-l>",
+    jump_prev = "<C-h>",
+    stop = "<C-s>",
+  },
+})
+
 vim.api.nvim_create_autocmd("User", {
   pattern = "MiniFilesActionRename",
   callback = function(args)

@@ -39,7 +39,7 @@ set updatetime=50
 set shortmess+=WcC
 set signcolumn=yes
 set mouse=a
-set completeopt=menuone,noselect,fuzzy
+set completeopt=menuone,noselect,fuzzy,nosort
 set list listchars=tab:▸\ ,trail:·
 set nofixendofline
 set cpoptions+=>
@@ -63,13 +63,12 @@ let g:netrw_banner=0
 let g:netrw_altv=1
 let g:netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 let g:netrw_use_errorwindow=0
+let g:netrw_sizestyle = "H"
+let g:netrw_liststyle=1
 let g:netrw_list_hide='^\.\+/$'
 
 let g:mapleader=" "
 let g:maplocalleader=" "
-
-inoremap <silent> <C-e> <nop>
-nnoremap <nowait> gr gr
 
 nnoremap <space><space> <cmd>make<CR>
 

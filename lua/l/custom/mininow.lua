@@ -1,5 +1,5 @@
 local add = MiniDeps.add
-add("echasnovski/mini.nvim")
+add("nvim-mini/mini.nvim")
 require("mini.icons").setup({})
 require("mini.files").setup({
   mappings = {
@@ -80,7 +80,7 @@ local config_path = vim.fn.stdpath("config")
 local file = config_path .. "/telerepos"
 local extra_repos = lines_from(file)
 
-local find_repo_cmd = { "fd", ".git$", "-HIp", "-d3", "-td", "--prune", "-x", "echo", "{//}", ";" }
+local find_repo_cmd = { "fd", ".git$", "-HIp", "-d6", "-td", "--prune", "-x", "echo", "{//}", ";" }
 local home = os.getenv("HOME")
 local repos = { "/.config/nvim", "/repos" }
 for _, v in ipairs(repos) do
@@ -112,7 +112,7 @@ local function git_branches()
         for w in item:gmatch("%S+") do
           table.insert(out, w)
         end
-        vim.system({ "git", "checkout", out[2] }, {}, function (obj)
+        vim.system({ "git", "checkout", out[2] }, {timeout = 3000}, function (obj)
           if obj.code == 0 then
             vim.print(string.format("checkout %s", out[2]))
           else
@@ -125,6 +125,8 @@ local function git_branches()
   })
 end
 
+vim.ui.select = MiniPick.ui_select
+
 vim.keymap.set("n", "<leader>OP", function()
   vim.cmd("silent !git fetch -p")
   git_branches()
@@ -132,3 +134,30 @@ end)
 vim.keymap.set("n", "<leader>op", function()
   git_branches()
 end)
+
+require("mini.completion").setup({
+  delay = { signature = 10000000 },
+  fallback_action =function()end,
+  mappings = {
+    force_twostep = "",
+    force_fallback = "",
+  },
+})
+vim.keymap.set("i", "<C-e>", function()
+  if vim.fn.pumvisible() == 1 then
+    return "<C-e>"
+  else
+    return "<C-x><C-u>"
+  end
+end, { expr = true })
+vim.keymap.set("i", "<Tab>", function()
+  if vim.fn.pumvisible() == 1 then
+    local selected = vim.fn.complete_info().selected
+    if selected == -1 then
+      return "<C-n><C-y>"
+    end
+    return "<C-y>"
+  else
+    return "<Tab>"
+  end
+end, { expr = true })

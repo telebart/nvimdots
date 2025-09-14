@@ -15,11 +15,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = event.buf })
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = event.buf })
     vim.keymap.set("n", "K", vim.lsp.buf.hover , { buffer = event.buf })
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = event.buf })
-    vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, { buffer = event.buf })
-    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = event.buf })
-    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = event.buf })
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = event.buf })
     vim.keymap.set("n", "<leader>GI", vim.lsp.buf.incoming_calls, { buffer = event.buf })
     vim.keymap.set("n", "<leader>GO", vim.lsp.buf.outgoing_calls, { buffer = event.buf })
     vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help , { buffer = event.buf })
@@ -27,17 +22,21 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 vim.diagnostic.config({
-  float = { max_width = 100, source = "if_many"},
+  float = { max_width = 100, source = true},
 })
 
+vim.lsp.log.set_level(vim.log.levels.OFF)
 vim.lsp.config('*', {
-  on_attach = function(client)
-    client.server_capabilities.semanticTokensProvider = nil
-  end
+  capabilities = vim.tbl_deep_extend(
+    "keep",
+    require("mini.completion").get_lsp_capabilities(),
+    vim.lsp.protocol.make_client_capabilities()
+  ),
 })
+vim.lsp.semantic_tokens.enable(false)
 
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-vim.lsp.config['vtsls'] = {
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
+vim.lsp.config["vtsls"] = {
   settings = {
     typescript = {
       preferences = {
@@ -46,6 +45,7 @@ vim.lsp.config['vtsls'] = {
     },
   }
 }
+-- vim.lsp.enable("tsgo")
 vim.lsp.config['gopls'] = {
   settings = {
     gopls = {
@@ -81,12 +81,24 @@ vim.lsp.config['yamlls'] = {
             description = 'Gitlab CI',
             fileMatch = { '.gitlab*yml', 'gitlab*yml', '.snyk.yml' },
             name = "gitlab-ci",
-            url = "https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"
+            url = "https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json",
           }
         },
       }),
     },
   },
+}
+
+local base_on_attach = vim.lsp.config.eslint.on_attach
+vim.lsp.config["eslint"] = {
+  on_attach = function(client, bufnr)
+    if not base_on_attach then return end
+    base_on_attach(client, bufnr)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "LspEslintFixAll",
+    })
+  end,
 }
 
 require("mason").setup({})
