@@ -3,13 +3,12 @@ local function load()
   local args_dir = ".vim"
   if not vim.loop.fs_stat(".git") then return end
   if not vim.loop.fs_stat(args_dir) then return end
-  if vim.loop.fs_stat(args_dir) then
-    local cat_out = vim.fn.system({"cat", args_dir.."/args"})
-    if cat_out.stderr then return end
-    if #cat_out then
-      local args = cat_out:gsub("\n", " ")
-      vim.cmd("arga "..args)
-    end
+
+  local cat_out = vim.fn.system({"cat", args_dir.."/args"})
+  if cat_out.stderr then return end
+  if #cat_out then
+    local args = cat_out:gsub("\n", " ")
+    vim.cmd("arga "..args)
   end
 end
 vim.schedule(load, 0)
