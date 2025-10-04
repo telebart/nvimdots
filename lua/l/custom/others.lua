@@ -1,15 +1,6 @@
-local function contains(t, value)
-  for _, v in pairs(t) do
-    if v == value then
-      return true
-    end
-  end
-  return false
-end
-
 local function jsroot()
   if
-    not contains({
+    not vim.list_contains({
       "javascript",
       "javascriptreact",
       "typescript",
