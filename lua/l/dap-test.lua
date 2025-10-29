@@ -5,6 +5,15 @@ local M = {
   last_testpath = "",
   buildtags = "test,account_test",
 }
+local dlv_default_conf = {
+  type = 'go',
+  buildFlags = "-tags=" .. M.buildtags,
+  request = 'launch',
+  showLog = true,
+  dlvFlags = {"--check-go-version=false"},
+  dlvToolPath = vim.fn.exepath('dlv'),
+  outputMode = "remote",
+}
 
 local function get_closest_test()
   local current_node = vim.treesitter.get_node()
@@ -42,28 +51,14 @@ function M.setup()
     }
   }
   dap.configurations.go = {
-    {
-      type = 'go',
+    vim.tbl_extend("force", dlv_default_conf, {
       name = 'Debug',
-      buildFlags = "-tags=" .. M.buildtags,
-      request = 'launch',
-      showLog = false,
       program = "${file}",
-      dlvFlags = {"--check-go-version=false"},
-      dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
-
-    },
-    {
-      type = 'go',
+    }),
+    vim.tbl_extend("force", dlv_default_conf, {
       name = 'Debug package',
-      buildFlags = "-tags=" .. M.buildtags,
-      request = 'launch',
-      showLog = false,
       program = "${fileDirname}",
-      dlvFlags = {"--check-go-version=false"},
-      dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
-
-    },
+    }),
   }
 end
 
@@ -80,17 +75,15 @@ function M.set_buildtags(buildtags)
 end
 
 local function debug_test(testname, testpath)
-  dap.run({
-    type = "go",
-    name = testname,
-    buildFlags = "-tags=" .. M.buildtags,
-    request = "launch",
-    mode = "test",
-    program = testpath,
-    args = { "-test.run", testname },
-    dlvFlags = {"--check-go-version=false"},
-    dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
-  })
+  dap.run(
+    vim.tbl_extend("force", dlv_default_conf, {
+      name = testname,
+      buildFlags = "-tags=" .. M.buildtags,
+      mode = "test",
+      program = testpath,
+      args = { "-test.run", testname },
+    })
+  )
 end
 
 function M.debug_test()

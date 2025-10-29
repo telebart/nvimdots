@@ -4,6 +4,7 @@ require("mini.notify").setup({
     winblend = 0,
   }
 })
+
 require("mini.surround").setup()
 require("mini.extra").setup()
 require("mini.splitjoin").setup({
@@ -20,9 +21,8 @@ require("mini.snippets").setup({
   },
   mappings = {
     expand = "<C-s>",
-    jump_next = "<C-l>",
-    jump_prev = "<C-h>",
-    stop = "<C-s>",
+    jump_next = "<C-j>",
+    jump_prev = "<C-k>",
   },
 })
 
@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd("User", {
     if not from or not to then return end
     local clients = vim.lsp.get_clients()
     for _, client in ipairs(clients) do
-      if client.supports_method("workspace/didRenameFiles") then
+      if client:supports_method("workspace/didRenameFiles") then
         ---@diagnostic disable-next-line: invisible
         client.notify("workspace/didRenameFiles", {
           files = {

@@ -12,13 +12,15 @@ if not vim.loop.fs_stat(mini_path) then
   vim.cmd('echo "Installed `mini.nvim`" | redraw')
 end
 
+require('vim._extui').enable({enable = true})
+
 require('mini.deps').setup({ path = { package = path_package } })
 
 local now, later = MiniDeps.now, MiniDeps.later
-now(function () require("l.custom.coding") end)
 now(function () require("l.custom.lsp") end)
 now(function () require("l.custom.mininow") end)
-later(function () require("l.custom.treesitter") end)
+now(function () require("l.custom.treesitter") end)
+later(function () require("l.custom.coding") end)
 later(function () require("l.custom.minilater") end)
 later(function () require("l.custom.mydap") end)
 later(function () require("l.custom.gitsigns") end)

@@ -34,7 +34,6 @@ vim.api.nvim_create_autocmd("User", {
   pattern = "MiniPickStart",
   callback = function ()
     vim.o.smartcase, vim.o.ignorecase = true, true
-    MiniFiles.close()
   end
 })
 
@@ -45,8 +44,6 @@ vim.api.nvim_create_autocmd("User", {
   end
 })
 
--- FILES
-
 vim.keymap.set("n", "-", function()
   local path = vim.api.nvim_buf_get_name(0)
 
@@ -55,44 +52,16 @@ vim.keymap.set("n", "-", function()
   MiniFiles.reveal_cwd()
 end)
 
--- PICKER
-
-local function file_exists(file)
-  local f = io.open(file, "rb")
-  if f then
-    f:close()
-  end
-  return f ~= nil
-end
-
-local function lines_from(file)
-  if not file_exists(file) then
-    return {}
-  end
-  local lines = {}
-  for line in io.lines(file) do
-    lines[#lines + 1] = line
-  end
-  return lines
-end
-
-local config_path = vim.fn.stdpath("config")
-local file = config_path .. "/telerepos"
-local extra_repos = lines_from(file)
-
-local find_repo_cmd = { "fd", ".git$", "-HIp", "-d6", "-td", "--prune", "-x", "echo", "{//}", ";" }
 local home = os.getenv("HOME")
-local repos = { "/.config/nvim", "/repos" }
-for _, v in ipairs(repos) do
-  table.insert(find_repo_cmd, home .. v)
-end
-for _, v in ipairs(extra_repos) do
-  table.insert(find_repo_cmd, home .. v)
-end
+local find_repo_cmd = { "fd", ".git$", "-Hp", "-d10", "-td", "--prune", "-x", "echo", "{//}", ";",
+  home.."/.config/nvim",
+  home.."/repos" ,
+  home.."/go/src" ,
+}
 
 vim.keymap.set("n", "<C-p>", MiniPick.builtin.files)
 vim.keymap.set("n", "<leader>pa", MiniPick.builtin.grep_live)
-vim.keymap.set("n", "<leader>pw", function() MiniPick.builtin.grep({ pattern = vim.fn.expand("<cword>") }) end)
+vim.keymap.set("n", "<leader>pw", function() MiniPick.builtin.grep({ pattern = "\\<"..vim.fn.expand("<cword>").."\\>" }) end)
 vim.keymap.set("n", "<leader>pr", MiniPick.builtin.resume)
 vim.keymap.set("n", "<leader>ph", MiniPick.builtin.help)
 vim.keymap.set("n", "<leader>fj", function()
@@ -124,8 +93,6 @@ local function git_branches()
 
   })
 end
-
-vim.ui.select = MiniPick.ui_select
 
 vim.keymap.set("n", "<leader>OP", function()
   vim.cmd("silent !git fetch -p")

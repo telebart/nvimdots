@@ -15,15 +15,11 @@ local frames_sb = widgets.sidebar(widgets.frames)
 local threads_sb = widgets.sidebar(widgets.threads)
 local expression_sb = widgets.sidebar(widgets.expression)
 local sidebars = {
-  {
-    name = "Frames",
-    widget = frames_sb,
-  },
-  {
-    name = "Threads",
-    widget = threads_sb,
-  },
+  { name = "Frames", widget = frames_sb, },
+  { name = "Threads", widget = threads_sb, },
+  { name = "Expressions", widget = expression_sb, },
 }
+
 
 vim.keymap.set("n", "<leader>dg", function() MiniPick.ui_select(sidebars, {
   prompt = "Select sidebar to open",

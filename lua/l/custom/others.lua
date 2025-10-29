@@ -20,9 +20,9 @@ local add = MiniDeps.add
 add("sindrets/diffview.nvim")
 require("diffview").setup({
   use_icons = false,
+  enhanced_diff_hl = true,
 })
 
-add("mbbill/undotree")
 add("eandrju/cellular-automaton.nvim")
 local build = function()
   vim.cmd("call mkdp#util#install()")
@@ -46,13 +46,6 @@ if vim.fn.has("mac") == 1 then
         endfunction
         let g:mkdp_browserfunc = 'OpenMarkdownPreview'
         ]])
-else
-  vim.cmd([[
-          function OpenMarkdownPreview (url)
-          execute "silent ! firefox --new-window " . a:url
-          endfunction
-          let g:mkdp_browserfunc = 'OpenMarkdownPreview'
-          ]])
 end
 vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreview<cr>")
 

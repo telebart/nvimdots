@@ -26,12 +26,14 @@ vim.diagnostic.config({
 })
 
 vim.lsp.log.set_level(vim.log.levels.OFF)
-vim.lsp.config('*', {
-  capabilities = vim.tbl_deep_extend(
+local capabilities = vim.tbl_deep_extend(
     "keep",
     require("mini.completion").get_lsp_capabilities(),
     vim.lsp.protocol.make_client_capabilities()
-  ),
+  )
+capabilities.textDocument.completion.completionItem.snippetSupport = false
+vim.lsp.config('*', {
+  capabilities = capabilities,
 })
 vim.lsp.semantic_tokens.enable(false)
 
@@ -100,6 +102,24 @@ vim.lsp.config["eslint"] = {
     })
   end,
 }
+
+vim.lsp.config["copilot"] = {
+  settings = {
+    telemetry = {
+      telemetryLevel = "none"
+    }
+  }
+}
+vim.lsp.inline_completion.enable(true)
+vim.keymap.set("i", "<C-space>", function()
+  vim.lsp.inline_completion.get()
+  if vim.fn.pumvisible() == 1 then
+    return "<C-e>"
+  end
+end, {
+  expr = true,
+  replace_keycodes = true,
+})
 
 require("mason").setup({})
 require("mason-lspconfig").setup({})

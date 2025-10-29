@@ -5,23 +5,17 @@ add('stevearc/conform.nvim')
 
 require('lint').linters_by_ft = {
   go = {"golangcilint"},
-  -- javascript = {"eslint_d"},
-  -- javascriptreact = {"eslint_d"},
-  -- typescript = {"eslint_d"},
-  -- typescriptreact = {"eslint_d"},
   terraform = {"snyk_iac"},
 }
 
 local lint = true
--- vim.list_extend(require('lint').linters.eslint_d.args, {"--rule", "prettier/prettier: 0"})
-vim.schedule(function()
-  if not require("lint").linters.golantcilint then return end
+if vim.fn.executable("golangci-lint") == 1 then
   vim.list_extend(require('lint').linters.golangcilint.args, {"--fix=false"})
-end, 1000)
+end
 vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
   callback = function()
     if not lint then return end
-    pcall(require("lint").try_lint)
+    require("lint").try_lint(nil, {ignore_errors = true})
   end,
 })
 vim.keymap.set('n', '<leader>lt', function()
@@ -33,7 +27,7 @@ vim.keymap.set('n', '<leader>lt', function()
     end
   end
   lint = not lint
-  print("lint: " .. (lint and "enabled" or "disabled"))
+  vim.notify("lint: " .. (lint and "enabled" or "disabled"))
 end)
 vim.keymap.set('n', '<leader>ff', function()
   require("conform").format({ lsp_fallback = true })

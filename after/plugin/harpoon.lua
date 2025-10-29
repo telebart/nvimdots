@@ -51,6 +51,7 @@ local function create_win()
     end,
   })
   vim.keymap.set("n", "q", ":bd<cr>", { buffer = buf, silent=true })
+  vim.keymap.set("n", "<ESC>", ":bd<cr>", { buffer = buf, silent=true })
 end
 
 vim.keymap.set("n", "<C-n>", create_win)

@@ -55,6 +55,7 @@ set grepformat=%f:%l:%c:%m
 set nocursorline
 set diffopt+="algorithm:histogram"
 set winborder=rounded
+set pumborder=rounded
 
 lua require("l.colors")()
 
@@ -77,7 +78,7 @@ nnoremap <silent> Q <nop>
 
 vnoremap <silent> . :normal .<CR>
 
-nnoremap <leader>u :UndotreeToggle<CR>
+nnoremap <leader>u :Undotree<CR>
 nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
 
 nnoremap <leader>tt <cmd>lua require("l.colors")()<CR>
@@ -147,6 +148,7 @@ command! BufOnly execute '%bdelete|edit #|normal `"'
 
 lua require("l.statusline")
 lua require("l.deps")
+packadd nvim.undotree
 
 augroup yank_restore_cursor
   autocmd!
