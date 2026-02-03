@@ -1,21 +1,3 @@
-local function jsroot()
-  if
-    not vim.list_contains({
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact",
-    }, vim.bo.filetype)
-  then
-    return
-  end
-  local root = vim.fs.root(0, { "package.json", ".git" })
-  if root == nil then
-    return
-  end
-  vim.g["test#project_root"] = root
-end
-
 local add = MiniDeps.add
 add("sindrets/diffview.nvim")
 require("diffview").setup({
@@ -64,11 +46,9 @@ vim.g["test#strategy"] = "neovim_sticky"
 vim.g["test#neovim#term_position"] = "vert"
 vim.g["test#preserve_screen"] = 0
 vim.keymap.set("n", "<leader>tj", function()
-  jsroot()
   vim.cmd("TestNearest | stopinsert")
 end)
 vim.keymap.set("n", "<leader>tf", function()
-  jsroot()
   vim.cmd("TestFile | stopinsert")
 end)
 vim.keymap.set("n", "<leader>tk", function()

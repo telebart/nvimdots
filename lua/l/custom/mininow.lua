@@ -109,6 +109,12 @@ require("mini.completion").setup({
     force_twostep = "",
     force_fallback = "",
   },
+  lsp_completion = {
+    snippet_insert = function(input)
+      require("mini.snippets").default_insert({body = input})
+      require("mini.snippets").session.stop()
+    end,
+  }
 })
 vim.keymap.set("i", "<C-e>", function()
   if vim.fn.pumvisible() == 1 then

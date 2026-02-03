@@ -12,7 +12,7 @@ if not vim.loop.fs_stat(mini_path) then
   vim.cmd('echo "Installed `mini.nvim`" | redraw')
 end
 
-require('vim._extui').enable({enable = true})
+require('vim._extui').enable({enable = true, msg = { target = 'msg', }})
 
 require('mini.deps').setup({ path = { package = path_package } })
 

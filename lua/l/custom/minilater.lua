@@ -1,9 +1,6 @@
-require("mini.notify").setup({
-  window = {
-    config = { border = "none", },
-    winblend = 0,
-  }
-})
+local og_notify = vim.notify
+require("mini.notify").setup({})
+vim.notify = og_notify
 
 require("mini.surround").setup()
 require("mini.extra").setup()

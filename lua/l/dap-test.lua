@@ -153,7 +153,7 @@ function M.test(scope)
   vim.cmd(string.format("botright %dsplit new", height))
 
   local cmd = {"go", "test", "-v", "-race", "-tags", M.buildtags, testpath, "-run", testname}
-  vim.print(cmd)
+  print(table.concat(cmd, " "))
 
   vim.fn.termopen(cmd)
   term = vim.api.nvim_get_current_buf()

@@ -55,7 +55,8 @@ set grepformat=%f:%l:%c:%m
 set nocursorline
 set diffopt+="algorithm:histogram"
 set winborder=rounded
-set pumborder=rounded
+set pumborder=
+set fo+=ro
 
 lua require("l.colors")()
 
@@ -103,8 +104,8 @@ nnoremap J m'J``
 nnoremap <leader>YFP <cmd>let @+=expand("%")<CR>
 
 " LSP
-nnoremap <leader>lr <cmd>LspRestart<CR>
-nnoremap <leader>li <cmd>LspInfo<CR>
+nnoremap <leader>lr <cmd>lsp restart<CR>
+nnoremap <leader>li <cmd>checkhealth lsp<CR>
 
 " QF
 nnoremap <C-k> <cmd>cprev<CR>zz

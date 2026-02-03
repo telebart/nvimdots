@@ -10,7 +10,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.cmd([[
-  au FileType * setlocal formatoptions-=ro
   " start from last position
   au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
   " create directory before writing file

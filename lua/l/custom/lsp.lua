@@ -1,7 +1,6 @@
 local add = MiniDeps.add
 add("neovim/nvim-lspconfig")
 add("williamboman/mason.nvim")
-add("williamboman/mason-lspconfig.nvim")
 add("b0o/SchemaStore.nvim")
 
 vim.keymap.set("n", "<leader>qp", vim.diagnostic.setqflist)
@@ -24,17 +23,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 vim.diagnostic.config({
   float = { max_width = 100, source = true},
 })
-
-vim.lsp.log.set_level(vim.log.levels.OFF)
-local capabilities = vim.tbl_deep_extend(
-    "keep",
-    require("mini.completion").get_lsp_capabilities(),
-    vim.lsp.protocol.make_client_capabilities()
-  )
-capabilities.textDocument.completion.completionItem.snippetSupport = false
-vim.lsp.config('*', {
-  capabilities = capabilities,
-})
 vim.lsp.semantic_tokens.enable(false)
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
@@ -47,7 +35,15 @@ vim.lsp.config["vtsls"] = {
     },
   }
 }
--- vim.lsp.enable("tsgo")
+vim.lsp.config["tsgo"] = {
+  settings = {
+    typescript = {
+      preferences = {
+        importModuleSpecifier = "non-relative",
+      },
+    },
+  }
+}
 vim.lsp.config['gopls'] = {
   settings = {
     gopls = {
@@ -56,14 +52,11 @@ vim.lsp.config['gopls'] = {
   },
 }
 vim.lsp.config['jsonls'] = {
-  on_new_config = function(new_config)
-    new_config.settings.json.schemas = new_config.settings.json.schemas or {}
-    vim.list_extend(new_config.settings.json.schemas, require('schemastore').json.schemas())
-  end,
+  filetype = { "json", "jsonc", "json5" },
   settings = {
     json = {
-      schemas = require("schemastore").json.schemas(),
       validate = { enable = true },
+      schemas = require("schemastore").json.schemas(),
     },
   },
 }
@@ -122,4 +115,25 @@ end, {
 })
 
 require("mason").setup({})
-require("mason-lspconfig").setup({})
+
+vim.lsp.enable({
+  "bashls",
+  "biome",
+  "copilot",
+  "docker_language_server",
+  "eslint",
+  "gitlab_ci_ls",
+  "gopls",
+  "graphql",
+  "lemminx",
+  "lua_ls",
+  "ols",
+  "pyright",
+  "sqlls",
+  "stylelint_lsp",
+  "terraformls",
+  -- "vtsls",
+  "tsgo",
+  "jsonls",
+  "yamlls",
+})
