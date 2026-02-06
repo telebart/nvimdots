@@ -1,7 +1,3 @@
-local add = MiniDeps.add
-add("mfussenegger/nvim-dap")
-add("theHamsta/nvim-dap-virtual-text")
-
 require("nvim-dap-virtual-text").setup({
   virt_text_pos = "eol",
   display_callback = function(variable, buf, stackframe, node, options)

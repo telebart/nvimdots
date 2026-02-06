@@ -1,21 +1,8 @@
-local add = MiniDeps.add
-add("sindrets/diffview.nvim")
 require("diffview").setup({
   use_icons = false,
   enhanced_diff_hl = true,
 })
 
-add("eandrju/cellular-automaton.nvim")
-local build = function()
-  vim.cmd("call mkdp#util#install()")
-end
-add({
-  source = "iamcco/markdown-preview.nvim",
-  hooks = {
-    post_install = build,
-    post_checkout = build,
-  },
-})
 vim.g.mkdp_auto_close = 0
 vim.g.mkdp_theme = "dark"
 vim.g.mkdp_browser = "firefox"
@@ -31,7 +18,6 @@ if vim.fn.has("mac") == 1 then
 end
 vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreview<cr>")
 
-add("uga-rosa/ccc.nvim")
 require("ccc").setup({
   highlight_mode = "background",
   highlighter = {
@@ -41,7 +27,6 @@ require("ccc").setup({
 })
 vim.keymap.set("n", "<leader>cc", "<cmd>CccPick<cr>")
 
-add("vim-test/vim-test")
 vim.g["test#strategy"] = "neovim_sticky"
 vim.g["test#neovim#term_position"] = "vert"
 vim.g["test#preserve_screen"] = 0

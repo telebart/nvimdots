@@ -1,8 +1,3 @@
-local add = MiniDeps.add
-add("neovim/nvim-lspconfig")
-add("williamboman/mason.nvim")
-add("b0o/SchemaStore.nvim")
-
 vim.keymap.set("n", "<leader>qp", vim.diagnostic.setqflist)
 vim.keymap.set("n", "<leader>pq", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)

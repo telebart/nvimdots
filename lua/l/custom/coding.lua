@@ -1,8 +1,3 @@
-local add = MiniDeps.add
-add("rafamadriz/friendly-snippets")
-add("mfussenegger/nvim-lint")
-add('stevearc/conform.nvim')
-
 require('lint').linters_by_ft = {
   go = {"golangcilint"},
   terraform = {"snyk_iac"},

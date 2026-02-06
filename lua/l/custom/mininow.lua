@@ -1,5 +1,3 @@
-local add = MiniDeps.add
-add("nvim-mini/mini.nvim")
 require("mini.icons").setup({})
 require("mini.files").setup({
   mappings = {

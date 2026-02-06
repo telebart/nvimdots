@@ -1,5 +1,3 @@
-local add = MiniDeps.add
-add("lewis6991/gitsigns.nvim")
 require("gitsigns").setup({
   signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
   numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`

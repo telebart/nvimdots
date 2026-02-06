@@ -1,28 +1,41 @@
--- Clone 'mini.nvim' manually in a way that it gets managed by 'mini.deps'
-local path_package = vim.fn.stdpath('data') .. '/site/'
-local mini_path = path_package .. 'pack/deps/start/mini.nvim'
-if not vim.loop.fs_stat(mini_path) then
-  vim.cmd('echo "Installing `mini.nvim`" | redraw')
-  local clone_cmd = {
-    'git', 'clone', '--filter=blob:none',
-    'https://github.com/nvim-mini/mini.nvim', mini_path
-  }
-  vim.fn.system(clone_cmd)
-  vim.cmd('packadd mini.nvim | helptags ALL')
-  vim.cmd('echo "Installed `mini.nvim`" | redraw')
-end
+require("vim._core.ui2").enable({enable = true, msg = { target = "msg", }})
 
-require('vim._extui').enable({enable = true, msg = { target = 'msg', }})
+vim.pack.add({
+  "https://github.com/b0o/SchemaStore.nvim",
+  "https://github.com/eandrju/cellular-automaton.nvim",
+  "https://github.com/iamcco/markdown-preview.nvim", -- vim.cmd("call mkdp#util#install()")
+  "https://github.com/lewis6991/gitsigns.nvim",
+  "https://github.com/mfussenegger/nvim-dap",
+  "https://github.com/mfussenegger/nvim-lint",
+  "https://github.com/neovim/nvim-lspconfig",
+  "https://github.com/nvim-mini/mini.nvim",
+  "https://github.com/nvim-treesitter/nvim-treesitter", -- hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
+  "https://github.com/nvim-treesitter/nvim-treesitter-context",
+  "https://github.com/rafamadriz/friendly-snippets",
+  "https://github.com/sindrets/diffview.nvim",
+  "https://github.com/theHamsta/nvim-dap-virtual-text",
+  "https://github.com/uga-rosa/ccc.nvim",
+  "https://github.com/vim-test/vim-test",
+  "https://github.com/williamboman/mason.nvim",
+  "https://github.com/stevearc/conform.nvim",
+})
 
-require('mini.deps').setup({ path = { package = path_package } })
+vim.api.nvim_create_autocmd("PackChanged", { callback = function(ev)
+  local name = ev.data.spec.name
+  if name == "nvim-treesitter" then
+    vim.cmd("TSUpdate")
+  end
+  if name == "markdown-preview.nvim" then
+    vim.cmd("call mkdp#util#install()")
+  end
+end })
 
-local now, later = MiniDeps.now, MiniDeps.later
-now(function () require("l.custom.lsp") end)
-now(function () require("l.custom.mininow") end)
-now(function () require("l.custom.treesitter") end)
-later(function () require("l.custom.coding") end)
-later(function () require("l.custom.minilater") end)
-later(function () require("l.custom.mydap") end)
-later(function () require("l.custom.gitsigns") end)
-later(function () require("l.custom.others") end)
+require("l.custom.lsp")
+require("l.custom.mininow")
+require("l.custom.treesitter")
+require("l.custom.coding")
+require("l.custom.minilater")
+require("l.custom.mydap")
+require("l.custom.gitsigns")
+require("l.custom.others")
 

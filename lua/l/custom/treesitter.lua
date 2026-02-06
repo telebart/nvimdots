@@ -1,12 +1,4 @@
 ---@diagnostic disable: missing-fields
-local add = MiniDeps.add
-
-add({
-  source="nvim-treesitter/nvim-treesitter",
-  checkout = "main",
-  hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
-})
-
 vim.api.nvim_create_autocmd('FileType', {
   pattern = {'*'},
   callback = function(args)
@@ -18,5 +10,3 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   end,
 })
-
-add("nvim-treesitter/nvim-treesitter-context")
