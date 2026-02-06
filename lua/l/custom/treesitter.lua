@@ -1,4 +1,23 @@
 ---@diagnostic disable: missing-fields
+require('nvim-treesitter').install({
+  "comment",
+  "diff",
+  "git_config",
+  "git_rebase",
+  "gitattributes",
+  "gitcommit",
+  "gitignore",
+  "jsdoc",
+  "luadoc",
+  "markdown",
+  "markdown_inline",
+  "printf",
+  "query",
+  "regex",
+  "vim",
+  "vimdoc",
+})
+
 vim.api.nvim_create_autocmd('FileType', {
   pattern = {'*'},
   callback = function(args)
