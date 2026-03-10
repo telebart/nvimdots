@@ -107,17 +107,14 @@ function M.debug_test()
 end
 
 function M.debug_last_test()
-  local testname = M.last_testname
-  local testpath = M.last_testpath
-
-  if testname == "" then
+  if M.last_testname == "" then
     vim.notify("no last run test found")
     return false
   end
 
-  local msg = string.format("starting debug session '%s : %s'...", testpath, testname)
+  local msg = string.format("starting debug session '%s : %s'...", M.last_testpath, M.last_testname)
   vim.notify(msg)
-  debug_test(testname, testpath)
+  debug_test(M.last_testname, M.last_testpath)
   return true
 end
 

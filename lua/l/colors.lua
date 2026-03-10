@@ -6,6 +6,8 @@ vim.api.nvim_set_hl(0, "Operator", { fg = "NvimLightGrey4" })
 vim.api.nvim_set_hl(0, "Delimiter", { fg = "NvimLightGrey4" })
 vim.api.nvim_set_hl(0, "StatusLine", { bg = "NvimDarkGrey3" })
 vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "NvimDarkGrey2" })
+vim.api.nvim_set_hl(0, "DiffAdd", { fg = "NONE", bg = "NvimDarkGreen" })
+vim.api.nvim_set_hl(0, "DiffChange", { fg = "NONE", bg = "NvimDarkGrey4" })
 
 vim.api.nvim_set_hl(0, "@markup.heading.delimiter.markdown", { fg = "#4fc3e8", bold = true })
 vim.api.nvim_set_hl(0, "@markup.raw.markdown_inline", { fg = "#4fc3e8" })

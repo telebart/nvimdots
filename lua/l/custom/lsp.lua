@@ -1,8 +1,11 @@
 vim.keymap.set("n", "<leader>qp", vim.diagnostic.setqflist)
 vim.keymap.set("n", "<leader>pq", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
-vim.keymap.set('n', '<leader>k', function() vim.diagnostic.jump({count=-1, float=true}) end)
-vim.keymap.set('n', '<leader>j', function() vim.diagnostic.jump({count=1, float=true}) end)
+local on_jump = function()
+  vim.diagnostic.open_float(nil, { focus = false })
+end
+vim.keymap.set('n', '<leader>k', function() vim.diagnostic.jump({count=-1, on_jump=on_jump}) end)
+vim.keymap.set('n', '<leader>j', function() vim.diagnostic.jump({count=1, on_jump=on_jump}) end)
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("l-lsp-attach", {clear = true}),
   callback = function (event)
@@ -15,13 +18,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end
 })
 
-vim.diagnostic.config({
-  float = { max_width = 100, source = true},
-})
 vim.lsp.semantic_tokens.enable(false)
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
-vim.lsp.config["vtsls"] = {
+local ts = {
   settings = {
     typescript = {
       preferences = {
@@ -30,22 +30,8 @@ vim.lsp.config["vtsls"] = {
     },
   }
 }
-vim.lsp.config["tsgo"] = {
-  settings = {
-    typescript = {
-      preferences = {
-        importModuleSpecifier = "non-relative",
-      },
-    },
-  }
-}
-vim.lsp.config['gopls'] = {
-  settings = {
-    gopls = {
-      buildFlags = { "-tags", "test,account_test" },
-    },
-  },
-}
+vim.lsp.config["vtsls"] = ts
+vim.lsp.config["tsgo"] = ts
 vim.lsp.config['jsonls'] = {
   filetype = { "json", "jsonc", "json5" },
   settings = {
@@ -79,55 +65,13 @@ vim.lsp.config['yamlls'] = {
   },
 }
 
-local base_on_attach = vim.lsp.config.eslint.on_attach
-vim.lsp.config["eslint"] = {
-  on_attach = function(client, bufnr)
-    if not base_on_attach then return end
-    base_on_attach(client, bufnr)
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = bufnr,
-      command = "LspEslintFixAll",
-    })
-  end,
-}
-
-vim.lsp.config["copilot"] = {
-  settings = {
-    telemetry = {
-      telemetryLevel = "none"
-    }
-  }
-}
-vim.lsp.inline_completion.enable(true)
-vim.keymap.set("i", "<C-space>", function()
-  vim.lsp.inline_completion.get()
-  if vim.fn.pumvisible() == 1 then
-    return "<C-e>"
-  end
-end, {
-  expr = true,
-  replace_keycodes = true,
-})
-
 require("mason").setup({})
 
 vim.lsp.enable({
   "bashls",
-  "biome",
-  "copilot",
-  "docker_language_server",
-  "eslint",
-  "gitlab_ci_ls",
   "gopls",
-  "graphql",
-  "lemminx",
-  "lua_ls",
+  "emmylua_ls",
   "ols",
-  "pyright",
-  "sqlls",
-  "stylelint_lsp",
-  "terraformls",
-  -- "vtsls",
   "tsgo",
   "jsonls",
   "yamlls",
