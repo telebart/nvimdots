@@ -58,7 +58,7 @@ set winborder=rounded
 set pumborder=
 set fo+=ro
 
-lua require("l.colors")()
+lua require("l.colors")
 
 " Netrw
 let g:netrw_banner=0

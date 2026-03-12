@@ -1,5 +1,3 @@
-local toggle = true
-
 vim.api.nvim_set_hl(0, "Keyword", { fg = "#3e8fb0", bold = true })
 vim.api.nvim_set_hl(0, "@variable.member", { fg = "NvimLightBlue" })
 vim.api.nvim_set_hl(0, "Operator", { fg = "NvimLightGrey4" })
@@ -37,6 +35,7 @@ local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
 local normal_float = vim.api.nvim_get_hl(0, { name = "NormalFloat" })
 local pmenu = vim.api.nvim_get_hl(0, { name = "Pmenu" })
 
+local toggle = false
 return function()
   if toggle then
     vim.api.nvim_set_hl(0, "Normal", normal)
