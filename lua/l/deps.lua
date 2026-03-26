@@ -1,4 +1,4 @@
-require("vim._core.ui2").enable({enable = true, msg = { target = "msg", }})
+require("vim._core.ui2").enable({enable = true, msg = { target = "cmd", }})
 
 vim.pack.add({
   "https://github.com/Punity122333/hexinspector.nvim.git",
