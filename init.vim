@@ -49,6 +49,7 @@ set spell
 set spelloptions=camel,noplainbuffer
 set laststatus=2
 set wildignore+=**/node_modules/**
+set wildoptions+=fuzzy
 set spr sb
 set grepprg=rg\ --vimgrep
 set grepformat=%f:%l:%c:%m
