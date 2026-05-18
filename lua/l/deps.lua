@@ -1,11 +1,13 @@
 require("vim._core.ui2").enable({enable = true, msg = { target = "cmd", }})
 
 vim.pack.add({
+  -- "https://github.com/NickTsaizer/splitasm.nvim",
+  -- "https://codeberg.org/Jorenar/nvim-dap-disasm",
   "https://github.com/Punity122333/hexinspector.nvim.git",
   "https://github.com/b0o/SchemaStore.nvim",
   "https://github.com/eandrju/cellular-automaton.nvim",
   "https://github.com/iamcco/markdown-preview.nvim",
-  "https://github.com/lewis6991/gitsigns.nvim",
+  "https://github.com/igorlfs/nvim-dap-view",
   "https://github.com/mfussenegger/nvim-dap",
   "https://github.com/mfussenegger/nvim-lint",
   "https://github.com/neovim/nvim-lspconfig",
@@ -15,7 +17,6 @@ vim.pack.add({
   "https://github.com/rafamadriz/friendly-snippets",
   "https://github.com/sindrets/diffview.nvim",
   "https://github.com/stevearc/conform.nvim",
-  "https://github.com/theHamsta/nvim-dap-virtual-text",
   "https://github.com/uga-rosa/ccc.nvim",
   "https://github.com/vim-test/vim-test",
   "https://github.com/williamboman/mason.nvim",
@@ -37,7 +38,6 @@ vim.schedule(function()
   require("l.custom.coding")
   require("l.custom.minilater")
   require("l.custom.mydap")
-  require("l.custom.gitsigns")
 
   require("hexinspector").setup({})
 

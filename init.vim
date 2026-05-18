@@ -58,6 +58,7 @@ set diffopt+="algorithm:histogram"
 set winborder=rounded
 set pumborder=
 set fo+=ro
+set linebreak showbreak=↪\
 
 lua require("l.colors")
 
@@ -98,7 +99,7 @@ nnoremap <C-u> <C-u>zz
 nnoremap G Gzz
 vnoremap <leader>y "+y
 nnoremap <leader>y "+y
-nnoremap <leader>Y gg"+yG
+nnoremap <leader>YY :%y+<CR>
 
 nnoremap J m'J``
 
@@ -115,9 +116,6 @@ nnoremap <C-q> <cmd>call ToggleQFList()<CR>
 nnoremap <leader>K <cmd>lprev<CR>zz
 nnoremap <leader>J <cmd>lnext<CR>zz
 nnoremap <leader>qq <cmd>call ToggleLocList()<CR>
-
-" Git
-nnoremap B <cmd>Gitsigns toggle_current_line_blame<CR>
 
 nnoremap <leader>rr <cmd>lua Root()<CR>
 nnoremap <leader>rl <cmd>lua Root(true)<CR>
@@ -151,13 +149,3 @@ command! BufOnly execute '%bdelete|edit #|normal `"'
 lua require("l.statusline")
 lua require("l.deps")
 packadd nvim.undotree
-
-augroup yank_restore_cursor
-  autocmd!
-  autocmd VimEnter,CursorMoved *
-        \ let s:cursor = getpos('.')
-  autocmd TextYankPost *
-        \ if v:event.operator ==? 'y' |
-        \ call setpos('.', s:cursor) |
-        \ endif
-augroup END

@@ -17,6 +17,16 @@ vim.cmd([[
   au TermOpen * setlocal nonu nornu nospell signcolumn=no so=0 siso=0 | startinsert | nnoremap <buffer> q <CMD>bd!<CR>
   au FileType dap-float,minideps-confirm nnoremap <buffer> q <CMD>close<CR>
   au FileType help wincmd L
+
+  augroup yank_restore_cursor
+    autocmd!
+    autocmd VimEnter,CursorMoved *
+          \ let s:cursor = getpos('.')
+    autocmd TextYankPost *
+          \ if v:event.operator ==? 'y' |
+          \ call setpos('.', s:cursor) |
+          \ endif
+  augroup END
 ]])
 
 vim.api.nvim_create_autocmd('BufWritePre', {
@@ -28,14 +38,6 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 })
 
 local function run_term(prog, style)
-  vim.api.nvim_create_autocmd("TermClose", {
-    group = vim.api.nvim_create_augroup("l_term_close", { clear = true }),
-    once = true,
-    callback = function()
-      vim.cmd('silent! :checktime')
-      vim.cmd('silent! :bw')
-    end,
-  })
   style = style or "tabnew"
 
   if not prog then

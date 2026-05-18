@@ -9,6 +9,12 @@ require("mini.splitjoin").setup({
     toggle = "gs"
   }
 })
+require("mini.diff").setup({
+  view = {
+    style = "sign",
+    signs = { add = "▎", change = "▎", delete = "▎", },
+  },
+})
 require("mini.git").setup()
 vim.keymap.set({ "n", "x" }, "<Leader>gs", "<Cmd>lua MiniGit.show_at_cursor()<CR>")
 

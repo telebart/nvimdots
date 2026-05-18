@@ -1,10 +1,3 @@
-require("nvim-dap-virtual-text").setup({
-  virt_text_pos = "eol",
-  display_callback = function(variable, buf, stackframe, node, options)
-    return "▸" .. string.sub(variable.value, 1, 50)
-  end,
-})
-
 local dap = require('dap')
 local widgets = require("dap.ui.widgets")
 local frames_sb = widgets.sidebar(widgets.frames)
@@ -15,6 +8,41 @@ local sidebars = {
   { name = "Threads", widget = threads_sb, },
   { name = "Expressions", widget = expression_sb, },
 }
+
+-- require("dap-disasm").setup({})
+require("dap-view").setup({
+  virtual_text = {
+    enabled = true,
+    position = "eol",
+    format = function(variable, _, _)
+      local value = variable.value
+      local type_str = variable.type
+      if type_str and value:sub(1, #type_str) == type_str then
+        value = vim.trim(value:sub(#type_str + 1))
+      end
+      local max_len = 50
+      if #value > max_len then
+        value = value:sub(1, max_len) .. "…"
+      end
+      return "▸" .. value
+    end,
+    prefix = function() return "" end,
+  },
+  winbar = {
+    sections = {
+      -- "disassembly",
+      "watches",
+      "scopes",
+      "exceptions",
+      "breakpoints",
+      "threads",
+      "repl"
+    },
+    controls = {
+      enabled = true,
+    }
+  }
+})
 
 
 vim.keymap.set("n", "<leader>dg", function() MiniPick.ui_select(sidebars, {
@@ -48,7 +76,8 @@ vim.keymap.set('n', '<leader>ds', function() widgets.centered_float(widgets.scop
 vim.keymap.set('n', '<leader>dw', function() frames_sb.toggle() end)
 vim.keymap.set('n', '<leader>dr', function() dap.repl.toggle() end)
 vim.keymap.set('n', '<leader>da', widgets.hover )
-vim.keymap.set('n', '<leader>dp', function () widgets.preview(nil, { listener = { "event_stopped" }}) end)
+vim.keymap.set('n', '<leader>dp', "<cmd>DapViewToggle<CR>")
+vim.keymap.set('n', '<leader>dP', "<cmd>DapViewWatch<CR>")
 
 require("l.dap-test").setup()
 
