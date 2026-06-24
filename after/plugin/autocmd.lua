@@ -1,15 +1,5 @@
-vim.api.nvim_create_autocmd('TextYankPost', {
-  group = vim.api.nvim_create_augroup("l_yank_highlight", { clear = true }),
-  pattern = '*',
-  callback = function()
-    vim.hl.on_yank({
-      higroup = 'IncSearch',
-      timeout = 40,
-    })
-  end,
-})
-
 vim.cmd([[
+  au TextYankPost * silent! lua vim.hl.hl_op {higroup='IncSearch', timeout=40}
   " start from last position
   au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
   " create directory before writing file
