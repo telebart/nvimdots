@@ -3,7 +3,7 @@ local file = dir.."/args"
 local state = {}
 
 local function load()
-  if not vim.loop.fs_stat(".git") then return end
+  if not vim.uv.fs_stat(".git") then return end
   local f = io.open(file, "r")
   if not f then return end
   local content = f:read("a")
@@ -17,7 +17,7 @@ vim.api.nvim_create_autocmd("DirChanged", {
 })
 
 local function save()
-  if not vim.loop.fs_stat(vim.fn.getcwd().."/.git") then return end
+  if not vim.uv.fs_stat(vim.fn.getcwd().."/.git") then return end
   vim.fn.mkdir(dir, "p")
   local f = io.open(file, "w")
   if f then

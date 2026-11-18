@@ -6,6 +6,8 @@ vim.api.nvim_set_hl(0, "StatusLine", { bg = "NvimDarkGrey3" })
 vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "NvimDarkGrey2" })
 vim.api.nvim_set_hl(0, "DiffAdd", { fg = "NONE", bg = "NvimDarkGreen" })
 vim.api.nvim_set_hl(0, "DiffChange", { fg = "NONE", bg = "NvimDarkGrey4" })
+vim.api.nvim_set_hl(0, "DiffText", { fg = "NONE", bg = "NvimDarkCyan" })
+vim.api.nvim_set_hl(0, "DiffTextAdd", { fg = "NONE", bg = "NvimDarkCyan" })
 vim.api.nvim_set_hl(0, "LspCodeLens", { fg = "NvimLightYellow", italic = true })
 
 vim.api.nvim_set_hl(0, "@markup.heading.delimiter.markdown", { fg = "#3298b8", bold = true })

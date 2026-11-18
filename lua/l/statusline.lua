@@ -10,4 +10,11 @@ function GetFilesize()
     return ("%.2fMB"):format(size / 1048576)
   end
 end
-vim.o.statusline = [[%#Delimiter#%f%#Title#%m%r %#NonText#%{luaeval("GetFilesize()")}%=%#Title#%y %#Boolean#%(%l/%L%):%c/%-2{virtcol('$')-1}]]
+vim.o.statusline = table.concat({
+  [[%#Delimiter#%f]],
+  [[%#Title#%m%r ]],
+  [[%#NonText#%{luaeval("GetFilesize()")} ]],
+  [[%{% luaeval("vim.diagnostic.status()")%}]],
+  [[%=%#Title#%y ]],
+  [[%#Boolean#%(%l/%L%):%c/%-2{virtcol('$')-1}]]
+})

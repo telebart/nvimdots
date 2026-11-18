@@ -19,5 +19,8 @@ require("conform").setup({
     yaml = { "prettier" },
     xml = { "xmlformat" },
     html = { "superhtml" },
+    bash = {"shfmt"},
+    mksh = {"shfmt"},
+    shell = {"shfmt"},
   }
 })

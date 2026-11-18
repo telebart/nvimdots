@@ -20,6 +20,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 vim.lsp.semantic_tokens.enable(false)
 
+vim.lsp.config("*", {
+    capabilities = {
+        workspace = {
+            didChangeWatchedFiles = {
+                -- Enable file watching for LSP
+                --
+                -- It's disabled because the default implementation is considered slow.
+                dynamicRegistration = true,
+            },
+        },
+    },
+})
+
+
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 local ts = {
   settings = {
@@ -31,7 +45,7 @@ local ts = {
   }
 }
 vim.lsp.config["vtsls"] = ts
-vim.lsp.config["tsgo"] = ts
+vim.lsp.config["tsc"] = ts
 vim.lsp.config['jsonls'] = {
   filetype = { "json", "jsonc", "json5" },
   settings = {
@@ -72,7 +86,7 @@ vim.lsp.enable({
   "gopls",
   "emmylua_ls",
   "ols",
-  "tsgo",
+  "tsc",
   "jsonls",
   "yamlls",
 })
